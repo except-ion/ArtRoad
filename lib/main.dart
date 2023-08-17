@@ -1,9 +1,7 @@
-import 'package:artroad/calendar.dart';
+import 'package:artroad/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:artroad/theme/theme_helper.dart';
-import 'package:artroad/routes/app_routes.dart';
+import 'package:intl/date_symbol_data_file.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,14 +9,23 @@ void main() {
     DeviceOrientation.portraitUp,
   ]);
 
-  ///Please update theme as per your need if required.
-  ThemeHelper().changeTheme('primary');
-  runApp(Calendar());
+  //await initializeDateFormatting('ko_KR', '');
+
+  runApp(MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp( );
+    return MaterialApp(
+      theme: ThemeData(
+        visualDensity: VisualDensity.standard,
+      ),
+      title: 'artroad',
+      debugShowCheckedModeBanner: false,
+      initialRoute: AppRoutes.basepageScreen,
+      routes: AppRoutes.routes,
+    );
   }
 }
