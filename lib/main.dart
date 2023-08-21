@@ -1,7 +1,7 @@
 import 'package:artroad/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/date_symbol_data_file.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -9,9 +9,7 @@ void main() {
     DeviceOrientation.portraitUp,
   ]);
 
-  //await initializeDateFormatting('ko_KR', '');
-
-  runApp(MyApp());
+  initializeDateFormatting().then((_) => runApp(MyApp()));
 }
 
 
