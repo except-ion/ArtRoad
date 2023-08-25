@@ -8,7 +8,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ConcertRepository {
 
-  Future<List<Concert>?> loadEvs() async {
+  Future<List<Concert>?> loadConcerts() async {
   await dotenv.load();
   String apiKey = dotenv.env['API_KEY']!;
   var startDate = "20230801";
@@ -29,12 +29,12 @@ class ConcertRepository {
 
       // 필요한 데이터 찾기
       Map<String, dynamic> jsonResult = convert.json.decode(json);
-      final jsonEv = jsonResult['dbs']['db'];
+      final jsonConcert = jsonResult['dbs']['db'];
 
       // 필요한 데이터 그룹이 있다면
-      if (jsonEv != null) {
+      if (jsonConcert != null) {
         // map을 통해 Ev형태로 item을  => Ev.fromJson으로 전달
-        return jsonEv.map<Concert>((item) => Concert.fromJson(item)).toList();
+        return jsonConcert.map<Concert>((item) => Concert.fromJson(item)).toList();
       }
     }
     return null;
