@@ -11,11 +11,12 @@ class ConcertRepository {
   Future<List<Concert>?> loadConcerts() async {
   await dotenv.load();
   String apiKey = dotenv.env['API_KEY']!;
-  var startDate = "20230801";
+  var startDate = "20160801";
   var endDate = "20230831";
+  var searchTerm = "뮤지컬";
 
     String baseUrl =
-        "http://www.kopis.or.kr/openApi/restful/pblprfr?service=$apiKey&stdate=$startDate&eddate=$endDate&rows=10&cpage=1";
+        "http://www.kopis.or.kr/openApi/restful/pblprfr?service=$apiKey&stdate=$startDate&eddate=$endDate&rows=10&cpage=1&shprfnm=$searchTerm";
     final response = await http.get(Uri.parse(baseUrl));
 
     // 정상적으로 데이터를 불러왔다면
@@ -30,12 +31,14 @@ class ConcertRepository {
       // 필요한 데이터 찾기
       Map<String, dynamic> jsonResult = convert.json.decode(json);
       final jsonConcert = jsonResult['dbs']['db'];
-
       // 필요한 데이터 그룹이 있다면
       if (jsonConcert != null) {
+        print('jsonConcert length: ${jsonConcert.length}');
         // map을 통해 Ev형태로 item을  => Ev.fromJson으로 전달
         return jsonConcert.map<Concert>((item) => Concert.fromJson(item)).toList();
       }
+    } else{
+      print(response);
     }
     return null;
   }

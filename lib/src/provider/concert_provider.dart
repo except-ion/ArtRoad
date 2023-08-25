@@ -1,5 +1,3 @@
-//가져온 데이터 알려주는 역할
-
 import 'package:artroad/src/model/concert.dart';
 import 'package:artroad/src/repository/concert_repo.dart';
 import 'package:flutter/material.dart';

@@ -22,11 +22,6 @@ class ConcertPage extends StatelessWidget {
                 concert.mt20id.toString(),
                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
-
-              Text(
-                concert.prfstate.toString(),
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-              ),
               
                Text(
                 concert.prfnm.toString(),
@@ -34,12 +29,7 @@ class ConcertPage extends StatelessWidget {
               ),
 
                Text(
-                concert.prfpdfrom.toString(),
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-              ),
-
-               Text(
-                concert.prfpdto.toString(),
+                concert.shprfnmfct.toString(),
                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
             ],
