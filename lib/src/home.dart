@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:artroad/src/ui/concert_page.dart';
+import 'package:artroad/src/ui/facility_page.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -21,10 +22,10 @@ class Home extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-              //   Navigator.push(
-              //     context
-              //     MaterialPageRoute(builder: (context) => FacilityPage()),
-              //   );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => FacilityPage()),
+                );
               },
               child: const Text('Facility'),
             ),
