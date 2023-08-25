@@ -13,21 +13,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        // MultiProvider를 통해 여러가지 Provider를 관리
-        home: MultiProvider(
-          
-            // ChangeNotifierProvider 통해 변화에 대해 구독
-            providers: [
-              ChangeNotifierProvider(
-                  create: (BuildContext context) => ConcertProvider())
-            ],
-            child:
-                Home() // home.dart 
-            ));
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ConcertProvider()),
+        // Add other providers here if needed
+      ],
+      child: const MaterialApp(
+        title: 'My App',
+        home: Home(),
+      ),
+    );
   }
 }
