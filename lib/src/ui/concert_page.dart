@@ -29,7 +29,7 @@ class ConcertPage extends StatelessWidget {
               ),
 
                Text(
-                concert.shprfnmfct.toString(),
+                concert.fcltynm.toString(),
                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
             ],
