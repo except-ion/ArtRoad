@@ -25,16 +25,16 @@ class ConcertDetail {
 
   factory ConcertDetail.fromJson(Map<String, dynamic> json) {
     return ConcertDetail(
-      mt20id: json["mt20id"] as String,
-      prfnm: json["prfnm"] as String,
-      poster: json["poster"] as String,
-      prfpdfrom: json["prfpdfrom"] as String,
-      prfpdto: json["prfpdto"] as String,
-      prfruntime: json["prfruntime"] as String,
-      prfage: json["prfage"] as String,
-      genrenm: json["genrenm"] as String,
-      fcltynm: json["fcltynm"] as String,
-      styurls: json["styurls"] as String,
+      mt20id: json["mt20id"] as String?,
+      prfnm: json["prfnm"] as String?,
+      poster: json["poster"] as String?,
+      prfpdfrom: json["prfpdfrom"] as String?,
+      prfpdto: json["prfpdto"] as String?,
+      prfruntime: json["prfruntime"] as String?,
+      prfage: json["prfage"] as String?,
+      genrenm: json["genrenm"] as String?,
+      fcltynm: json["fcltynm"] as String?,
+      styurls: (json["styurls"] as Map<String, dynamic>)  ['styurl'] as String?,
     );
   }
 }

@@ -13,6 +13,11 @@ class ConcertDetailRepository {
     String baseUrl = 
       "http://www.kopis.or.kr/openApi/restful/pblprfr/$concertID?service=$apiKey";
     
+    //null값일때 none으로 바꾸기
+        String replaceNullWithFieldKey(String key, dynamic value) {
+          return value ?? key;
+        }
+
     final response = await http.get(Uri.parse(baseUrl));
 
     if(response.statusCode == 200){
@@ -23,9 +28,14 @@ class ConcertDetailRepository {
 
         Map<String, dynamic> jsonResult = convert.jsonDecode(json);
         final jsonConcertDetail = jsonResult['dbs']['db'];
-        if (jsonConcertDetail.values != null) {
-          return jsonConcertDetail.map<ConcertDetail>((item) => ConcertDetail.fromJson(item)).toList();
-      }
+        // jsonConcertDetail.removeWhere((key, value) => value == null);
+        print(jsonConcertDetail);
+
+        if (jsonConcertDetail != null) {
+          return [ConcertDetail.fromJson(jsonConcertDetail)];
+        } else{
+          print('jsonConcert is null');
+        }
         }
       finally{
         print('finally print');
