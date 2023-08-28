@@ -11,9 +11,10 @@ class RankingRepository {
 
   Future<List<Ranking>?> loadRankings() async {
     await dotenv.load();
-    String apiKey = dotenv.env['API_KEY']!;
-    String currentDate = "20230821";
+    DateTime now = DateTime.now();
+    String currentDate = DateFormat('yyyyMMdd').format(now);
     List<String> catecodeList = ["", "AAAA", "GGGA", "CCCD", "CCCA"];
+    String apiKey = dotenv.env['API_KEY']!;
     List<Ranking> rankings = [];
     for(String catecode in catecodeList){
       String baseUrl =
