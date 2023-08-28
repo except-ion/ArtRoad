@@ -1,5 +1,6 @@
 import 'package:artroad/src/provider/condetail_provider.dart';
 import 'package:artroad/src/provider/facdetail_provider.dart';
+import 'package:artroad/src/provider/ranking_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:artroad/src/provider/search/concert_provider.dart';
 import 'package:artroad/src/provider/calendar/concert_provider.dart';
@@ -30,9 +31,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => ConcertDetailProvider()
           ),
-          ChangeNotifierProvider(
-          create: (context) => FacilityDetailProvider()
-          ),
+        ChangeNotifierProvider(
+        create: (context) => FacilityDetailProvider()
+        ),
+        ChangeNotifierProvider(
+        create: (context) => RankingProvider()
+        ),
       ],
       child: const MaterialApp(
         title: 'My App',
