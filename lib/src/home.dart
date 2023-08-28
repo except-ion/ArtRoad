@@ -1,3 +1,4 @@
+import 'package:artroad/src/ui/facdetail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:artroad/src/ui/concert_page.dart';
 import 'package:artroad/src/ui/facility_page.dart';
@@ -38,6 +39,15 @@ class Home extends StatelessWidget {
                 );
               },
               child: const Text('Concert Detail'),
+            ),
+             ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => FacilityDetailPage()),
+                );
+              },
+              child: const Text('Facility Detail'),
             ),
           ],
         ),

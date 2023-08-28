@@ -1,4 +1,5 @@
 import 'package:artroad/src/provider/condetail_provider.dart';
+import 'package:artroad/src/provider/facdetail_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:artroad/src/provider/concert_provider.dart';
 import 'package:artroad/src/provider/facility_provider.dart';
@@ -24,6 +25,9 @@ class MyApp extends StatelessWidget {
           ),
         ChangeNotifierProvider(
           create: (context) => ConcertDetailProvider()
+          ),
+          ChangeNotifierProvider(
+          create: (context) => FacilityDetailProvider()
           ),
       ],
       child: const MaterialApp(
