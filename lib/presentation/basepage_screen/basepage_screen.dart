@@ -1,5 +1,7 @@
 import 'package:artroad/core/app_export.dart';
-import 'package:artroad/presentation/favoritecalendar_page/favoritecalendar_page.dart';
+import 'package:artroad/presentation/calendar/favoritecalendar_screen.dart';
+import 'package:artroad/presentation/home/home_screen.dart';
+import 'package:artroad/presentation/profile/profile_screen.dart';
 import 'package:artroad/widgets/custom_bottom_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -33,13 +35,13 @@ class BasepageScreen extends StatelessWidget {
   String getCurrentRoute(BottomBarEnum type) {
     switch (type) {
       case BottomBarEnum.Home:
-        return "/";
+        return AppRoutes.homeScreen;
       case BottomBarEnum.Calendar:
-        return AppRoutes.favoritecalendarPage;
+        return AppRoutes.favoritecalendarScreen;
       case BottomBarEnum.Search:
-        return "/";
+        return AppRoutes.searchScreen;
       case BottomBarEnum.Profile:
-        return "/";
+        return AppRoutes.profileScreen;
       default:
         return "/";
     }
@@ -48,8 +50,10 @@ class BasepageScreen extends StatelessWidget {
   ///Handling page based on route
   Widget getCurrentPage(String currentRoute) {
     switch (currentRoute) {
-      case AppRoutes.favoritecalendarPage:
-        return FavoritecalendarPage();
+      case AppRoutes.favoritecalendarScreen:
+        return FavoritecalendarScreen();
+      case AppRoutes.homeScreen:
+        return HomeScreen();
       default:
         return DefaultWidget();
     }

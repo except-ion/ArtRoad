@@ -1,3 +1,4 @@
+import 'package:artroad/presentation/login/login_screen.dart';
 import 'package:artroad/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoutes.basepageScreen,
       routes: AppRoutes.routes,
+      home: LoginScreen(),
     );
   }
 }
