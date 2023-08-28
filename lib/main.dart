@@ -13,7 +13,6 @@ void main() {
   initializeDateFormatting().then((_) => runApp(MyApp()));
 }
 
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -23,9 +22,8 @@ class MyApp extends StatelessWidget {
       ),
       title: 'artroad',
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.basepageScreen,
+      initialRoute: AppRoutes.loginScreen,
       routes: AppRoutes.routes,
-      home: LoginScreen(),
     );
   }
 }

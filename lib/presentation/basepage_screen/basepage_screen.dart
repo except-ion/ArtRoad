@@ -2,6 +2,7 @@ import 'package:artroad/core/app_export.dart';
 import 'package:artroad/presentation/calendar/favoritecalendar_screen.dart';
 import 'package:artroad/presentation/home/home_screen.dart';
 import 'package:artroad/presentation/profile/profile_screen.dart';
+import 'package:artroad/presentation/search/search_screen.dart';
 import 'package:artroad/widgets/custom_bottom_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +20,7 @@ class BasepageScreen extends StatelessWidget {
             backgroundColor: appTheme.whiteA700,
             body: Navigator(
                 key: navigatorKey,
-                initialRoute: "/",
+                initialRoute: AppRoutes.homeScreen,
                 onGenerateRoute: (routeSetting) => PageRouteBuilder(
                     pageBuilder: (ctx, ani, ani1) =>
                         getCurrentPage(routeSetting.name!),
@@ -54,6 +55,10 @@ class BasepageScreen extends StatelessWidget {
         return FavoritecalendarScreen();
       case AppRoutes.homeScreen:
         return HomeScreen();
+      case AppRoutes.profileScreen:
+        return ProfileScreen();
+      case AppRoutes.searchScreen:
+        return SearchScreen();
       default:
         return DefaultWidget();
     }

@@ -1,3 +1,4 @@
+import 'package:artroad/presentation/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:artroad/presentation/basepage_screen/basepage_screen.dart';
 import 'package:artroad/presentation/app_navigation_screen/app_navigation_screen.dart';
@@ -14,6 +15,7 @@ class AppRoutes {
 
   static Map<String, WidgetBuilder> routes = {
     basepageScreen: (context) => BasepageScreen(),
+    loginScreen:(context) => LoginScreen(),
     appNavigationScreen: (context) => AppNavigationScreen()
   };
 }
