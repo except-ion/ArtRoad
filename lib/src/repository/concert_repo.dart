@@ -1,5 +1,5 @@
 //오픈 api를 통해 데이터 가져오기
-
+//공연 Search 할 때 사용하기
 import 'dart:convert' as convert;
 import 'package:artroad/src/model/concert.dart';
 import 'package:http/http.dart' as http;

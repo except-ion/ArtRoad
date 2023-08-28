@@ -1,3 +1,4 @@
+//공연 상세 정보(ConcertDetail) 페이지
 import 'package:artroad/src/model/condetail.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;

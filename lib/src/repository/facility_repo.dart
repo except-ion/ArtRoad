@@ -1,3 +1,4 @@
+//공연시설 검색결과 페이지
 import 'dart:convert' as convert;
 import 'package:artroad/src/model/facility.dart';
 import 'package:http/http.dart' as http;
