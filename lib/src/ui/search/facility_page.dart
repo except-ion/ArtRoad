@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:artroad/src/provider/facility_provider.dart';
+import 'package:artroad/src/provider/search/facility_provider.dart';
 import 'package:artroad/src/model/facility.dart';
 import 'package:provider/provider.dart';
 
@@ -24,6 +24,10 @@ class FacilityPage extends StatelessWidget{
 
               Text(
                 facility.fcltynm.toString(),
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+              Text(
+                facility.adres.toString(),
                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
             ],
@@ -55,7 +59,7 @@ class FacilityPage extends StatelessWidget{
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Concert Page'),
+        title: const Text('Facility Page'),
       ),
       body: Consumer<FacilityProvider>(builder: (context, provider, wideget) {
           if (provider.concerts.isNotEmpty) {

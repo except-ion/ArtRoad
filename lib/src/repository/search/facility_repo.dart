@@ -24,8 +24,33 @@ class FacilityRepository {
 
       Map<String, dynamic> jsonResult = convert.json.decode(json);
       final jsonFacility = jsonResult['dbs']['db'];
-
+      
+      //공연시설 상세정보에서 adres가져오기
       if (jsonFacility != null) {
+        List<Facility> facilities = [];
+
+        for (var item in jsonFacility) {
+          String facilityID = item['mt10id'];
+          String facilityDetailUrl = 
+            "http://www.kopis.or.kr/openApi/restful/prfplc/$facilityID?service=$apiKey";
+          final detailResponse = await http.get(Uri.parse(facilityDetailUrl));
+          
+          if (detailResponse.statusCode == 200) {
+            final detailBody = convert.utf8.decode(detailResponse.bodyBytes);
+            final xml = Xml2Json()..parse(detailBody);
+            final jsonDetail = xml.toParker();
+
+            Map<String, dynamic> jsonFacilityDetail = convert.json.decode(jsonDetail);
+            
+            // 'adres' 값 추출
+            String adres = jsonFacilityDetail['dbs']['db']['adres'];
+            // Facility 객체 생성 및 리스트에 추가
+            item['adres'] = adres;
+            facilities.add(Facility.fromJson(item));
+          }
+        }
+        print(jsonFacility);
+
         return jsonFacility.map<Facility>((item) => Facility.fromJson(item)).toList();
       }
     }

@@ -1,5 +1,5 @@
 import 'package:artroad/src/model/facility.dart';
-import 'package:artroad/src/repository/facility_repo.dart';
+import 'package:artroad/src/repository/search/facility_repo.dart';
 import 'package:flutter/material.dart';
 
 class FacilityProvider extends ChangeNotifier {
