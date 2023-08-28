@@ -5,18 +5,26 @@ import 'package:artroad/src/model/concert.dart';
 import 'package:http/http.dart' as http;
 import 'package:xml2json/xml2json.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:intl/intl.dart';
 
 class ConcertRepository {
 
   Future<List<Concert>?> loadConcerts() async {
   await dotenv.load();
   String apiKey = dotenv.env['API_KEY']!;
-  var startDate = "20160801";
-  var endDate = "20230831";
+
+  DateTime now = DateTime.now();
+  DateTime sixMonthsAgo = now.subtract(const Duration(days: 6 * 30));
+  
+  String formattedDate = DateFormat('yyyyMMdd').format(now);
+  String formattedSixMonthsAgo = DateFormat('yyyyMMdd').format(sixMonthsAgo);
+
+  var startDate = formattedSixMonthsAgo;
+  var endDate = formattedDate;
   var searchTerm = "뮤지컬";
 
     String baseUrl =
-        "http://www.kopis.or.kr/openApi/restful/pblprfr?service=$apiKey&stdate=$startDate&eddate=$endDate&rows=10&cpage=1&shprfnm=$searchTerm";
+        "http://www.kopis.or.kr/openApi/restful/pblprfr?service=$apiKey&stdate=$startDate&eddate=$endDate&rows=500&cpage=1&shprfnm=$searchTerm";
     final response = await http.get(Uri.parse(baseUrl));
 
     // 정상적으로 데이터를 불러왔다면
@@ -30,11 +38,9 @@ class ConcertRepository {
 
       // 필요한 데이터 찾기
       Map<String, dynamic> jsonResult = convert.json.decode(json);
-      print('jsonResult: $jsonResult');
       final jsonConcert = jsonResult['dbs']['db'];
       // 필요한 데이터 그룹이 있다면
       if (jsonConcert != null) {
-        print('jsonConcert length: ${jsonConcert.length}');
         // map을 통해 Ev형태로 item을  => Ev.fromJson으로 전달
         return jsonConcert.map<Concert>((item) => Concert.fromJson(item)).toList();
       }
