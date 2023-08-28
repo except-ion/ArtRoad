@@ -32,6 +32,10 @@ class ConcertPage extends StatelessWidget {
                 concert.fcltynm.toString(),
                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
+              Text(
+                concert.poster.toString(),
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
             ],
           ),
         ))
