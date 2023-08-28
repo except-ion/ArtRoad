@@ -13,29 +13,37 @@ class RankingRepository {
     await dotenv.load();
     String apiKey = dotenv.env['API_KEY']!;
     String currentDate = "20230821";
-    String baseUrl =
-        "http://kopis.or.kr/openApi/restful/boxoffice?service=$apiKey&ststype=month&date=$currentDate";
-    final response = await http.get(Uri.parse(baseUrl));
+    List<String> catecodeList = ["", "AAAA", "GGGA", "CCCD", "CCCA"];
+    List<Ranking> rankings = [];
+    for(String catecode in catecodeList){
+      String baseUrl =
+          "http://kopis.or.kr/openApi/restful/boxoffice?service=$apiKey&ststype=month&date=$currentDate&catecode=$catecode";
+      final response = await http.get(Uri.parse(baseUrl));
 
-    // 정상적으로 데이터를 불러왔다면
-    if (response.statusCode == 200) {
-      // 데이터 가져오기
-      final body = convert.utf8.decode(response.bodyBytes);
-      // xml => json으로 변환
-      final xml = Xml2Json()..parse(body);
-      final json = xml.toParker();
+      // 정상적으로 데이터를 불러왔다면
+      if (response.statusCode == 200) {
+        // 데이터 가져오기
+        final body = convert.utf8.decode(response.bodyBytes);
+        // xml => json으로 변환
+        final xml = Xml2Json()..parse(body);
+        final json = xml.toParker();
 
-      // 필요한 데이터 찾기
-      Map<String, dynamic> jsonResult = convert.json.decode(json);
-      final jsonRanking = jsonResult['boxofs']['boxof'];
-      print(jsonRanking);
-      // 필요한 데이터 그룹이 있다면
-      if (jsonRanking != null) {
-        // map을 통해 Ev형태로 item을  => Ev.fromJson으로 전달
-        return jsonRanking.map<Ranking>((item) => Ranking.fromJson(item)).toList();
+        // 필요한 데이터 찾기
+        Map<String, dynamic> jsonResult = convert.json.decode(json);
+        final jsonRanking = jsonResult['boxofs']['boxof'];
+        
+        // ranking 상위 10개만 return 보내기
+        if (jsonRanking != null) {
+          List<dynamic> items = jsonRanking as List;
+          int itemCount = items.length < 10 ? items.length : 10;
+          rankings.addAll(items.sublist(0, itemCount).map<Ranking>((item) => Ranking.fromJson(item)));
+      } else{
+        print(response);
       }
-    } else{
-      print(response);
+    }
+    }
+    if (rankings.isNotEmpty) {
+      return rankings;
     }
     return null;
   }
