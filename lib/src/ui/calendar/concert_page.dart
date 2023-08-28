@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:artroad/src/model/concert.dart';
-import 'package:artroad/src/provider/concert_provider.dart';
+import 'package:artroad/src/provider/calendar/concert_provider.dart';
 import 'package:provider/provider.dart';
 
-class ConcertPage extends StatelessWidget {
+class ConcertCalendarPage extends StatelessWidget {
 
-  late ConcertProvider _concertProvider;
+  late ConcertCalendarProvider _concertProvider;
 
-  ConcertPage({super.key}); 
+  ConcertCalendarPage({super.key}); 
 
   Widget _makeConcertOne(Concert concert) {
     return Row(
@@ -32,8 +32,12 @@ class ConcertPage extends StatelessWidget {
                 concert.fcltynm.toString(),
                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
-              Text(
-                concert.poster.toString(),
+               Text(
+                concert.prfpdfrom.toString(),
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+               Text(
+                concert.prfpdto.toString(),
                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
             ],
@@ -60,14 +64,14 @@ class ConcertPage extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    _concertProvider = Provider.of<ConcertProvider>(context, listen: false);
+    _concertProvider = Provider.of<ConcertCalendarProvider>(context, listen: false);
     _concertProvider.loadConcerts(); 
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Concert Page'),
+        title: const Text('Concert calendar Page'),
       ),
-      body: Consumer<ConcertProvider>(builder: (context, provider, wideget) {
+      body: Consumer<ConcertCalendarProvider>(builder: (context, provider, wideget) {
           // 데이터가 있으면 _makeListView에 데이터를 전달
           if (provider.concerts.isNotEmpty) {
             return _makeListView(provider.concerts);

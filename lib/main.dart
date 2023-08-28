@@ -1,7 +1,8 @@
 import 'package:artroad/src/provider/condetail_provider.dart';
 import 'package:artroad/src/provider/facdetail_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:artroad/src/provider/concert_provider.dart';
+import 'package:artroad/src/provider/search/concert_provider.dart';
+import 'package:artroad/src/provider/calendar/concert_provider.dart';
 import 'package:artroad/src/provider/facility_provider.dart';
 import 'package:artroad/src/home.dart';
 import 'package:provider/provider.dart';
@@ -18,8 +19,11 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => ConcertProvider()
+          create: (context) => ConcertSearchProvider()
           ),
+        ChangeNotifierProvider(
+        create: (context) => ConcertCalendarProvider()
+        ),
         ChangeNotifierProvider(
           create: (context) => FacilityProvider()
           ),

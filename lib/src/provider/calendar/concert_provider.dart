@@ -1,8 +1,8 @@
 import 'package:artroad/src/model/concert.dart';
-import 'package:artroad/src/repository/concert_repo.dart';
+import 'package:artroad/src/repository/calendar/concert_repo.dart';
 import 'package:flutter/material.dart';
 
-class ConcertProvider extends ChangeNotifier {
+class ConcertCalendarProvider extends ChangeNotifier {
   // EvRepository를 접근(데이터를 받아와야 하기 때문에)
   final ConcertRepository _concertRepository = ConcertRepository();
 

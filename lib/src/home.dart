@@ -1,6 +1,7 @@
+import 'package:artroad/src/ui/calendar/concert_page.dart';
 import 'package:artroad/src/ui/facdetail_page.dart';
 import 'package:flutter/material.dart';
-import 'package:artroad/src/ui/concert_page.dart';
+import 'package:artroad/src/ui/search/concert_page.dart';
 import 'package:artroad/src/ui/facility_page.dart';
 import 'package:artroad/src/ui/condetail_page.dart';
 
@@ -17,10 +18,19 @@ class Home extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ConcertPage()),
+                  MaterialPageRoute(builder: (context) => ConcertSearchPage()),
                 );
               },
-              child: const Text('Concert'),
+              child: const Text('Concert search'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ConcertCalendarPage()),
+                );
+              },
+              child: const Text('Concert Calendar'),
             ),
             ElevatedButton(
               onPressed: () {
