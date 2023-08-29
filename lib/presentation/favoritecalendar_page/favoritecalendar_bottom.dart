@@ -17,6 +17,9 @@ class _fTableCalendarBottomState extends State<fTableCalendarBottom> {
 
   @override
   Widget build(BuildContext context) {
+    String selectedDate = '${widget.selectedDay.year}.${widget.selectedDay.month}.${widget.selectedDay.day}';
+    print(selectedDate);
+
     return Stack(
       children: [
         Positioned(
@@ -27,9 +30,8 @@ class _fTableCalendarBottomState extends State<fTableCalendarBottom> {
             child:Text(
               '${widget.selectedDay.month}/${widget.selectedDay.day} (${_getDayOfWeek(widget.selectedDay)})',
               style: TextStyle(
-                color: Color(0xFF1E1E1E),
+                color: Colors.black,
                 fontSize: 18,
-                fontFamily: 'Nunito',
                 fontWeight: FontWeight.w700,
                 height: 1,
                 letterSpacing: -0.36,

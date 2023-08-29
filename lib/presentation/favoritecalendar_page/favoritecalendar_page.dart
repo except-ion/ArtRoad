@@ -76,7 +76,6 @@ class _FavoritecalendarPageState extends State<FavoritecalendarPage> {
                       },
                       style: ElevatedButton.styleFrom(
                         primary: isTableCalendarVisible ? appTheme.blue100 : appTheme.blueGray50, // 색상 조건에 따라 변경
-                        elevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadiusStyle.customBorderTL10,
                         ),
@@ -103,7 +102,6 @@ class _FavoritecalendarPageState extends State<FavoritecalendarPage> {
                       },
                       style: ElevatedButton.styleFrom(
                         primary: isTableCalendarVisible ? appTheme.blueGray50 : appTheme.blue100, // 색상 조건에 따라 변경
-                        elevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadiusStyle.customBorderTL10,
                         ),
