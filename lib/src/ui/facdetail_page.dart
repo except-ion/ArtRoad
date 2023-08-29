@@ -50,7 +50,7 @@ class FacilityDetailPage extends StatelessWidget {
               ),
             ],
           ),
-        ))
+        )),
       ],
     );
   }
@@ -83,7 +83,6 @@ class FacilityDetailPage extends StatelessWidget {
           if (provider.facilityDetails.isNotEmpty) {
             return _makeListView(provider.facilityDetails);
           }
-
           // 데이터가 없으면 CircularProgressIndicator 수행(로딩)
           return const Center(
             child: CircularProgressIndicator(),

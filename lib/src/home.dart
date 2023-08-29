@@ -5,6 +5,7 @@ import 'package:artroad/src/ui/search/concert_page.dart';
 import 'package:artroad/src/ui/search/facility_page.dart';
 import 'package:artroad/src/ui/condetail_page.dart';
 import 'package:artroad/src/ui/ranking_page.dart';
+import 'package:artroad/src/ui/kakao_map_page.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -68,6 +69,15 @@ class Home extends StatelessWidget {
                 );
               },
               child: const Text('Ranking'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const KakaoMapPage()),
+                );
+              },
+              child: const Text('Kakao map'),
             ),
           ],
         ),

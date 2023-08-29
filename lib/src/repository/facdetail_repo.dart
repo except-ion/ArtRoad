@@ -31,16 +31,6 @@ class FacilityDetailRepository {
     } else{
       print(response);
     }
-    //   Map<String, dynamic> jsonResult = convert.json.decode(json);
-    //   final jsonFacilityDetail = jsonResult['dbs']['db'];
-    //   if (jsonFacilityDetail != null) {
-    //     FacilityDetail facilityDetail =
-    //         FacilityDetail.fromJson(jsonFacilityDetail);
-    //     return facilityDetail;
-    //   }
-    // } else {
-    //   print("Failed to fetch facility detail: ${response.statusCode}");
-    // }
     return null;
   }
 }
