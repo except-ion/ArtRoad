@@ -3,11 +3,12 @@ import 'package:artroad/src/model/facdetail.dart';
 import 'package:artroad/src/provider/facdetail_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:kakaomap_webview/kakaomap_webview.dart';
-const String kakaoMapKey = '708757a1c33c4ef4738b67842bca34dd';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class FacilityDetailPage extends StatelessWidget {
 
   late FacilityDetailProvider _facilityDetailProvider;
+  String kakaoMapKey = dotenv.env['KAKAO_MAP_KEY']!;
 
   FacilityDetailPage({super.key}); 
 
@@ -101,17 +102,15 @@ class FacilityDetailPage extends StatelessWidget {
         width: 400,
         height: 400,
         kakaoMapKey: kakaoMapKey,
+        // kakaoMapKey: dotenv.env['KAKAO_MAP_KEY']!,
         //lat, lng 값 facility la, lo로 변경 필요
         lat: 33.450701,
         lng: 126.570667,
         showMapTypeControl: true,
         showZoomControl: true,
         markerImageURL:
-            'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png',
-        onTapMarker: (message) async {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(const SnackBar(content: Text('Marker is clicked')));
-        }),
+          'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png',
+        ),
     ],)
     );
   }
