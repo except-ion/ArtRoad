@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:artroad/presentation/basepage_screen/basepage_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:artroad/theme/theme_helper.dart';
 import 'dart:async';
 
 class LoginScreen extends StatefulWidget {
@@ -329,10 +332,18 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 Flexible(
                   flex: 3,
-                  child: Center(
+                  child: Align(
+                    alignment: Alignment.center,
                     child: Text(
-                      'ArtRoad',
-                      style: TextStyle(color: Colors.white, fontSize: 70),
+                      "ArtRoad",
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.left,
+                      style: theme.textTheme.displaySmall?.copyWith(
+                          fontSize: 80, // 폰트 사이즈 조절
+                          fontWeight: FontWeight.normal, // 폰트 굵기 조절
+                          color: Colors
+                              .white // 텍스트 색상 설정 (그라데이션에 의해 가려지므로 원하는 색상 사용 가능)
+                          ),
                     ),
                   ),
                 ),
@@ -342,25 +353,31 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 200,
                     )),
                 Flexible(
-                  child: ElevatedButton(
-                    onPressed: _showLoginDialog,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0x7F5D5D5D),
-                      foregroundColor: Colors.white,
-                      textStyle: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontFamily: 'Nunito',
-                        fontWeight: FontWeight.w700,
-                        height: 1.20,
-                      ),
-                      maximumSize: Size(250, 58),
-                      minimumSize: Size(250, 58),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+                      child: TextButton(
+                        onPressed: _showLoginDialog,
+                        style: TextButton.styleFrom(
+                          backgroundColor: Color(0x5F5E5E5E),
+                          maximumSize: Size(300, 64),
+                          minimumSize: Size(250, 58),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                        ),
+                        child: Text(
+                          '시작하기',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
                       ),
                     ),
-                    child: Text('시작하기'),
                   ),
                 ),
               ],
