@@ -42,6 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void _showLoginDialog() {
     //로그인 창
     showModalBottomSheet<void>(
+      backgroundColor: Colors.white,
       context: context,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
@@ -70,27 +71,116 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text(
                                 '로그인',
-                                textAlign: TextAlign.left,
+                                textAlign: TextAlign.end,
                                 style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 30,
+                                  fontSize: 35,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              const SizedBox(height: 26),
-                              TextFormField(
-                                decoration:
-                                    const InputDecoration(labelText: '이메일'),
+                              const SizedBox(height: 46),
+                              Stack(
+                                clipBehavior: Clip.none,
+                                children: [
+                                  TextFormField(
+                                    style: TextStyle(fontSize: 18),
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.only(
+                                          top: 25, left: 20, bottom: 10),
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          width: 3,
+                                          color: Color(0xFF00233D),
+                                        ),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: -9,
+                                    left: -13,
+                                    child: Transform.translate(
+                                      offset: Offset(30, 0),
+                                      child: Stack(
+                                        children: [
+                                          SizedBox(
+                                            width: 50,
+                                            height: 15,
+                                            child: DecoratedBox(
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                              ),
+                                              child: Text(
+                                                '이메일',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    backgroundColor:
+                                                        Colors.white), // ???
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              TextFormField(
-                                decoration:
-                                    const InputDecoration(labelText: '비밀번호'),
-                                obscureText: true,
+                              SizedBox(
+                                height: 25,
                               ),
-                              const SizedBox(height: 25),
+                              Stack(
+                                clipBehavior: Clip.none,
+                                children: [
+                                  TextFormField(
+                                    obscureText: true,
+                                    style: TextStyle(fontSize: 18),
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.only(
+                                          top: 25, left: 20, bottom: 10),
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0xFF00233D),
+                                        ),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: -9,
+                                    left: -13,
+                                    child: Transform.translate(
+                                      offset: Offset(30, 0),
+                                      child: Stack(
+                                        children: [
+                                          SizedBox(
+                                            width: 60,
+                                            height: 15,
+                                            child: DecoratedBox(
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                              ),
+                                              child: Text(
+                                                '비밀번호',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    backgroundColor:
+                                                        Colors.white), // ???
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 17),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -98,8 +188,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Row(
                                     children: [
                                       Checkbox(
-                                        fillColor: MaterialStateProperty.all(
-                                            const Color(0xFF00233D)),
                                         activeColor: Color(0xFF00233D),
                                         value: _isCheckRemember,
                                         onChanged: (value) {
@@ -123,100 +211,75 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ],
                               ),
                               const SizedBox(height: 25),
-                              SizedBox(
-                                height: 50,
-                                width: 300,
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.pop(context); // 다이얼로그 닫기
-                                    //로그인 로직 추가
-                                    // 로그인 성공 후 페이지 이동
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => BasepageScreen(),
-                                      ),
-                                    );
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context); // 다이얼로그 닫기
+                                  //로그인 로직 추가
+                                  // 로그인 성공 후 페이지 이동
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => BasepageScreen(),
+                                    ),
+                                  );
 
-                                    print('로그인 성공');
-                                  },
-                                  style: ElevatedButton.styleFrom(
+                                  print('로그인 성공');
+                                },
+                                style: TextButton.styleFrom(
                                     backgroundColor: const Color(0xFF00233D),
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(10)),
-                                  ),
-                                  child: const Text(
-                                    '로그인',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                    minimumSize: const Size(350, 50)),
+                                child: const Text(
+                                  '로그인',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
                                   ),
                                 ),
                               ),
                               const SizedBox(height: 25),
-                              // const Row(
-                              //   mainAxisAlignment: MainAxisAlignment.center,
-                              //   children: [
-                              //     Divider(
-                              //         color: Colors.black, thickness: 1.0),
-                              //     Text(
-                              //       'SNS 로그인',
-                              //       textAlign: TextAlign.center,
-                              //       style: TextStyle(
-                              //           textBaseline: TextBaseline.alphabetic),
-                              //     ),
-                              //     Divider(
-                              //         color: Colors.black, thickness: 1.0),
-                              //   ],
-                              // ),
-                              // const SizedBox(
-                              //   height: 20,
-                              // ),
-                              SizedBox(
-                                height: 50,
-                                width: 300,
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.pop(context); // 다이얼로그 닫기
-                                    //로그인 로직 추가
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => BasepageScreen(),
-                                      ), // 홈화면으로 이동
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color(0xFFFEE500),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      minimumSize: const Size(300, 50)),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Transform.scale(
-                                          scale: 0.7,
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context); // 다이얼로그 닫기
+                                  //로그인 로직 추가
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => BasepageScreen(),
+                                    ), // 홈화면으로 이동
+                                  );
+                                },
+                                style: TextButton.styleFrom(
+                                    textStyle: TextStyle(
+                                        textBaseline: TextBaseline.alphabetic),
+                                    backgroundColor: const Color(0xFFFEE500),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    minimumSize: const Size(350, 50)),
+                                child: Stack(
+                                  clipBehavior: Clip.none,
+                                  children: [
+                                    Positioned(
+                                      top: -6,
+                                      left: -100,
+                                      child: Transform.scale(
+                                          scale: 0.6,
                                           child: Image.asset(
                                               'assets/images/login_kakao.png')),
-                                      const Padding(
-                                        padding: EdgeInsets.only(left: 45),
-                                        child: Text(
-                                          '카카오 로그인',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 18,
-                                            fontFamily: 'Inter',
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
+                                    ),
+                                    Text(
+                                      '카카오 로그인',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w400,
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
                               const SizedBox(
@@ -229,6 +292,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Text(
                                     '회원가입',
                                     style: TextStyle(
+                                      decoration: TextDecoration.underline,
                                       color: Colors.blue,
                                     ),
                                   ),
