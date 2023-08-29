@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:artroad/src/model/facdetail.dart';
 import 'package:artroad/src/provider/facdetail_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:kakaomap_webview/kakaomap_webview.dart';
+const String kakaoMapKey = '708757a1c33c4ef4738b67842bca34dd';
 
 class FacilityDetailPage extends StatelessWidget {
 
@@ -74,12 +76,17 @@ class FacilityDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     _facilityDetailProvider = Provider.of<FacilityDetailProvider>(context, listen: false);
     _facilityDetailProvider.loadFacilityDetails(); 
+    //지도 전체화면 할 때는 이 코드 살리고 width:size.width 사용
+    // Size size = MediaQuery.of(context).size;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Facility Detail Page'),
       ),
-      body: Consumer<FacilityDetailProvider>(builder: (context, provider, wideget) {
+      body: Column(children: [
+        Expanded(
+          child: Consumer<FacilityDetailProvider>(
+            builder: (context, provider, wideget) {
           if (provider.facilityDetails.isNotEmpty) {
             return _makeListView(provider.facilityDetails);
           }
@@ -87,6 +94,25 @@ class FacilityDetailPage extends StatelessWidget {
           return const Center(
             child: CircularProgressIndicator(),
           );
-        }));
+        },
+      ),
+    ),
+      KakaoMapView(
+        width: 400,
+        height: 400,
+        kakaoMapKey: kakaoMapKey,
+        //lat, lng 값 facility la, lo로 변경 필요
+        lat: 33.450701,
+        lng: 126.570667,
+        showMapTypeControl: true,
+        showZoomControl: true,
+        markerImageURL:
+            'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png',
+        onTapMarker: (message) async {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text('Marker is clicked')));
+        }),
+    ],)
+    );
   }
 }
