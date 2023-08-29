@@ -100,6 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       Checkbox(
                                         fillColor: MaterialStateProperty.all(
                                             const Color(0xFF00233D)),
+                                        activeColor: Color(0xFF00233D),
                                         value: _isCheckRemember,
                                         onChanged: (value) {
                                           bottomState(() {
@@ -127,18 +128,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                 width: 300,
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    bottomState(() {
-                                      setState(() {
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                BasepageScreen(),
-                                          ), // 홈 화면으로 이동
-                                        );
-                                      });
-                                    });
-                                    // 로그인 처리 로직 추가
                                     Navigator.pop(context); // 다이얼로그 닫기
+                                    //로그인 로직 추가
+                                    // 로그인 성공 후 페이지 이동
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => BasepageScreen(),
+                                      ),
+                                    );
+
+                                    print('로그인 성공');
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: const Color(0xFF00233D),
@@ -182,12 +181,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 width: 300,
                                 child: ElevatedButton(
                                   onPressed: () {
+                                    Navigator.pop(context); // 다이얼로그 닫기
+                                    //로그인 로직 추가
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (context) => BasepageScreen(),
                                       ), // 홈화면으로 이동
                                     );
-                                    Navigator.pop(context); // 다이얼로그 닫기
                                   },
                                   style: ElevatedButton.styleFrom(
                                       backgroundColor: const Color(0xFFFEE500),
