@@ -1,5 +1,8 @@
 name: artroad
 description: A new Flutter project.
+version: 1.0.0+1
+environment: 
+  sdk: '>=2.17.0 <3.0.0'
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -7,10 +10,31 @@ version: 1.0.0+1
 
 environment:
   sdk: '>=3.0.6 <4.0.0'
-
 dependencies:
-  flutter:
+  flutter: 
     sdk: flutter
+  cached_network_image: ^3.2.1
+  flutter_svg: ^1.1.6
+  intl: ^0.17.0
+  table_calendar: ^3.0.6
+  provider: ^5.0.0
+dev_dependencies: 
+  flutter_test: 
+    sdk: flutter
+flutter: 
+  uses-material-design: true
+  assets: 
+    - assets/
+    - assets/images/
+  fonts: 
+    - family: Oleo Script Swash Caps
+      fonts: 
+        - asset: assets/fonts/OleoScriptSwashCapsRegular.ttf
+          weight: 400
+    - family: Poppins
+      fonts: 
+        - asset: assets/fonts/PoppinsRegular.ttf
+          weight: 400
   provider: ^6.0.1 
   http: ^0.13.4 
   xml2json: ^5.3.2
