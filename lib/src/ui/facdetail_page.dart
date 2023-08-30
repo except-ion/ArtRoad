@@ -77,7 +77,7 @@ class FacilityDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     _facilityDetailProvider = Provider.of<FacilityDetailProvider>(context, listen: false);
     _facilityDetailProvider.loadFacilityDetails(); 
-    //지도 전체화면 할 때는 이 코드 살리고 width:size.width 사용
+    //지도 전체화면 할 때는 아래 코드 살리고 width:size.width 사용
     // Size size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -102,7 +102,6 @@ class FacilityDetailPage extends StatelessWidget {
         width: 400,
         height: 400,
         kakaoMapKey: kakaoMapKey,
-        // kakaoMapKey: dotenv.env['KAKAO_MAP_KEY']!,
         //lat, lng 값 facility la, lo로 변경 필요
         lat: 33.450701,
         lng: 126.570667,
