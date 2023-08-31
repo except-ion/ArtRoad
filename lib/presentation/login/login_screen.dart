@@ -36,6 +36,12 @@ class _LoginScreenState extends State<LoginScreen> {
     timer = Timer.periodic(const Duration(seconds: 5), _changeBackground);
   }
 
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
   void _changeBackground(Timer timer) {
     setState(() {
       currentImageIndex = (currentImageIndex + 1) % backgroundImageUrls.length;
