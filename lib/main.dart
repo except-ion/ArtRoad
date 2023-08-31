@@ -8,15 +8,15 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:artroad/src/provider/search/concert_provider.dart';
 import 'package:artroad/src/provider/calendar/concert_provider.dart';
 import 'package:artroad/src/provider/search/facility_provider.dart';
-import 'package:artroad/src/home.dart';
 import 'package:provider/provider.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
 
-  initializeDateFormatting().then((_) => runApp(MyApp()));
+  initializeDateFormatting().then((_) => runApp(const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -26,24 +26,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => ConcertSearchProvider()
-          ),
-        ChangeNotifierProvider(
-        create: (context) => ConcertCalendarProvider()
-        ),
-        ChangeNotifierProvider(
-          create: (context) => FacilityProvider()
-          ),
-        ChangeNotifierProvider(
-          create: (context) => ConcertDetailProvider()
-          ),
-        ChangeNotifierProvider(
-        create: (context) => FacilityDetailProvider()
-        ),
-        ChangeNotifierProvider(
-        create: (context) => RankingProvider()
-        ),
+        ChangeNotifierProvider(create: (context) => ConcertSearchProvider()),
+        ChangeNotifierProvider(create: (context) => ConcertCalendarProvider()),
+        ChangeNotifierProvider(create: (context) => FacilityProvider()),
+        ChangeNotifierProvider(create: (context) => ConcertDetailProvider()),
+        ChangeNotifierProvider(create: (context) => FacilityDetailProvider()),
+        ChangeNotifierProvider(create: (context) => RankingProvider()),
       ],
       child: MaterialApp(
         theme: ThemeData(
