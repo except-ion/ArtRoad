@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         visualDensity: VisualDensity.standard,
+        scaffoldBackgroundColor: Colors.white,
       ),
       title: 'artroad',
       debugShowCheckedModeBanner: false,
