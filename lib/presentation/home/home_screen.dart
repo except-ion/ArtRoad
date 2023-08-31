@@ -1,6 +1,7 @@
+import 'package:artroad/presentation/home/home_ranking_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:artroad/theme/theme_helper.dart';
-import 'package:card_swiper/card_swiper.dart';
+import 'home_ranking_grid_view.dart';
 
 final List<String> imgList = [
   'assets/images/login_background_image_1.png',
@@ -63,19 +64,9 @@ class HomeScreen extends StatelessWidget {
           SizedBox(
             height: 30,
           ),
-          Container(
-            height: 300, // 스와이퍼의 높이 설정해야함
-            child: Swiper(
-              onTap: (index) => {}, //사진 클릭시 이동
-              autoplay: true,
-              scale: 0.8,
-              viewportFraction: 0.6,
-              itemCount: imgList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Image.asset(imgList[index]);
-              },
-            ),
-          ),
+          HomeRankingSwiper(),
+          SizedBox(height: 40,),
+          HomeRankingGridView(),
         ]),
       ),
     );
