@@ -9,12 +9,17 @@ import 'package:artroad/src/provider/search/concert_provider.dart';
 import 'package:artroad/src/provider/calendar/concert_provider.dart';
 import 'package:artroad/src/provider/search/facility_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk_user.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
+  KakaoSdk.init(
+    nativeAppKey: '66389c442b9dba0350c2d6c94286380a',
+    javaScriptAppKey: '708757a1c33c4ef4738b67842bca34dd'
+    );
 
   initializeDateFormatting().then((_) => runApp(const MyApp()));
 }

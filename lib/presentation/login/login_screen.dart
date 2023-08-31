@@ -1,9 +1,14 @@
 import 'dart:ui';
+import 'dart:convert';
+import 'dart:io';
 
 import 'package:artroad/presentation/basepage_screen/basepage_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:artroad/theme/theme_helper.dart';
 import 'dart:async';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk_user.dart';
+import 'package:http/http.dart' as http;
+import 'package:artroad/src/model/login_platform.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -13,6 +18,55 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  LoginPlatform _loginPlatform = LoginPlatform.none;
+
+  //Kakao login
+  void signInWithKakao() async {
+    try {
+      bool isInstalled = await isKakaoTalkInstalled();
+
+      OAuthToken token = isInstalled
+          ? await UserApi.instance.loginWithKakaoTalk()
+          : await UserApi.instance.loginWithKakaoAccount();
+      print('token: $token');
+
+      final url = Uri.https('kapi.kakao.com', '/v2/user/me');
+
+      final response = await http.get(
+        url,
+        headers: {
+          HttpHeaders.authorizationHeader: 'Bearer ${token.accessToken}'
+        },
+      );
+
+      final profileInfo = json.decode(response.body);
+      print(profileInfo.toString());
+
+      setState(() {
+        _loginPlatform = LoginPlatform.kakao;
+      });
+
+    } catch (error) {
+      print('카카오톡으로 로그인 실패 $error');
+    }
+  }
+
+  void signOut() async {
+    switch (_loginPlatform) {
+      case LoginPlatform.firebase:
+        break;
+      case LoginPlatform.kakao:
+        await UserApi.instance.logout();
+        break;
+      case LoginPlatform.none:
+        break;
+    }
+
+    setState(() {
+      _loginPlatform = LoginPlatform.none;
+    });
+  }
+
   List<String> backgroundImageUrls = [
     'assets/images/login_background_image_1.png',
     'assets/images/login_background_image_2.png',
@@ -90,12 +144,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                 clipBehavior: Clip.none,
                                 children: [
                                   TextFormField(
-                                    style: TextStyle(fontSize: 18),
+                                    style: const TextStyle(fontSize: 18),
                                     decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.only(
+                                      contentPadding: const EdgeInsets.only(
                                           top: 25, left: 20, bottom: 10),
                                       border: OutlineInputBorder(
-                                        borderSide: BorderSide(
+                                        borderSide: const BorderSide(
                                           width: 3,
                                           color: Color(0xFF00233D),
                                         ),
@@ -107,8 +161,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                     top: -9,
                                     left: -13,
                                     child: Transform.translate(
-                                      offset: Offset(30, 0),
-                                      child: Stack(
+                                      offset: const Offset(30, 0),
+                                      child: const Stack(
                                         children: [
                                           SizedBox(
                                             width: 50,
@@ -133,7 +187,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 25,
                               ),
                               Stack(
@@ -141,12 +195,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                 children: [
                                   TextFormField(
                                     obscureText: true,
-                                    style: TextStyle(fontSize: 18),
+                                    style: const TextStyle(fontSize: 18),
                                     decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.only(
+                                      contentPadding: const EdgeInsets.only(
                                           top: 25, left: 20, bottom: 10),
                                       border: OutlineInputBorder(
-                                        borderSide: BorderSide(
+                                        borderSide: const BorderSide(
                                           color: Color(0xFF00233D),
                                         ),
                                         borderRadius: BorderRadius.circular(10),
@@ -157,8 +211,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                     top: -9,
                                     left: -13,
                                     child: Transform.translate(
-                                      offset: Offset(30, 0),
-                                      child: Stack(
+                                      offset: const Offset(30, 0),
+                                      child: const Stack(
                                         children: [
                                           SizedBox(
                                             width: 60,
@@ -191,7 +245,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Row(
                                     children: [
                                       Checkbox(
-                                        activeColor: Color(0xFF00233D),
+                                        activeColor: const Color(0xFF00233D),
                                         value: _isCheckRemember,
                                         onChanged: (value) {
                                           bottomState(() {
@@ -247,7 +301,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               TextButton(
                                 onPressed: () {
                                   Navigator.pop(context); // 다이얼로그 닫기
-                                  //로그인 로직 추가
+                                  signInWithKakao();
+                                  // _kakaoLoginPressed();
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) => BasepageScreen(),
@@ -255,7 +310,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   );
                                 },
                                 style: TextButton.styleFrom(
-                                    textStyle: TextStyle(
+                                    textStyle: const TextStyle(
                                         textBaseline: TextBaseline.alphabetic),
                                     backgroundColor: const Color(0xFFFEE500),
                                     shape: RoundedRectangleBorder(
@@ -273,7 +328,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           child: Image.asset(
                                               'assets/images/login_kakao.png')),
                                     ),
-                                    Text(
+                                    const Text(
                                       '카카오 로그인',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
@@ -360,14 +415,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: TextButton(
                         onPressed: _showLoginDialog,
                         style: TextButton.styleFrom(
-                          backgroundColor: Color(0x5F5E5E5E),
-                          maximumSize: Size(300, 64),
-                          minimumSize: Size(250, 58),
+                          backgroundColor: const Color(0x5F5E5E5E),
+                          maximumSize: const Size(300, 64),
+                          minimumSize: const Size(250, 58),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
                         ),
-                        child: Text(
+                        child: const Text(
                           '시작하기',
                           textAlign: TextAlign.center,
                           style: TextStyle(
