@@ -11,6 +11,7 @@ import 'package:kakao_flutter_sdk/kakao_flutter_sdk_user.dart';
 import 'package:http/http.dart' as http;
 import 'package:artroad/src/model/login_platform.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:artroad/widgets/custom_textformfield.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -121,6 +122,12 @@ class _LoginScreenState extends State<LoginScreen> {
     timer = Timer.periodic(const Duration(seconds: 5), _changeBackground);
   }
 
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
   void _changeBackground(Timer timer) {
     setState(() {
       currentImageIndex = (currentImageIndex + 1) % backgroundImageUrls.length;
@@ -188,105 +195,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                               const SizedBox(height: 46),
-                              Stack(
-                                clipBehavior: Clip.none,
-                                children: [
-                                  TextFormField(
-                                    controller: emailField,
-                                    style: const TextStyle(fontSize: 18),
-                                    decoration: InputDecoration(
-                                      contentPadding: const EdgeInsets.only(
-                                          top: 25, left: 20, bottom: 10),
-                                      border: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          width: 3,
-                                          color: Color(0xFF00233D),
-                                        ),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: -9,
-                                    left: -13,
-                                    child: Transform.translate(
-                                      offset: const Offset(30, 0),
-                                      child: const Stack(
-                                        children: [
-                                          SizedBox(
-                                            width: 50,
-                                            height: 15,
-                                            child: DecoratedBox(
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                              ),
-                                              child: Text(
-                                                '이메일',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    backgroundColor:
-                                                        Colors.white), // ???
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
+                              CustomTextformfield(name: '이메일', isPassword: false,controller: emailField,),
+                              SizedBox(
                                 height: 25,
                               ),
-                              Stack(
-                                clipBehavior: Clip.none,
-                                children: [
-                                  TextFormField(
-                                    controller: pwField,
-                                    obscureText: true,
-                                    style: const TextStyle(fontSize: 18),
-                                    decoration: InputDecoration(
-                                      contentPadding: const EdgeInsets.only(
-                                          top: 25, left: 20, bottom: 10),
-                                      border: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFF00233D),
-                                        ),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: -9,
-                                    left: -13,
-                                    child: Transform.translate(
-                                      offset: const Offset(30, 0),
-                                      child: const Stack(
-                                        children: [
-                                          SizedBox(
-                                            width: 60,
-                                            height: 15,
-                                            child: DecoratedBox(
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                              ),
-                                              child: Text(
-                                                '비밀번호',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    backgroundColor:
-                                                        Colors.white), // ???
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              CustomTextformfield(name: '비밀번호', isPassword: true, controller: pwField,),
                               const SizedBox(height: 17),
                               Row(
                                 mainAxisAlignment:
