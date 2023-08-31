@@ -27,6 +27,8 @@ class _LoginScreenState extends State<LoginScreen> {
     'assets/images/login_background_image_10.png',
     'assets/images/login_background_image_11.png',
   ];
+  final TextEditingController emailField = TextEditingController();
+  final TextEditingController pwField = TextEditingController();
   int currentImageIndex = 0;
   late Timer timer;
   bool _isCheckRemember = false; //아이디 저장 checkbox
@@ -93,11 +95,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                               const SizedBox(height: 46),
-                              CustomTextformfield(name: '이메일', isPassword: false),
+                              CustomTextformfield(
+                                  name: '이메일',
+                                  isPassword: false,
+                                  controller: emailField),
                               SizedBox(
                                 height: 25,
                               ),
-                              CustomTextformfield(name: '비밀번호', isPassword: true), 
+                              CustomTextformfield(
+                                  name: '비밀번호',
+                                  isPassword: true,
+                                  controller: pwField),
                               const SizedBox(height: 17),
                               Row(
                                 mainAxisAlignment:
