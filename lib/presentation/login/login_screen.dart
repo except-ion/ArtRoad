@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:artroad/theme/theme_helper.dart';
 import 'dart:async';
 import 'package:artroad/widgets/custom_textformfield.dart';
+import 'package:artroad/presentation/login/login_forgot_password.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -132,10 +133,24 @@ class _LoginScreenState extends State<LoginScreen> {
                                       const Text('아이디 저장'),
                                     ],
                                   ),
-                                  const Text(
-                                    '비밀번호를 잃어버리셨나요?',
-                                    style: TextStyle(color: Colors.blue),
-                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              LoginForgotPasswordScreen(),
+                                        ),
+                                      );
+                                    },
+                                    style: TextButton.styleFrom(
+                                      textStyle: TextStyle(
+                                        decoration: TextDecoration.underline,
+                                        color: Colors.blue,
+                                      ),
+                                    ),
+                                    child: Text('비밀번호를 잃어버리셨나요?'),
+                                  )
                                 ],
                               ),
                               const SizedBox(height: 25),
