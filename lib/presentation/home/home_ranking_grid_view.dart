@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:artroad/presentation/home/home_ranking_items_tile.dart';
 
 class HomeRankingGridView extends StatelessWidget {
+  final int selectedCategoryIndex; // 선택된 칩의 인덱스를 받을 변수
+
+  HomeRankingGridView({Key? key, required this.selectedCategoryIndex})
+      : super(key: key);
+
   final List<RankingItems> rankingList = [
     RankingItems(
         mt20id: "aaa",
@@ -50,8 +55,11 @@ class HomeRankingGridView extends StatelessWidget {
         poster: "assets/images/poster_example2.jpg",
         rnum: "9"),
   ];
+
   @override
   Widget build(BuildContext context) {
+    print(selectedCategoryIndex);
+    //선택된 칩에 따라 api 불러오는 함수 추가하면 됨
     return Padding(
       padding: EdgeInsets.all(10),
       child: SizedBox(

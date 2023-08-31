@@ -16,12 +16,32 @@ final List<String> imgList = [
   'assets/images/login_background_image_10.png',
 ];
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+int _selectedCategoryIndex = 0;
+
+class _HomeScreenState extends State<HomeScreen> {
+  final List<String> cateList = [
+    '연극',
+    '뮤지컬',
+    '클래식',
+    '국악',
+    '대중음악',
+    '무용',
+    '대중무용',
+    '서커스/마술',
+    '복합',
+    '아동',
+  ];
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Padding(
@@ -65,10 +85,62 @@ class HomeScreen extends StatelessWidget {
             height: 30,
           ),
           HomeRankingSwiper(),
-          SizedBox(height: 40,),
-          HomeRankingGridView(),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            '분야별 랭킹',
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 8.0,
+              children: _buildCategoryChips(),
+            ),
+          ),
+          HomeRankingGridView(selectedCategoryIndex: _selectedCategoryIndex),
         ]),
       ),
     );
+  }
+
+  List<Widget> _buildCategoryChips() {
+    return List<Widget>.generate(
+      cateList.length,
+      (index) => ChoiceChip(
+        selectedColor: Color(0xFF176FF2),
+        selectedShadowColor: Colors.white,
+        backgroundColor: _selectedCategoryIndex == index
+            ? Color(0xFF176FF2) // 선택된 경우 파란색 배경색
+            : Colors.white, // 선택되지 않은 경우 투명 배경색
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+              color: _selectedCategoryIndex == index
+                  ? Colors.transparent // 선택된 경우 테두리 없음
+                  : Color(0xFFC7C7CC), // 선택되지 않은 경우 기본 테마 테두리 색
+              width: 0.5),
+          borderRadius: BorderRadius.circular(30),
+        ),
+        label: Text(
+          cateList[index],
+          style: TextStyle(
+            color: _selectedCategoryIndex == index
+                ? Colors.white // 선택된 경우 흰색 글자색
+                : Theme.of(context).primaryColor, // 선택되지 않은 경우 기본 테마 글자색
+          ),
+        ),
+        selected: _selectedCategoryIndex == index,
+        onSelected: (selected) {
+          setState(() {
+            _selectedCategoryIndex = selected ? index : 0;
+          });
+        },
+      ),
+    ).toList();
   }
 }
