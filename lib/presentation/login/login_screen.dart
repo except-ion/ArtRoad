@@ -2,11 +2,11 @@ import 'dart:ui';
 
 import 'package:artroad/presentation/basepage_screen/basepage_screen.dart';
 import 'package:artroad/presentation/signup/signup_screen.dart';
+import 'package:artroad/widgets/custom_button_main_color.dart';
 import 'package:flutter/material.dart';
 import 'package:artroad/theme/theme_helper.dart';
 import 'dart:async';
 import 'package:artroad/widgets/custom_textformfield.dart';
-import 'package:flutter/gestures.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -139,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ],
                               ),
                               const SizedBox(height: 25),
-                              TextButton(
+                              CustomButtonMainColor(
                                 onPressed: () {
                                   Navigator.pop(context); // 다이얼로그 닫기
                                   //로그인 로직 추가
@@ -152,21 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                                   print('로그인 성공');
                                 },
-                                style: TextButton.styleFrom(
-                                    backgroundColor: const Color(0xFF00233D),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    minimumSize: const Size(350, 50)),
-                                child: const Text(
-                                  '로그인',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
+                                text: '로그인',
                               ),
                               const SizedBox(height: 25),
                               TextButton(
