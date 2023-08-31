@@ -19,6 +19,7 @@ class RestaurantListView extends StatelessWidget {
         Flexible(
           child: ListView.separated(
             shrinkWrap : true,
+            physics: const NeverScrollableScrollPhysics(),
             padding: const EdgeInsets.all(20),
             itemCount: restaurantList.length,
             itemBuilder: (context, index) {
