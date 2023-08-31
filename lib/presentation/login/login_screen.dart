@@ -1,10 +1,12 @@
 import 'dart:ui';
 
 import 'package:artroad/presentation/basepage_screen/basepage_screen.dart';
+import 'package:artroad/presentation/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:artroad/theme/theme_helper.dart';
 import 'dart:async';
 import 'package:artroad/widgets/custom_textformfield.dart';
+import 'package:flutter/gestures.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -211,17 +213,27 @@ class _LoginScreenState extends State<LoginScreen> {
                               const SizedBox(
                                 height: 25,
                               ),
-                              const Row(
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text('기존 회원이 아니신가요?'),
-                                  Text(
-                                    '회원가입',
-                                    style: TextStyle(
-                                      decoration: TextDecoration.underline,
-                                      color: Colors.blue,
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => SignupScreen(),
+                                        ),
+                                      );
+                                    },
+                                    style: TextButton.styleFrom(
+                                      textStyle: TextStyle(
+                                        decoration: TextDecoration.underline,
+                                        color: Colors.blue,
+                                      ),
                                     ),
-                                  ),
+                                    child: Text('회원가입'),
+                                  )
                                 ],
                               )
                             ],
