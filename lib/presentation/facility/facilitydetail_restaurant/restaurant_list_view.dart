@@ -1,6 +1,6 @@
 import 'package:artroad/presentation/facility/facilitydetail_restaurant/restaurant_items.dart';
 import 'package:artroad/presentation/facility/facilitydetail_restaurant/restaurant_items_tile.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 
 class RestaurantListView extends StatelessWidget {
@@ -14,11 +14,11 @@ class RestaurantListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize :MainAxisSize.min,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Flexible(
           child: ListView.separated(
-            shrinkWrap : true,
+            shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             padding: const EdgeInsets.all(20),
             itemCount: restaurantList.length,

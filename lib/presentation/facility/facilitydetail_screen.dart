@@ -1,8 +1,6 @@
 import 'package:artroad/core/app_export.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'facilitydetail_accommodation/accommodation_list_view.dart';
 import 'facilitydetail_info_icons.dart';
 import 'facilitydetail_restaurant/restaurant_list_view.dart';
@@ -23,7 +21,6 @@ class _FacilityDetailScreen extends State<FacilityDetailScreen> {
     return SingleChildScrollView(
       child: Column(
         children: [
-
           // --- 지도 ---
 
           Padding(
@@ -51,9 +48,7 @@ class _FacilityDetailScreen extends State<FacilityDetailScreen> {
                       color: Color(0xFF939191),
                       size: 20,
                     ),
-
                     SizedBox(width: 5),
-
                     Text(
                       '서울 서초구 남부순환로 2406',
                       style: TextStyle(
@@ -61,13 +56,12 @@ class _FacilityDetailScreen extends State<FacilityDetailScreen> {
                         color: Color(0xFF939191),
                       ),
                     ),
-
                     SizedBox(width: 5),
-
                     InkWell(
                       onTap: () {
                         // 텍스트 복사 로직 구현
-                        Clipboard.setData(ClipboardData(text: '서울 서초구 남부순환로 2406'));
+                        Clipboard.setData(
+                            ClipboardData(text: '서울 서초구 남부순환로 2406'));
                         // 복사 완료 메시지 표시 등의 로직 추가 가능
                         print('adress copy bt');
                       },
@@ -79,9 +73,7 @@ class _FacilityDetailScreen extends State<FacilityDetailScreen> {
                     ),
                   ],
                 ),
-
                 SizedBox(height: 7),
-
                 Row(
                   children: [
                     Icon(
@@ -89,9 +81,7 @@ class _FacilityDetailScreen extends State<FacilityDetailScreen> {
                       color: Color(0xFF939191),
                       size: 20,
                     ),
-
                     SizedBox(width: 5),
-
                     Text(
                       '1668-1352',
                       style: TextStyle(
@@ -99,9 +89,7 @@ class _FacilityDetailScreen extends State<FacilityDetailScreen> {
                         color: Color(0xFF939191),
                       ),
                     ),
-
                     SizedBox(width: 5),
-
                     InkWell(
                       onTap: () {
                         // 텍스트 복사 로직 구현
@@ -117,9 +105,7 @@ class _FacilityDetailScreen extends State<FacilityDetailScreen> {
                     ),
                   ],
                 ),
-
                 SizedBox(height: 7),
-
                 Row(
                   children: [
                     Icon(
@@ -127,9 +113,7 @@ class _FacilityDetailScreen extends State<FacilityDetailScreen> {
                       color: Color(0xFF939191),
                       size: 20,
                     ),
-
                     SizedBox(width: 5),
-
                     Text(
                       '사이트 링크 없음',
                       style: TextStyle(
@@ -159,7 +143,6 @@ class _FacilityDetailScreen extends State<FacilityDetailScreen> {
                   ),
                 ),
               ),
-
               Padding(
                 padding: getPadding(top: 0, bottom: 30, left: 40, right: 40),
                 child: FacilityDetailInfoIcons(),
@@ -191,15 +174,23 @@ class _FacilityDetailScreen extends State<FacilityDetailScreen> {
                           padding: EdgeInsets.only(bottom: 11),
                           decoration: BoxDecoration(
                             border: isRestaurantSelected
-                                ? Border(bottom: BorderSide(width: 3.5, color: Colors.black))
-                                : Border(bottom: BorderSide(width: 1.5, color: Color(0xFFC7C7CC))),
+                                ? Border(
+                                    bottom: BorderSide(
+                                        width: 3.5, color: Colors.black))
+                                : Border(
+                                    bottom: BorderSide(
+                                        width: 1.5, color: Color(0xFFC7C7CC))),
                           ),
                           child: Text(
                             '맛집',
                             style: TextStyle(
                               fontSize: 18,
-                              fontWeight: isRestaurantSelected ? FontWeight.bold : FontWeight.normal,
-                              color: isRestaurantSelected ? Colors.black : Color(0xFF939191),
+                              fontWeight: isRestaurantSelected
+                                  ? FontWeight.bold
+                                  : FontWeight.normal,
+                              color: isRestaurantSelected
+                                  ? Colors.black
+                                  : Color(0xFF939191),
                             ),
                           ),
                         ),
@@ -218,29 +209,33 @@ class _FacilityDetailScreen extends State<FacilityDetailScreen> {
                           padding: EdgeInsets.only(bottom: 11),
                           decoration: BoxDecoration(
                             border: isAccommodationSelected
-                                ? Border(bottom: BorderSide(width: 3.5, color: Colors.black))
-                                : Border(bottom: BorderSide(width: 1.5, color: Color(0xFFC7C7CC))),
+                                ? Border(
+                                    bottom: BorderSide(
+                                        width: 3.5, color: Colors.black))
+                                : Border(
+                                    bottom: BorderSide(
+                                        width: 1.5, color: Color(0xFFC7C7CC))),
                           ),
                           child: Text(
                             '숙소',
                             style: TextStyle(
                               fontSize: 18,
-                              fontWeight: isAccommodationSelected ? FontWeight.bold : FontWeight.normal,
-                              color: isAccommodationSelected ? Colors.black : Color(0xFF939191),
+                              fontWeight: isAccommodationSelected
+                                  ? FontWeight.bold
+                                  : FontWeight.normal,
+                              color: isAccommodationSelected
+                                  ? Colors.black
+                                  : Color(0xFF939191),
                             ),
                           ),
                         ),
                       ),
                     ],
                   ),
-                  if (isRestaurantSelected)
-                    RestaurantListView(),
-
-                  if(isAccommodationSelected)
-                    AccommodationListView(),
+                  if (isRestaurantSelected) RestaurantListView(),
+                  if (isAccommodationSelected) AccommodationListView(),
                 ],
-              )
-          ),
+              )),
         ],
       ),
     );
