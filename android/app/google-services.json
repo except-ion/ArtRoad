@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "390392529696",
+    "project_id": "artroad-4373d",
+    "storage_bucket": "artroad-4373d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:390392529696:android:4abcc582151d8f8f8b4d45",
+        "android_client_info": {
+          "package_name": "com.example.artroad"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "390392529696-ajt4g4764usoqr747lojoomt5315rnci.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBn3SoCd5obed_6ysC9MnQIgyAPpvpIkss"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "390392529696-ajt4g4764usoqr747lojoomt5315rnci.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

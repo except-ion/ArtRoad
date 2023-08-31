@@ -3,12 +3,14 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:artroad/presentation/basepage_screen/basepage_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:artroad/theme/theme_helper.dart';
 import 'dart:async';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk_user.dart';
 import 'package:http/http.dart' as http;
 import 'package:artroad/src/model/login_platform.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -19,6 +21,11 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   LoginPlatform _loginPlatform = LoginPlatform.none;
+  TextEditingController emailField = TextEditingController();
+  TextEditingController pwField = TextEditingController();
+
+  //firebase login
+  final _auth = FirebaseAuth.instance;
 
   //Kakao login
   void signInWithKakao() async {
@@ -67,6 +74,30 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
+  //firebase sign-up
+  void signUpWithFirebase(String email, String pw) async {
+    try {
+      print('signinfirebase, $email, $pw');
+      final credential = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: pw,
+      );
+
+    if (credential.user != null) {
+      await FirebaseFirestore.instance
+          .collection('user')
+          .doc(credential.user!.uid)
+          .set({
+            // 'userName': name,
+            'email': email,
+      });
+    }
+  } on FirebaseAuthException catch (e) {
+    print(e.message);
+  } catch (e) {
+      print(e);
+  }
+}
   List<String> backgroundImageUrls = [
     'assets/images/login_background_image_1.png',
     'assets/images/login_background_image_2.png',
@@ -97,6 +128,23 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _showLoginDialog() {
+    showDialog<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Error'),
+        content: const Text('Please enter an email.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context); // Close the dialog
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      );
+    },
+  );
     //로그인 창
     showModalBottomSheet<void>(
       backgroundColor: Colors.white,
@@ -144,6 +192,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 clipBehavior: Clip.none,
                                 children: [
                                   TextFormField(
+                                    controller: emailField,
                                     style: const TextStyle(fontSize: 18),
                                     decoration: InputDecoration(
                                       contentPadding: const EdgeInsets.only(
@@ -194,6 +243,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 clipBehavior: Clip.none,
                                 children: [
                                   TextFormField(
+                                    controller: pwField,
                                     obscureText: true,
                                     style: const TextStyle(fontSize: 18),
                                     decoration: InputDecoration(
@@ -272,13 +322,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                 onPressed: () {
                                   Navigator.pop(context); // 다이얼로그 닫기
                                   //로그인 로직 추가
+                                  String email = emailField.text;
+                                  String pw = pwField.text;
+                                  signUpWithFirebase(email, pw);
+                    
                                   // 로그인 성공 후 페이지 이동
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) => BasepageScreen(),
                                     ),
                                   );
-
+                                  print('emailField: ${emailField.text}');
+                                  print('pwField: ${pwField.text}');
                                   print('로그인 성공');
                                 },
                                 style: TextButton.styleFrom(
