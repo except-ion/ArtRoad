@@ -2,16 +2,20 @@ import 'package:artroad/core/app_export.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MyCalendarBottom extends StatefulWidget {
+class mCalendarDialog extends StatefulWidget {
   final DateTime selectedDay; // 선택된 날짜를 인자로 받도록 수정
 
-  MyCalendarBottom({required this.selectedDay});
+  mCalendarDialog({required this.selectedDay});
+
+  get alarm => alarm;
+
+  get colors => colors;
 
   @override
-  _MyCalendarBottom createState() => _MyCalendarBottom();
+  _mCalendarDialog createState() => _mCalendarDialog();
 }
 
-class _MyCalendarBottom extends State<MyCalendarBottom> {
+class _mCalendarDialog extends State<mCalendarDialog> {
 
   void _showScheduleDialog() {
     showModalBottomSheet<void>(
@@ -24,7 +28,16 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
         ),
       ),
       builder: (BuildContext context) {
-        String selectedValue = '이벤트 당일 자정';
+        List<bool> aToggledList = [false, true, false, false, false,];
+        List<String> alarm = [
+          '없음',
+          '이벤트 당일 자정',
+          '1일 전',
+          '2일 전',
+          '1주일 전',
+        ];
+        String selectedAlarm = alarm[1]; // 초기 선택 값
+
         List<bool> isToggledList = [false, false, false, false, true, false, false];
         List<Color> colors = [
           Colors.red,
@@ -108,27 +121,27 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
                             children: [
                               Expanded(
                                 flex: 6,
-                                  child: Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Padding(
-                                      padding: getPadding(left: 10),
-                                      child: TextFormField(
-                                        cursorColor: Colors.black,
-                                        cursorWidth: 1.5,
-                                        showCursor: true,
+                                child: Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Padding(
+                                    padding: getPadding(left: 10),
+                                    child: TextFormField(
+                                      cursorColor: Colors.black,
+                                      cursorWidth: 1.5,
+                                      showCursor: true,
 
-                                        style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 30,
-                                            fontWeight: FontWeight.w700,
-                                        ),
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.w700,
+                                      ),
 
-                                        decoration: const InputDecoration(
-                                          border: InputBorder.none,
-                                        ),
+                                      decoration: const InputDecoration(
+                                        border: InputBorder.none,
                                       ),
                                     ),
                                   ),
+                                ),
                               ),
                               Expanded(
                                 flex: 1,
@@ -201,63 +214,63 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
                                                   mainAxisAlignment: MainAxisAlignment.center,
                                                   children: [
                                                     InkWell(
-                                                      onTap: () {
-                                                        // 클릭 이벤트에 따른 로직 작성
-                                                      },
-                                                      child: Container(
-                                                        decoration: BoxDecoration(
-                                                          color: Color(0xFFC7C7CC), // 배경색
-                                                          borderRadius: BorderRadius.circular(30),
-                                                          boxShadow: [
-                                                            BoxShadow(
-                                                              color: Colors.black.withOpacity(0.2), // 그림자 색상
-                                                              spreadRadius: 1, // 그림자 확산 범위
-                                                              blurRadius: 2, // 그림자 흐림 정도
-                                                              offset: Offset(0, 3), // 그림자 위치 (x, y)
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                                                        child: Text(
-                                                          '취소',
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 16,
-                                                            fontWeight: FontWeight.bold,
+                                                        onTap: () {
+                                                          // 클릭 이벤트에 따른 로직 작성
+                                                        },
+                                                        child: Container(
+                                                          decoration: BoxDecoration(
+                                                            color: Color(0xFFC7C7CC), // 배경색
+                                                            borderRadius: BorderRadius.circular(30),
+                                                            boxShadow: [
+                                                              BoxShadow(
+                                                                color: Colors.black.withOpacity(0.2), // 그림자 색상
+                                                                spreadRadius: 1, // 그림자 확산 범위
+                                                                blurRadius: 2, // 그림자 흐림 정도
+                                                                offset: Offset(0, 3), // 그림자 위치 (x, y)
+                                                              ),
+                                                            ],
                                                           ),
-                                                        ),
-                                                      )
+                                                          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                                                          child: Text(
+                                                            '취소',
+                                                            style: TextStyle(
+                                                              color: Colors.white,
+                                                              fontSize: 16,
+                                                              fontWeight: FontWeight.bold,
+                                                            ),
+                                                          ),
+                                                        )
                                                     ),
 
                                                     SizedBox(width: 10),
 
                                                     InkWell(
-                                                      onTap: () {
-                                                        // 클릭 이벤트에 따른 로직 작성
-                                                      },
-                                                      child: Container(
-                                                        decoration: BoxDecoration(
-                                                          color: Color(0xFF176FF2), // 배경색
-                                                          borderRadius: BorderRadius.circular(30),
-                                                          boxShadow: [
-                                                            BoxShadow(
-                                                              color: Colors.black.withOpacity(0.2), // 그림자 색상
-                                                              spreadRadius: 1, // 그림자 확산 범위
-                                                              blurRadius: 2, // 그림자 흐림 정도
-                                                              offset: Offset(0, 3), // 그림자 위치 (x, y)
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                                                        child: Text(
-                                                          '확인',
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 16,
-                                                            fontWeight: FontWeight.bold,
+                                                        onTap: () {
+                                                          // 클릭 이벤트에 따른 로직 작성
+                                                        },
+                                                        child: Container(
+                                                          decoration: BoxDecoration(
+                                                            color: Color(0xFF176FF2), // 배경색
+                                                            borderRadius: BorderRadius.circular(30),
+                                                            boxShadow: [
+                                                              BoxShadow(
+                                                                color: Colors.black.withOpacity(0.2), // 그림자 색상
+                                                                spreadRadius: 1, // 그림자 확산 범위
+                                                                blurRadius: 2, // 그림자 흐림 정도
+                                                                offset: Offset(0, 3), // 그림자 위치 (x, y)
+                                                              ),
+                                                            ],
                                                           ),
-                                                        ),
-                                                      )
+                                                          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                                                          child: Text(
+                                                            '확인',
+                                                            style: TextStyle(
+                                                              color: Colors.white,
+                                                              fontSize: 16,
+                                                              fontWeight: FontWeight.bold,
+                                                            ),
+                                                          ),
+                                                        )
                                                     ),
                                                   ],
                                                 ),
@@ -354,13 +367,18 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
                                   child: Padding(
                                     padding: getPadding(left: 8),
                                     child: DropdownButton<String>(
-                                      value: selectedValue, // 현재 선택된 값
+                                      value: selectedAlarm,
                                       onChanged: (String? newValue) {
-                                        bottomState(() { // bottomState를 사용하여 상태를 업데이트합니다
+                                        bottomState(() {
                                           setState(() {
-                                            selectedValue = newValue!;
-                                            print("alarm option : " + selectedValue);
-                                          }); // 선택된 값을 업데이트
+                                            selectedAlarm = newValue!;
+                                            print("alarm option : " + aToggledList.toString());
+
+                                            // 선택된 값에 따라 aToggledList 업데이트
+                                            for (int i = 0; i < alarm.length; i++) {
+                                              aToggledList[i] = alarm[i] == selectedAlarm;
+                                            }
+                                          });
                                         });
                                       },
                                       underline: SizedBox(), // 밑줄 제거
@@ -368,13 +386,7 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
                                         padding: EdgeInsets.only(left: 25), // 아이콘 왼쪽 패딩 설정
                                         child: Icon(Icons.arrow_drop_down),
                                       ), // 드롭다운 아이콘
-                                      items: <String>[
-                                        '없음',
-                                        '이벤트 당일 자정',
-                                        '1일 전',
-                                        '2일 전',
-                                        '1주일 전',
-                                      ].map<DropdownMenuItem<String>>((String value) {
+                                      items: alarm.map<DropdownMenuItem<String>>((String value) {
                                         return DropdownMenuItem<String>(
                                           value: value,
                                           child: Text(
@@ -466,60 +478,32 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
       children: [
-        Stack(
-          children: [
-            Padding(
-              padding: getPadding(top: 20, left: 11),
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  '${widget.selectedDay.month}/${widget.selectedDay.day} (${_getDayOfWeek(widget.selectedDay)})',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                    height: 1,
-                    letterSpacing: -0.36,
-                  ),
+        InkWell(
+          onTap: () {
+            _showScheduleDialog();
+          },
+          child: Stack(
+            children: [
+              Icon(
+                Icons.circle,
+                color: Color(0xFF176FF2),
+                size: 50,
+              ),
+              Positioned(
+                top: 10,
+                left: 10,
+                child: Icon(
+                  Icons.add_rounded,
+                  color: Colors.white,
+                  size: 30,
                 ),
               ),
-            ),
-            Padding(
-              padding: getPadding(top: 3),
-              child: Align(
-                  alignment: Alignment.topRight,
-                  child: Container(
-                    child: InkWell(
-                      onTap: () {
-                        _showScheduleDialog();
-                      },
-                      child: Stack(
-                        children: [
-                          Icon(
-                            Icons.circle,
-                            color: Color(0xFF176FF2),
-                            size: 60,
-                          ),
-                          Positioned(
-                            top: 10,
-                            left: 10,
-                            child: Icon(
-                              Icons.add_rounded,
-                              color: Colors.white,
-                              size: 40,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ]
+      ],
     );
   }
 
