@@ -39,7 +39,7 @@ class _RankingItemsTileState extends State<RankingItemsTile> {
                 width: 200,
                 height: 270,
                 fit: BoxFit.fitWidth,
-                //아래는 z
+                //아래는 network로 수정할 때 true로 바꾸기
                 // loadingBuilder: (context, child, loadingProgress) {
                 //   if (loadingProgress == null) {
                 //     _updateImageLoading(false);
