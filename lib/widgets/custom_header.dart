@@ -1,9 +1,30 @@
 import 'package:flutter/material.dart';
 
-class CustomHeader extends StatelessWidget {
+class CustomHeader extends StatefulWidget {
   final String? name;
+  final bool hasLiked;
 
-  const CustomHeader({Key? key, this.name});
+  const CustomHeader({Key? key, this.name, this.hasLiked = false});
+
+  @override
+  _CustomHeaderState createState() => _CustomHeaderState();
+}
+
+class _CustomHeaderState extends State<CustomHeader> {
+  bool isLiked = false;
+
+  @override
+  void initState() {
+    super.initState();
+    isLiked = widget.hasLiked;
+  }
+
+  //좋아요 클릭 유무
+  void toggleLiked() {
+    setState(() {
+      isLiked = !isLiked;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,10 +32,10 @@ class CustomHeader extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.only(top: 50, left: 15, right: 15, bottom: 5),
         child: Stack(
-          alignment: Alignment.center, // 중앙 정렬
+          alignment: Alignment.center,
           children: [
             Align(
-              alignment: Alignment.topLeft, // 상단 좌측 정렬
+              alignment: Alignment.topLeft,
               child: Transform.scale(
                 scale: 1.5,
                 child: IconButton(
@@ -23,19 +44,41 @@ class CustomHeader extends StatelessWidget {
                     color: Color(0xFF00233D),
                   ),
                   onPressed: () {
-                    Navigator.pop(context); // 기본적으로 뒤로가기 기능 실행
+                    Navigator.pop(context);
                   },
                 ),
               ),
             ),
-            if (name != null)
+            if (widget.name != null)
               Text(
-                name!,
+                widget.name!,
                 style: TextStyle(
                   color: Color(0xFF00233D),
                   fontSize: 21,
                 ),
                 textAlign: TextAlign.center,
+              ),
+            if (widget.hasLiked)
+              Positioned(
+                right: 0,
+                top: 0,
+                child: Transform.scale(
+                  scale: 1.5,
+                  child: IconButton(
+                    icon: isLiked
+                        ? Icon(
+                            //좋아요 클릭 전
+                            Icons.favorite_border,
+                            color: Colors.grey,
+                          )
+                        : Icon(
+                            //좋아요 클릭 후
+                            Icons.favorite,
+                            color: Colors.red,
+                          ),
+                    onPressed: toggleLiked,
+                  ),
+                ),
               ),
           ],
         ),

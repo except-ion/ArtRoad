@@ -34,11 +34,7 @@ class _SignupScreenState extends State<SignupScreen> {
               height: 50,
             ),
             Padding(
-              padding: EdgeInsets.only(
-                left: 40,
-                right: 40,
-                bottom: 30
-              ),
+              padding: EdgeInsets.only(left: 40, right: 40, bottom: 30),
               child: Column(
                 children: [
                   CustomTextformfield(
