@@ -1,7 +1,7 @@
 //오픈 api를 통해 데이터 가져오기
 //search에서 공연으로 검색했을 경우 사용
 import 'dart:convert' as convert;
-import 'package:artroad/src/model/ranking.dart';
+import 'package:artroad/presentation/home/home_ranking_items.dart';
 import 'package:http/http.dart' as http;
 import 'package:xml2json/xml2json.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -9,13 +9,13 @@ import 'package:intl/intl.dart';
 
 class RankingRepository {
 
-  Future<List<Ranking>?> loadRankings() async {
+  Future<List<RankingItems>?> loadRankings() async {
     await dotenv.load();
     DateTime now = DateTime.now();
     String currentDate = DateFormat('yyyyMMdd').format(now);
     List<String> catecodeList = ["", "AAAA", "GGGA", "CCCD", "CCCA"];
     String apiKey = dotenv.env['API_KEY']!;
-    List<Ranking> rankings = [];
+    List<RankingItems> rankings = [];
     for(String catecode in catecodeList){
       String baseUrl =
           "http://kopis.or.kr/openApi/restful/boxoffice?service=$apiKey&ststype=month&date=$currentDate&catecode=$catecode";
@@ -37,7 +37,7 @@ class RankingRepository {
         if (jsonRanking != null) {
           List<dynamic> items = jsonRanking as List;
           int itemCount = items.length < 10 ? items.length : 10;
-          rankings.addAll(items.sublist(0, itemCount).map<Ranking>((item) => Ranking.fromJson(item)));
+          rankings.addAll(items.sublist(0, itemCount).map<RankingItems>((item) => RankingItems.fromJson(item)));
       } else{
         print(response);
       }

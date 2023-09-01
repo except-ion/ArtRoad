@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:artroad/src/model/ranking.dart';
+import 'package:artroad/presentation/home/home_ranking_items.dart';
 import 'package:artroad/src/provider/ranking_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -9,7 +9,7 @@ class RankingPage extends StatelessWidget {
 
   RankingPage({super.key}); 
 
-  Widget _makeRankingOne(Ranking ranking) {
+  Widget _makeRankingOne(RankingItems rankingItems) {
     return Row(
       children: [
         Expanded(
@@ -19,21 +19,21 @@ class RankingPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                ranking.mt20id.toString(),
+                rankingItems.mt20id.toString(),
                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
               
                Text(
-                ranking.cate.toString(),
+                rankingItems.cate.toString(),
                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
 
                Text(
-                ranking.poster.toString(),
+                rankingItems.poster.toString(),
                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
               Text(
-                ranking.rnum.toString(),
+                rankingItems.rnum.toString(),
                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
             ],
@@ -43,7 +43,7 @@ class RankingPage extends StatelessWidget {
     );
   }
 
-  Widget _makeListView(List<Ranking> rankings) {
+  Widget _makeListView(List<RankingItems> rankings) {
     return ListView.separated(
       itemCount: rankings.length,
       itemBuilder: (BuildContext context, int index) {
