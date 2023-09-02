@@ -77,30 +77,6 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
-  //firebase sign-up
-  void signUpWithFirebase(String email, String pw) async {
-    try {
-      print('signinfirebase, $email, $pw');
-      final credential = await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: pw,
-      );
-
-    if (credential.user != null) {
-      await FirebaseFirestore.instance
-          .collection('user')
-          .doc(credential.user!.uid)
-          .set({
-            // 'userName': name,
-            'email': email,
-      });
-    }
-  } on FirebaseAuthException catch (e) {
-    print(e.message);
-  } catch (e) {
-      print(e);
-  }
-}
   List<String> backgroundImageUrls = [
     'assets/images/login_background_image_1.png',
     'assets/images/login_background_image_2.png',
@@ -258,9 +234,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 onPressed: () {
                                   Navigator.pop(context); // 다이얼로그 닫기
                                   //로그인 로직 추가
-                                  String email = emailField.text;
-                                  String pw = pwField.text;
-                                  signUpWithFirebase(email, pw);
                     
                                   // 로그인 성공 후 페이지 이동
                                   Navigator.of(context).push(
