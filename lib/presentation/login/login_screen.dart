@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:artroad/presentation/basepage_screen/basepage_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +11,9 @@ import 'package:http/http.dart' as http;
 import 'package:artroad/src/model/login_platform.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:artroad/widgets/custom_textformfield.dart';
+import 'package:artroad/presentation/signup/signup_screen.dart';
+import 'package:artroad/widgets/custom_button_main_color.dart';
+import 'package:artroad/presentation/login/login_forgot_password.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -112,6 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
     'assets/images/login_background_image_10.png',
     'assets/images/login_background_image_11.png',
   ];
+
   int currentImageIndex = 0;
   late Timer timer;
   bool _isCheckRemember = false; //아이디 저장 checkbox
@@ -195,11 +198,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                               const SizedBox(height: 46),
-                              CustomTextformfield(name: '이메일', isPassword: false,controller: emailField,),
-                              SizedBox(
+                              CustomTextformfield(
+                                  name: '이메일',
+                                  isPassword: false,
+                                  controller: emailField),
+                              const SizedBox(
                                 height: 25,
                               ),
-                              CustomTextformfield(name: '비밀번호', isPassword: true, controller: pwField,),
+                              CustomTextformfield(
+                                  name: '비밀번호',
+                                  isPassword: true,
+                                  controller: pwField),
                               const SizedBox(height: 17),
                               Row(
                                 mainAxisAlignment:
@@ -224,14 +233,28 @@ class _LoginScreenState extends State<LoginScreen> {
                                       const Text('아이디 저장'),
                                     ],
                                   ),
-                                  const Text(
-                                    '비밀번호를 잃어버리셨나요?',
-                                    style: TextStyle(color: Colors.blue),
-                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const LoginForgotPasswordScreen(),
+                                        ),
+                                      );
+                                    },
+                                    style: TextButton.styleFrom(
+                                      textStyle: const TextStyle(
+                                        decoration: TextDecoration.underline,
+                                        color: Colors.blue,
+                                      ),
+                                    ),
+                                    child: const Text('비밀번호를 잃어버리셨나요?'),
+                                  )
                                 ],
                               ),
                               const SizedBox(height: 25),
-                              TextButton(
+                              CustomButtonMainColor(
                                 onPressed: () {
                                   Navigator.pop(context); // 다이얼로그 닫기
                                   //로그인 로직 추가
@@ -249,21 +272,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   print('pwField: ${pwField.text}');
                                   print('로그인 성공');
                                 },
-                                style: TextButton.styleFrom(
-                                    backgroundColor: const Color(0xFF00233D),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    minimumSize: const Size(350, 50)),
-                                child: const Text(
-                                  '로그인',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
+                                text: '로그인',
                               ),
                               const SizedBox(height: 25),
                               TextButton(
@@ -311,17 +320,27 @@ class _LoginScreenState extends State<LoginScreen> {
                               const SizedBox(
                                 height: 25,
                               ),
-                              const Row(
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text('기존 회원이 아니신가요?'),
-                                  Text(
-                                    '회원가입',
-                                    style: TextStyle(
-                                      decoration: TextDecoration.underline,
-                                      color: Colors.blue,
+                                  const Text('기존 회원이 아니신가요?'),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => const SignupScreen(),
+                                        ),
+                                      );
+                                    },
+                                    style: TextButton.styleFrom(
+                                      textStyle: const TextStyle(
+                                        decoration: TextDecoration.underline,
+                                        color: Colors.blue,
+                                      ),
                                     ),
-                                  ),
+                                    child: const Text('회원가입'),
+                                  )
                                 ],
                               )
                             ],

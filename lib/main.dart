@@ -49,12 +49,13 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         theme: ThemeData(
           visualDensity: VisualDensity.standard,
+          scaffoldBackgroundColor: Colors.white,
         ),
         title: 'artroad',
         debugShowCheckedModeBanner: false,
         initialRoute: AppRoutes.loginScreen,
         routes: AppRoutes.routes,
-      ),
+      )
     );
   }
 }

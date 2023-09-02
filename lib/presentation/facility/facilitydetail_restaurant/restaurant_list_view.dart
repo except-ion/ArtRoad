@@ -58,11 +58,11 @@ class _RestaurantListViewState extends State<RestaurantListView> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize :MainAxisSize.min,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Flexible(
           child: ListView.separated(
-            shrinkWrap : true,
+            shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             padding: const EdgeInsets.all(20),
             itemCount: restaurantList.length,
