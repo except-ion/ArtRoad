@@ -59,15 +59,18 @@ class _CustomHeaderState extends State<CustomHeader> {
                   ),
                 ),
                 if (widget.name != null)
-                  Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      widget.name!,
-                      style: TextStyle(
-                        color: widget.isDetail ? Colors.white : Colors.black,
-                        fontSize: 21,
+                  Positioned(
+                    top: 14,
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: Text(
+                        widget.name!,
+                        style: TextStyle(
+                          color: widget.isDetail ? Colors.white : Colors.black,
+                          fontSize: 21,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
                     ),
                   ),
                 if (widget.hasLiked)
