@@ -1,17 +1,59 @@
-import 'package:artroad/presentation/facility/facilitydetail_restaurant/restaurant_items.dart';
-import 'package:artroad/presentation/facility/facilitydetail_restaurant/restaurant_items_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'restaurant_items.dart';
+import 'restaurant_items_tile.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
-class RestaurantListView extends StatelessWidget {
-  final List<RestaurantItems> restaurantList = [
-    RestaurantItems("Restaurant 1", "Type 1", "Address 1", 100, "111-1111"),
-    RestaurantItems("Restaurant 2", "Type 2", "Address 2", 200, "222-2222"),
-    RestaurantItems("Restaurant 3", "Type 3", "Address 3", 300, "333-3333"),
-    RestaurantItems("Restaurant 4", "Type 4", "Address 4", 300, "444-4444"),
-  ];
+class RestaurantListView extends StatefulWidget {
+  const RestaurantListView({super.key});
 
-  RestaurantListView({super.key});
+  @override
+  _RestaurantListViewState createState() => _RestaurantListViewState();
+}
+
+class _RestaurantListViewState extends State<RestaurantListView> {
+  List<RestaurantItems> restaurantList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchRestaurantData();
+  }
+
+  Future<void> fetchRestaurantData() async {
+    String lng="127.05902969025047";
+    String lat="37.51207412593136";
+
+    final String url = 
+      "https://dapi.kakao.com/v2/local/search/category.json?category_group_code=FD6&x=$lng&y=$lat";
+
+    final response = await http.get(
+      Uri.parse(url),
+      headers: {
+        'Authorization': 'KakaoAK 96186d771fe1f266518a71fee36ba25a',
+      },
+    );
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+      final List<RestaurantItems> apiRestaurantList = [];
+      for (var item in jsonData['documents']) {
+        apiRestaurantList.add(RestaurantItems(
+          item['place_name'] ?? "Unknown",
+          item['category_name'] ?? "Unknown",
+          item['road_address_name'] ?? "Unknown",
+          item['distance'] ?? "Unknown",
+          item['phone'] ?? "Unknown",
+        ));
+      }
+
+      setState(() {
+        restaurantList = apiRestaurantList;
+      });
+    } else {
+      throw Exception('Failed to load data from the API');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -14,7 +14,7 @@ class RestaurantItemsTile extends StatelessWidget {
       title: Row(
         children: [
           Text(
-              _RestaurantItems.rName,
+              _RestaurantItems.place_name,
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -23,7 +23,7 @@ class RestaurantItemsTile extends StatelessWidget {
           const SizedBox(width: 5),
 
           Text(
-              _RestaurantItems.rType,
+              _RestaurantItems.category_name,
             style: const TextStyle(
               fontSize: 12,
               color: Color(0xFF939191),
@@ -39,7 +39,7 @@ class RestaurantItemsTile extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    _RestaurantItems.rAdress,
+                    _RestaurantItems.road_address_name,
                     style: const TextStyle(
                         fontSize: 14
                     ),
@@ -49,7 +49,7 @@ class RestaurantItemsTile extends StatelessWidget {
 
                   InkWell(
                     onTap: () {
-                      Clipboard.setData(ClipboardData(text: _RestaurantItems.rAdress));
+                      Clipboard.setData(ClipboardData(text: _RestaurantItems.road_address_name));
                       print('adress copy bt');
                     },
                     child: const Icon(
@@ -70,7 +70,7 @@ class RestaurantItemsTile extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "${_RestaurantItems.rDistance.toString()}m",
+                    "${_RestaurantItems.distance.toString()}m",
                     style: const TextStyle(
                       fontSize: 12,
                       color: Colors.orange,
@@ -84,7 +84,7 @@ class RestaurantItemsTile extends StatelessWidget {
           Row(
             children: [
               Text(
-                _RestaurantItems.rPhoneNum,
+                _RestaurantItems.phone,
                 style: const TextStyle(
                     fontSize: 14
                 ),
@@ -94,7 +94,7 @@ class RestaurantItemsTile extends StatelessWidget {
 
               InkWell(
                 onTap: () {
-                  Clipboard.setData(ClipboardData(text: _RestaurantItems.rPhoneNum));
+                  Clipboard.setData(ClipboardData(text: _RestaurantItems.phone));
                   print('phone number copy bt');
                 },
                 child: const Icon(
