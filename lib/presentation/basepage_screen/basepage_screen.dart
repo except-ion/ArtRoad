@@ -18,7 +18,7 @@ class BasepageScreen extends StatelessWidget {
     mediaQueryData = MediaQuery.of(context);
     return SafeArea(
         child: Scaffold(
-            backgroundColor: appTheme.whiteA700,
+            backgroundColor: Colors.white,
             body: Navigator(
                 key: navigatorKey,
                 initialRoute: AppRoutes.homeScreen,
