@@ -19,6 +19,7 @@ class mCalendarListView extends StatelessWidget {
         Flexible(
           child: ListView.builder(
               shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
               padding: const EdgeInsets.all(20),
               itemCount: mcalendarList.length,
               itemBuilder: (context, index) {

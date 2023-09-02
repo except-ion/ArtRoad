@@ -1,6 +1,7 @@
 import 'package:artroad/core/app_export.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../widgets/custom_header.dart';
 import 'facilitydetail_accommodation/accommodation_list_view.dart';
 import 'facilitydetail_info_icons.dart';
 import 'facilitydetail_restaurant/restaurant_list_view.dart';
@@ -21,6 +22,12 @@ class _FacilityDetailScreen extends State<FacilityDetailScreen> {
     return SingleChildScrollView(
       child: Column(
         children: [
+          Row(
+            children: [
+              CustomHeader(),
+            ],
+          ),
+
           // --- 지도 ---
 
           Padding(
