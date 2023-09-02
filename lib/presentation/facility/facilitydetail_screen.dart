@@ -1,11 +1,7 @@
 import 'package:artroad/core/app_export.dart';
-import 'package:artroad/presentation/facility/facilitydetail_restaurant/restaurant_items.dart';
-import 'package:artroad/presentation/facility/facilitydetail_restaurant/restaurant_provider.dart';
-import 'package:artroad/presentation/facility/facilitydetail_restaurant/restaurant_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 
 import 'facilitydetail_accommodation/accommodation_list_view.dart';
 import 'facilitydetail_info_icons.dart';
@@ -21,21 +17,15 @@ class FacilityDetailScreen extends StatefulWidget {
 class _FacilityDetailScreen extends State<FacilityDetailScreen> {
   bool isRestaurantSelected = true;
   bool isAccommodationSelected = false;
-  final RestaurantItemsRepository _restaurantItemsProvider = RestaurantItemsRepository();
-  @override
-  void initState() {
-    super.initState();
-    _restaurantItemsProvider.loadKakaoRestaurants();
-  }
 
   @override
   Widget build(BuildContext context) {
-  final restaurantDataProvider = Provider.of<RestaurantItemsProvider>(context, listen: false);
     return SingleChildScrollView(
       child: Column(
         children: [
 
           // --- 지도 ---
+
           Padding(
             padding: getPadding(top: 20, left: 20),
             child: const Align(
@@ -244,30 +234,13 @@ class _FacilityDetailScreen extends State<FacilityDetailScreen> {
                     ],
                   ),
                   if (isRestaurantSelected)
-                    FutureBuilder<List<RestaurantItems>>(
-                      future: restaurantDataProvider.loadKakaoRestaurants(),
-                      builder: (context, snapshot) {
-                        print('builder sdfljsakl');
-                        if (snapshot.hasError) {
-                          return const Center(
-                            child: Text('An error has occurred!'),
-                          );
-                        } else if (snapshot.hasData) {
-                          print('snap has data $snapshot');
-                          return const RestaurantListView();
-                        } else {
-                          print('snap shoshoho');
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                      },
-                    ),
+                    RestaurantListView(),
+
                   if(isAccommodationSelected)
                     AccommodationListView(),
                 ],
               )
-            ),  
+          ),
         ],
       ),
     );

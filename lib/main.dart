@@ -46,7 +46,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => ConcertDetailProvider()),
         ChangeNotifierProvider(create: (context) => FacilityDetailProvider()),
         ChangeNotifierProvider(create: (context) => RankingProvider()),
-        ChangeNotifierProvider<RestaurantItemsProvider>(create: (context) => RestaurantItemsProvider(),),
       ],
       child: MaterialApp(
         theme: ThemeData(

@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'accommodation_items.dart';
 
 class AccommodationItemsTile extends StatelessWidget {
-  AccommodationItemsTile(this._AccommodationItems);
+  const AccommodationItemsTile(this._AccommodationItems, {super.key});
 
   final AccommodationItems _AccommodationItems;
 
@@ -14,17 +14,17 @@ class AccommodationItemsTile extends StatelessWidget {
       title: Row(
         children: [
           Text(
-            _AccommodationItems.aName,
-            style: TextStyle(
+            _AccommodationItems.place_name,
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(width: 5),
+          const SizedBox(width: 5),
 
           Text(
-            _AccommodationItems.aType,
-            style: TextStyle(
+            _AccommodationItems.category_name,
+            style: const TextStyle(
               fontSize: 12,
               color: Color(0xFF939191),
             ),
@@ -39,20 +39,20 @@ class AccommodationItemsTile extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    _AccommodationItems.aAdress,
-                    style: TextStyle(
+                    _AccommodationItems.road_address_name,
+                    style: const TextStyle(
                         fontSize: 14
                     ),
                   ),
 
-                  SizedBox(width: 5),
+                  const SizedBox(width: 5),
 
                   InkWell(
                     onTap: () {
-                      Clipboard.setData(ClipboardData(text: _AccommodationItems.aAdress));
+                      Clipboard.setData(ClipboardData(text: _AccommodationItems.road_address_name));
                       print('adress copy bt');
                     },
-                    child: Icon(
+                    child: const Icon(
                       Icons.copy_rounded,
                       color: Color(0xFF176FF2),
                       size: 16,
@@ -62,15 +62,16 @@ class AccommodationItemsTile extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.star_rounded,
                     color: Colors.yellow,
                     size: 16,
                   ),
-                  SizedBox(width: 2),
+                  const SizedBox(width: 2),
                   Text(
-                    _AccommodationItems.aReview.toString(),
-                    style: TextStyle(
+                    //별점 못받아오면 어카농?
+                    _AccommodationItems.distance.toString(),
+                    style: const TextStyle(
                       fontSize: 12,
                     ),
                   ),
@@ -82,20 +83,20 @@ class AccommodationItemsTile extends StatelessWidget {
           Row(
             children: [
               Text(
-                _AccommodationItems.aPhoneNum,
-                style: TextStyle(
+                _AccommodationItems.phone,
+                style: const TextStyle(
                     fontSize: 14
                 ),
               ),
 
-              SizedBox(width: 5),
+              const SizedBox(width: 5),
 
               InkWell(
                 onTap: () {
-                  Clipboard.setData(ClipboardData(text: _AccommodationItems.aPhoneNum));
+                  Clipboard.setData(ClipboardData(text: _AccommodationItems.phone));
                   print('phone number copy bt');
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.copy_rounded,
                   color: Color(0xFF176FF2),
                   size: 16,

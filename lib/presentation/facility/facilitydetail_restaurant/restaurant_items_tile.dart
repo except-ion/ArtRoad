@@ -1,22 +1,20 @@
 import 'package:artroad/presentation/facility/facilitydetail_restaurant/restaurant_items.dart';
-import 'package:artroad/presentation/facility/facilitydetail_restaurant/restaurant_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 
 class RestaurantItemsTile extends StatelessWidget {
-  const RestaurantItemsTile({super.key, required this.restaurantItems});
-  
-  // late RestaurantItemsProvider _restaurantProvider;
-  final List<RestaurantItems> restaurantItems;
-  
-  Widget _makeRestaurantItemTile(RestaurantItems restaurantItems){
+  const RestaurantItemsTile(this._RestaurantItems, {super.key});
+
+  final RestaurantItems _RestaurantItems;
+
+  @override
+  Widget build(BuildContext context) {
     return ListTile(
       title: Row(
         children: [
           Text(
-              restaurantItems.placeName.toString(),
+              _RestaurantItems.rName,
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -25,7 +23,7 @@ class RestaurantItemsTile extends StatelessWidget {
           const SizedBox(width: 5),
 
           Text(
-              restaurantItems.categoryName.toString(),
+              _RestaurantItems.rType,
             style: const TextStyle(
               fontSize: 12,
               color: Color(0xFF939191),
@@ -41,7 +39,7 @@ class RestaurantItemsTile extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    restaurantItems.roadAddressName.toString(),
+                    _RestaurantItems.rAdress,
                     style: const TextStyle(
                         fontSize: 14
                     ),
@@ -51,7 +49,7 @@ class RestaurantItemsTile extends StatelessWidget {
 
                   InkWell(
                     onTap: () {
-                      Clipboard.setData(ClipboardData(text: restaurantItems.roadAddressName.toString()));
+                      Clipboard.setData(ClipboardData(text: _RestaurantItems.rAdress));
                       print('adress copy bt');
                     },
                     child: const Icon(
@@ -72,7 +70,7 @@ class RestaurantItemsTile extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "${restaurantItems.distance}m",
+                    "${_RestaurantItems.rDistance.toString()}m",
                     style: const TextStyle(
                       fontSize: 12,
                       color: Colors.orange,
@@ -86,7 +84,7 @@ class RestaurantItemsTile extends StatelessWidget {
           Row(
             children: [
               Text(
-                restaurantItems.phone.toString(),
+                _RestaurantItems.rPhoneNum,
                 style: const TextStyle(
                     fontSize: 14
                 ),
@@ -96,7 +94,7 @@ class RestaurantItemsTile extends StatelessWidget {
 
               InkWell(
                 onTap: () {
-                  Clipboard.setData(ClipboardData(text: restaurantItems.phone.toString()));
+                  Clipboard.setData(ClipboardData(text: _RestaurantItems.rPhoneNum));
                   print('phone number copy bt');
                 },
                 child: const Icon(
@@ -108,27 +106,6 @@ class RestaurantItemsTile extends StatelessWidget {
             ],
           ),
         ],
-      ),
-    );
-  }
-  @override
-  Widget build(BuildContext context) {
-     return Expanded(
-      child: Consumer<RestaurantItemsProvider>(
-        builder: (context, provider, widget) {
-          if (provider.restaurantItems.isNotEmpty) {
-            return ListView.builder(
-              itemCount: provider.restaurantItems.length,
-              itemBuilder: (context, index) {
-                return _makeRestaurantItemTile(provider.restaurantItems[index]);
-              },
-            );
-          }
-          // 데이터가 없으면 CircularProgressIndicator 수행(로딩)
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
       ),
     );
   }
