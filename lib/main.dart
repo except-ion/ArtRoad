@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:artroad/src/provider/condetail_provider.dart';
 import 'package:artroad/src/provider/facdetail_provider.dart';
 import 'package:artroad/src/provider/ranking_provider.dart';
+import 'package:artroad/presentation/facility/facilitydetail_restaurant/restaurant_provider.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:artroad/src/provider/search/concert_provider.dart';
 import 'package:artroad/src/provider/calendar/concert_provider.dart';
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => ConcertDetailProvider()),
         ChangeNotifierProvider(create: (context) => FacilityDetailProvider()),
         ChangeNotifierProvider(create: (context) => RankingProvider()),
+        ChangeNotifierProvider<RestaurantItemsProvider>(create: (context) => RestaurantItemsProvider(),),
       ],
       child: MaterialApp(
         theme: ThemeData(
