@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:artroad/presentation/services/firebase_auth_services.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -19,6 +20,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController emailField = TextEditingController();
   final TextEditingController pwField = TextEditingController();
   final TextEditingController pwcheckField = TextEditingController();
+  final FirebaseAuthService _firebaseAuthService = FirebaseAuthService();
 
   //firebase signup
   final _auth = FirebaseAuth.instance;
@@ -34,7 +36,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   }
   //firebase sign-up
-  Future<bool> signUpWithFirebase(String name, String email, String pw, String pwcheck) async {
+  void signUpWithFirebase(String name, String email, String pw, String pwcheck) async {
     if (pw != pwcheck) {
       Fluttertoast.showToast(
         msg: '비밀번호가 일치하지 않습니다.',
@@ -43,31 +45,19 @@ class _SignupScreenState extends State<SignupScreen> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
-      return false;
     }
-
-    try {
-      final credential = await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: pw,
-      );
-
-      if (credential.user != null) {
-        await FirebaseFirestore.instance
-            .collection('user')
-            .doc(credential.user!.uid)
-            .set({
-              'userName': name,
-              'email': email,
-        });
-      }
-    return true;
-  } on FirebaseAuthException catch (e) {
-    print('error: ${e.message}');
-    return false;
-  } catch (e) {
-      print('error: $e');
-      return false;
+    final credential = await _firebaseAuthService.registerWithEmailPassword(name, email, pw, pwcheck);
+    if (credential != null) {
+      await FirebaseFirestore.instance
+          .collection('user')
+          .doc(credential.uid)
+          .set({
+            'userName': name,
+            'email': email,
+      });
+    } else {
+      ScaffoldMessenger.of(context)
+        .showSnackBar(const SnackBar(content: Text('회원가입 실패')));
     }
   }
 
@@ -137,26 +127,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             ),
                             CustomButtonMainColor(
                               onPressed: () async {
-                                bool isSuccess = await signUpWithFirebase(nameField.text, emailField.text, pwField.text, pwcheckField.text);
-                                if (isSuccess){
-                                  Navigator.pop(context);
-                                  Fluttertoast.showToast(
-                                    msg: '가입되었습니다.',
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    backgroundColor: Colors.grey,
-                                    textColor: Colors.white,
-                                    fontSize: 16.0,
-                                  );
-                                } else {
-                                  Fluttertoast.showToast(
-                                    msg: '회원가입 실패',
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    backgroundColor: Colors.grey,
-                                    textColor: Colors.white,
-                                    fontSize: 16.0,
-                                  );
-                                }
-                                //회원가입 로직
+                                signUpWithFirebase(nameField.text, emailField.text, pwField.text, pwcheckField.text);
                               },
                               text: '회원가입',
                             ),

@@ -7,11 +7,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:async';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk_user.dart';
 import 'package:artroad/src/model/login_platform.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:artroad/widgets/custom_textformfield.dart';
 import 'package:artroad/presentation/signup/signup_screen.dart';
 import 'package:artroad/widgets/custom_button_main_color.dart';
 import 'package:artroad/presentation/login/login_forgot_password.dart';
+import 'package:artroad/presentation/services/firebase_auth_services.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -24,35 +24,28 @@ class _LoginScreenState extends State<LoginScreen> {
   LoginPlatform _loginPlatform = LoginPlatform.none;
   TextEditingController emailField = TextEditingController();
   TextEditingController pwField = TextEditingController();
-  final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
+  final FirebaseAuthService _firebaseAuthService = FirebaseAuthService();
 
   //firebase login
-  void signInWithFirebase(String email, String pw) async {
-    try {
-      final credential = await _auth.signInWithEmailAndPassword(
-        email: email, 
-        password: pw
-        );
-      if (credential.user != null) {
-        setState(() {
-          _loginPlatform = LoginPlatform.firebase;
-        });
-        // 로그인 성공 후 페이지 이동
+   void signInWithFirebase(String email, String pw) async {
+    final user = await _firebaseAuthService.signInWithFirebase(email, pw);
+    if (user != null) {
+      // 로그인 성공 후 처리
+      ScaffoldMessenger.of(context)
+        .showSnackBar(const SnackBar(content: Text('로그인 성공')));
+
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => BasepageScreen(),
           ),
         );       
-      }
-    } on FirebaseException catch (e) {
-      ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(e.message!)));
-    } catch (e) {
-      print(e);
+    } else {
+      // 로그인 실패 처리
+       ScaffoldMessenger.of(context)
+        .showSnackBar(const SnackBar(content: Text('로그인 실패')));
     }
   }
-
   //Kakao login
   Future<bool> signInWithKakao() async {
     try {
@@ -62,12 +55,12 @@ class _LoginScreenState extends State<LoginScreen> {
           ? await UserApi.instance.loginWithKakaoTalk()
           : await UserApi.instance.loginWithKakaoAccount();
       print('token: $token');
-      bool isSavedFirebase = await saveUserData(token.accessToken);
-      if(isSavedFirebase) {
-        print('isSaveFirebase 성공');
-      } else {
-        print('isSaveFirebase 실패');
-      }
+      // bool isSavedFirebase = await saveUserData(token.accessToken);
+      // if(isSavedFirebase) {
+      //   print('isSaveFirebase 성공');
+      // } else {
+      //   print('isSaveFirebase 실패');
+      // }
       return true;
     } catch (error) {
       print('카카오톡으로 로그인 실패 $error');
@@ -76,27 +69,27 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   //카카오 로그인 정보 firebase에 유저 정보 저장
-  Future<bool> saveUserData(String token) async {
-    try{
-      final userCredential = await _auth.signInAnonymously();
-      print('userCredential : $userCredential');
+  // Future<bool> saveUserData(String token) async {
+  //   try{
+  //     final userCredential = await _auth.signInAnonymously();
+  //     print('userCredential : $userCredential');
 
-      if(userCredential.user != null) {
-        final uid = userCredential.user?.uid;
-        print('uid : $uid');
-        await _firestore.collection('Users').doc(uid).set({
-          'providerId': 'kakao.com',
-          'userName': (await UserApi.instance.me()).kakaoAccount!.profile!.nickname,
-          'idToken': token
-        });
-        print('collection 저장');
-      }
-      return true;
-    } catch (e) {
-      print('saveUserData error: $e');
-      return false;
-    }
-  }
+  //     if(userCredential.user != null) {
+  //       final uid = userCredential.user?.uid;
+  //       print('uid : $uid');
+  //       await _firestore.collection('Users').doc(uid).set({
+  //         'providerId': 'kakao.com',
+  //         'userName': (await UserApi.instance.me()).kakaoAccount!.profile!.nickname,
+  //         'idToken': token
+  //       });
+  //       print('collection 저장');
+  //     }
+  //     return true;
+  //   } catch (e) {
+  //     print('saveUserData error: $e');
+  //     return false;
+  //   }
+  // }
 
   void signOut() async {
     switch (_loginPlatform) {
