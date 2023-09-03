@@ -22,9 +22,19 @@ class _SignupScreenState extends State<SignupScreen> {
 
   //firebase signup
   final _auth = FirebaseAuth.instance;
+  
+   @override
+  void initState() {
+    super.initState();
+    
+    nameField.text = "yuda";
+    emailField.text = "dyj09087@gmail.com";
+    pwField.text = "r3OeR0UDal";
+    pwcheckField.text = "r3OeR0UDal";
 
+  }
   //firebase sign-up
-  void signUpWithFirebase(String name, String email, String pw, String pwcheck) async {
+  Future<bool> signUpWithFirebase(String name, String email, String pw, String pwcheck) async {
     if (pw != pwcheck) {
       Fluttertoast.showToast(
         msg: '비밀번호가 일치하지 않습니다.',
@@ -33,7 +43,7 @@ class _SignupScreenState extends State<SignupScreen> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
-      return;
+      return false;
     }
 
     try {
@@ -42,24 +52,22 @@ class _SignupScreenState extends State<SignupScreen> {
         password: pw,
       );
 
-    if (credential.user != null) {
-      await FirebaseFirestore.instance
-          .collection('user')
-          .doc(credential.user!.uid)
-          .set({
-            'userName': name,
-            'email': email,
-      });
-      setState(() {
-        pwField.clear();
-      });
-    }
+      if (credential.user != null) {
+        await FirebaseFirestore.instance
+            .collection('user')
+            .doc(credential.user!.uid)
+            .set({
+              'userName': name,
+              'email': email,
+        });
+      }
+    return true;
   } on FirebaseAuthException catch (e) {
-    print(e.message);
-    return;
+    print('error: ${e.message}');
+    return false;
   } catch (e) {
-      print(e);
-      return;
+      print('error: $e');
+      return false;
     }
   }
 
@@ -128,17 +136,27 @@ class _SignupScreenState extends State<SignupScreen> {
                               height: 25,
                             ),
                             CustomButtonMainColor(
-                              onPressed: () {
-                                Navigator.pop(context); // 다이얼로그 닫기
+                              onPressed: () async {
+                                bool isSuccess = await signUpWithFirebase(nameField.text, emailField.text, pwField.text, pwcheckField.text);
+                                if (isSuccess){
+                                  Navigator.pop(context);
+                                  Fluttertoast.showToast(
+                                    msg: '가입되었습니다.',
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    backgroundColor: Colors.grey,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0,
+                                  );
+                                } else {
+                                  Fluttertoast.showToast(
+                                    msg: '회원가입 실패',
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    backgroundColor: Colors.grey,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0,
+                                  );
+                                }
                                 //회원가입 로직
-                                print('회원가입 성공');
-                                Fluttertoast.showToast(
-                                  msg: '가입되었습니다.',
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  backgroundColor: Colors.grey,
-                                  textColor: Colors.white,
-                                  fontSize: 16.0,
-                                );
                               },
                               text: '회원가입',
                             ),
