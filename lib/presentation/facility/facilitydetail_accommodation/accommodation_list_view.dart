@@ -28,7 +28,7 @@ class AccommodationListView extends StatelessWidget {
           child: ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.only(top: 20),
             itemCount: accommodationList.length,
             itemBuilder: (context, index) {
               return AccommodationItemsTile(accommodationList[index]);
