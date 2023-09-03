@@ -55,6 +55,8 @@ class _mCalendarDialog extends State<mCalendarDialog> {
           Colors.pink,
         ];
         Color selectedColor = colors[4]; // 초기 선택 값
+        Color currentSelectedColor = selectedColor;
+        int colorValue = currentSelectedColor.value;
 
         print(MediaQuery.of(context).viewInsets.bottom);
         return StatefulBuilder(
@@ -95,7 +97,7 @@ class _mCalendarDialog extends State<mCalendarDialog> {
                                   onTap: () async {
                                     Navigator.pop(context);
                                     String color = selectedColor.toString();
-                                    bool isSuccess = await _firebaseStoreService.addSchedule(userId!, titleField.text, widget.selectedDay, selectedAlarm, color, linkField.text);
+                                    bool isSuccess = await _firebaseStoreService.addSchedule(userId!, titleField.text, widget.selectedDay, selectedAlarm, colorValue, linkField.text);
                                     if (isSuccess) {
                                       //일정 추가 성공 토스트 띄우기
                                     } else {
@@ -451,6 +453,8 @@ class _mCalendarDialog extends State<mCalendarDialog> {
                                           setState(() {
                                             isToggledList = List.generate(isToggledList.length, (i) => i == index ? !isToggledList[i] : false);
                                             selectedColor = colors[index];
+                                            currentSelectedColor = selectedColor;
+                                            colorValue = currentSelectedColor.value;
                                             print("color option : $selectedColor");
                                           });
                                         });

@@ -2,15 +2,19 @@ import 'dart:core';
 import 'dart:ui';
 
 class mCalendarItems {
-  String? schid; // 일정 ID
   String schname; // 일정 이름
-  String schdate;
+  DateTime schdate;
   String? schlink; // 일정 링크
   String schalarm;
   Color schcolor;
 
-  mCalendarItems(this.schid, this.schname,
-      this.schdate, this.schlink, this.schalarm, this.schcolor);
+  mCalendarItems(
+    this.schname,
+    this.schdate, 
+    this.schlink, 
+    this.schalarm, 
+    this.schcolor
+  );
 }
 
 //String schdate = CalendarDayInfo(selectedDay: mTableCalendarScreen().selectedDay).selectedDate; // 일정 날짜

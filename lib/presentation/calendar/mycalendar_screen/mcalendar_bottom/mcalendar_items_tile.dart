@@ -5,12 +5,12 @@ import '../../../../core/utils/image_constant.dart';
 import 'mcalendar_items.dart';
 
 class mCalendarItemsTile extends StatelessWidget {
-  mCalendarItemsTile(this._mCalendarItems);
+  const mCalendarItemsTile(this._mCalendarItems, {super.key});
 
   final mCalendarItems _mCalendarItems;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    
     return Stack(
       children: [
         Positioned(
@@ -22,7 +22,7 @@ class mCalendarItemsTile extends StatelessWidget {
           ),
         ),
 
-        SizedBox(width: 10),
+        const SizedBox(width: 10),
 
         ListTile(
           title: Text(
@@ -36,13 +36,13 @@ class mCalendarItemsTile extends StatelessWidget {
 
           subtitle: Column(
             children: [
-              SizedBox(height: 3.5),
+              const SizedBox(height: 3.5),
 
               Row(
                 children: [
                   Text(
-                    _mCalendarItems.schdate,
-                    style: TextStyle(
+                    _mCalendarItems.schdate.toString(),
+                    style: const TextStyle(
                       fontSize: 14,
                       color: Color(0xFF939191),
                     ),
@@ -50,21 +50,21 @@ class mCalendarItemsTile extends StatelessWidget {
                 ],
               ),
 
-              SizedBox(height: 3),
+              const SizedBox(height: 3),
 
               Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.alarm_rounded,
                     color: Color(0xFF939191),
                     size: 18,
                   ),
 
-                  SizedBox(width: 2.5),
+                  const SizedBox(width: 2.5),
 
                   Text(
                     _mCalendarItems.schalarm,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
                       color: Color(0xFF939191),
                     ),
@@ -79,7 +79,7 @@ class mCalendarItemsTile extends StatelessWidget {
             onTap: () {
               print("link button clicked");
             },
-            child: Icon(
+            child: const Icon(
               Icons.link_rounded,
               color: Color(0xFF939191),
               size: 30,
