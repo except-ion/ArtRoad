@@ -45,12 +45,12 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Padding(
-            padding: EdgeInsets.all(30),
+            padding: const EdgeInsets.all(30),
             child: Align(
               alignment: Alignment.topLeft,
               child: ShaderMask(
                 shaderCallback: (Rect bounds) {
-                  return LinearGradient(
+                  return const LinearGradient(
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
                     colors: [Colors.transparent, Colors.white], // 그라데이션 색상 설정
@@ -71,24 +71,24 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
-          Text(
+          const Text(
             'Top 10',
             style: TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.w600,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           HomeRankingSwiper(),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
-          Text(
+          const Text(
             '분야별 랭킹',
             style: TextStyle(
               fontSize: 30,
@@ -113,16 +113,16 @@ class _HomeScreenState extends State<HomeScreen> {
     return List<Widget>.generate(
       cateList.length,
       (index) => ChoiceChip(
-        selectedColor: Color(0xFF176FF2),
+        selectedColor: const Color(0xFF176FF2),
         selectedShadowColor: Colors.white,
         backgroundColor: _selectedCategoryIndex == index
-            ? Color(0xFF176FF2) // 선택된 경우 파란색 배경색
+            ? const Color(0xFF176FF2) // 선택된 경우 파란색 배경색
             : Colors.white, // 선택되지 않은 경우 투명 배경색
         shape: RoundedRectangleBorder(
           side: BorderSide(
               color: _selectedCategoryIndex == index
                   ? Colors.transparent // 선택된 경우 테두리 없음
-                  : Color(0xFFC7C7CC), // 선택되지 않은 경우 기본 테마 테두리 색
+                  : const Color(0xFFC7C7CC), // 선택되지 않은 경우 기본 테마 테두리 색
               width: 0.5),
           borderRadius: BorderRadius.circular(30),
         ),
