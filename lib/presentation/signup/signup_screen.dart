@@ -24,7 +24,8 @@ class _SignupScreenState extends State<SignupScreen> {
   final _auth = FirebaseAuth.instance;
 
   //firebase sign-up
-  void signUpWithFirebase(String name, String email, String pw, String pwcheck) async {
+  void signUpWithFirebase(
+      String name, String email, String pw, String pwcheck) async {
     if (pw != pwcheck) {
       Fluttertoast.showToast(
         msg: '비밀번호가 일치하지 않습니다.',
@@ -42,22 +43,22 @@ class _SignupScreenState extends State<SignupScreen> {
         password: pw,
       );
 
-    if (credential.user != null) {
-      await FirebaseFirestore.instance
-          .collection('user')
-          .doc(credential.user!.uid)
-          .set({
-            'userName': name,
-            'email': email,
-      });
-      setState(() {
-        pwField.clear();
-      });
-    }
-  } on FirebaseAuthException catch (e) {
-    print(e.message);
-    return;
-  } catch (e) {
+      if (credential.user != null) {
+        await FirebaseFirestore.instance
+            .collection('user')
+            .doc(credential.user!.uid)
+            .set({
+          'userName': name,
+          'email': email,
+        });
+        setState(() {
+          pwField.clear();
+        });
+      }
+    } on FirebaseAuthException catch (e) {
+      print(e.message);
+      return;
+    } catch (e) {
       print(e);
       return;
     }
@@ -109,7 +110,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             ),
                             CustomTextformfield(
                               name: '비밀번호',
-                              isPassword: false,
+                              isPassword: true,
                               controller: pwField,
                             ),
                             const SizedBox(
@@ -117,7 +118,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             ),
                             CustomTextformfield(
                               name: '비밀번호 확인',
-                              isPassword: false,
+                              isPassword: true,
                               controller: pwcheckField,
                             ),
                             const SizedBox(
@@ -131,7 +132,6 @@ class _SignupScreenState extends State<SignupScreen> {
                               onPressed: () {
                                 Navigator.pop(context); // 다이얼로그 닫기
                                 //회원가입 로직
-                                print('회원가입 성공');
                                 Fluttertoast.showToast(
                                   msg: '가입되었습니다.',
                                   toastLength: Toast.LENGTH_SHORT,
