@@ -17,55 +17,57 @@ class _LoginForgotPasswordScreenState extends State<LoginForgotPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const CustomHeader(
-            name: '비밀번호 찾기',
-          ),
-          const SizedBox(
-            height: 50,
-          ),
-          const Text(
-            '가입한 이메일 주소를 입력해주세요.\n비밀번호 재설정 메일을 보내드립니다.',
-            style: TextStyle(fontSize: 16),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(
-            height: 50,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 40, right: 40, bottom: 30),
-            child: Column(
-              children: [
-                CustomTextformfield(
-                  name: '이메일',
-                  isPassword: false,
-                  controller: emailField,
-                ),
-                const SizedBox(
-                  height: 25,
-                ),
-                CustomButtonMainColor(
-                  onPressed: () {
-                    Navigator.pop(context); // 다이얼로그 닫기
-                    //회원가입 로직
-                    print('메일 발신 성공');
-                    Fluttertoast.showToast(
-                      msg: '메일을 보냈습니다.',
-                      toastLength: Toast.LENGTH_SHORT,
-                      backgroundColor: Colors.grey,
-                      textColor: Colors.white,
-                      fontSize: 16.0,
-                    );
-                  },
-                  text: '비밀번호 재설정하기',
-                ),
-              ],
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const CustomHeader(
+              name: '비밀번호 찾기',
             ),
-          )
-        ],
+            const SizedBox(
+              height: 50,
+            ),
+            const Text(
+              '가입한 이메일 주소를 입력해주세요.\n비밀번호 재설정 메일을 보내드립니다.',
+              style: TextStyle(fontSize: 16),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 40, right: 40, bottom: 30),
+              child: Column(
+                children: [
+                  CustomTextformfield(
+                    name: '이메일',
+                    isPassword: false,
+                    controller: emailField,
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  CustomButtonMainColor(
+                    onPressed: () {
+                      Navigator.pop(context); // 다이얼로그 닫기
+                      //회원가입 로직
+                      print('메일 발신 성공');
+                      Fluttertoast.showToast(
+                        msg: '메일을 보냈습니다.',
+                        toastLength: Toast.LENGTH_SHORT,
+                        backgroundColor: Colors.grey,
+                        textColor: Colors.white,
+                        fontSize: 16.0,
+                      );
+                    },
+                    text: '비밀번호 재설정하기',
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

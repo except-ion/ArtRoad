@@ -64,7 +64,7 @@ class _RestaurantListViewState extends State<RestaurantListView> {
           child: ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.only(top: 20),
             itemCount: restaurantList.length,
             itemBuilder: (context, index) {
               return RestaurantItemsTile(restaurantList[index]);
