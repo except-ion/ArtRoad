@@ -1,12 +1,10 @@
 import 'dart:ui';
-import 'dart:convert';
-import 'dart:io';
 import 'package:artroad/presentation/basepage_screen/basepage_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:artroad/theme/theme_helper.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:async';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk_user.dart';
-import 'package:http/http.dart' as http;
 import 'package:artroad/src/model/login_platform.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:artroad/widgets/custom_textformfield.dart';
@@ -54,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   //Kakao login
-  void signInWithKakao() async {
+  Future<bool> signInWithKakao() async {
     try {
       bool isInstalled = await isKakaoTalkInstalled();
 
@@ -62,25 +60,10 @@ class _LoginScreenState extends State<LoginScreen> {
           ? await UserApi.instance.loginWithKakaoTalk()
           : await UserApi.instance.loginWithKakaoAccount();
       print('token: $token');
-
-      final url = Uri.https('kapi.kakao.com', '/v2/user/me');
-
-      final response = await http.get(
-        url,
-        headers: {
-          HttpHeaders.authorizationHeader: 'Bearer ${token.accessToken}'
-        },
-      );
-
-      final profileInfo = json.decode(response.body);
-      print(profileInfo.toString());
-
-      setState(() {
-        _loginPlatform = LoginPlatform.kakao;
-      });
-
+      return true;
     } catch (error) {
       print('카카오톡으로 로그인 실패 $error');
+      return false;
     }
   }
 
@@ -122,6 +105,8 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     timer = Timer.periodic(const Duration(seconds: 5), _changeBackground);
+    emailField.text = "dyj09087@gmail.com";
+    pwField.text = "r3OeR0UDal";
   }
 
   @override
@@ -263,15 +248,24 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               const SizedBox(height: 25),
                               TextButton(
-                                onPressed: () {
+                                onPressed: () async {
                                   Navigator.pop(context); // 다이얼로그 닫기
-                                  signInWithKakao();
-                                  // _kakaoLoginPressed();
-                                  Navigator.of(context).push(
+                                  bool isSuccess = await signInWithKakao();
+                                  if (isSuccess){
+                                    Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) => BasepageScreen(),
                                     ), // 홈화면으로 이동
                                   );
+                                  } else {
+                                    Fluttertoast.showToast(
+                                      msg: '카카오 로그인 실패',
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      backgroundColor: Colors.grey,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0,
+                                    );
+                                  }                                  
                                 },
                                 style: TextButton.styleFrom(
                                     textStyle: const TextStyle(

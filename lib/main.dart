@@ -12,16 +12,17 @@ import 'package:artroad/src/provider/calendar/concert_provider.dart';
 import 'package:artroad/src/provider/search/facility_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk_user.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() async {
+Future<void> main() async {
+  await dotenv.load();
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
 
   KakaoSdk.init(
-    nativeAppKey: '66389c442b9dba0350c2d6c94286380a',
-    javaScriptAppKey: '708757a1c33c4ef4738b67842bca34dd'
+    nativeAppKey: dotenv.env['KAKAO_NATIVE_APP_KEY']
   );
 
   //firebase 사용을 위해 초기화 메소드 호출
