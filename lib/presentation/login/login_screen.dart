@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:artroad/presentation/basepage_screen/basepage_screen.dart';
+import 'package:artroad/src/provider/user_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:artroad/theme/theme_helper.dart';
@@ -12,6 +13,7 @@ import 'package:artroad/presentation/signup/signup_screen.dart';
 import 'package:artroad/widgets/custom_button_main_color.dart';
 import 'package:artroad/presentation/login/login_forgot_password.dart';
 import 'package:artroad/presentation/services/firebase_auth_services.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -24,13 +26,14 @@ class _LoginScreenState extends State<LoginScreen> {
   LoginPlatform _loginPlatform = LoginPlatform.none;
   TextEditingController emailField = TextEditingController();
   TextEditingController pwField = TextEditingController();
-  final _firestore = FirebaseFirestore.instance;
   final FirebaseAuthService _firebaseAuthService = FirebaseAuthService();
 
   //firebase login
    void signInWithFirebase(String email, String pw) async {
     final user = await _firebaseAuthService.signInWithFirebase(email, pw);
     if (user != null) {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      userProvider.setFirebaseUserId(user.uid);
       // 로그인 성공 후 처리
       ScaffoldMessenger.of(context)
         .showSnackBar(const SnackBar(content: Text('로그인 성공')));
@@ -46,6 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
         .showSnackBar(const SnackBar(content: Text('로그인 실패')));
     }
   }
+
   //Kakao login
   Future<bool> signInWithKakao() async {
     try {

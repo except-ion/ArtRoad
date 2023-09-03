@@ -1,4 +1,5 @@
 import 'package:artroad/firebase_options.dart';
+import 'package:artroad/src/provider/user_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:artroad/routes/app_routes.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => ConcertDetailProvider()),
         ChangeNotifierProvider(create: (context) => FacilityDetailProvider()),
         ChangeNotifierProvider(create: (context) => RankingProvider()),
+        ChangeNotifierProvider(create: (context) => UserProvider()),
       ],
       child: MaterialApp(
         theme: ThemeData(

@@ -1,16 +1,16 @@
 import 'package:artroad/core/app_export.dart';
+import 'package:artroad/src/provider/user_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:artroad/presentation/services/firebase_firestore_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 
 class mCalendarDialog extends StatefulWidget {
   final DateTime selectedDay; // 선택된 날짜를 인자로 받도록 수정
-
   const mCalendarDialog({super.key, required this.selectedDay});
 
   get alarm => alarm;
-
   get colors => colors;
 
   @override
@@ -96,7 +96,7 @@ class _mCalendarDialog extends State<mCalendarDialog> {
                                     Navigator.pop(context);
                                     // --- 일정 추가 로직 구현 ---
                                     String color = selectedColor.toString();
-                                    await _firebaseStoreService.addSchedule("QMaZfoHFLwfD5SFyFZOearOwe9H2", titleField.text, widget.selectedDay, selectedAlarm, color, linkField.text);
+                                    await _firebaseStoreService.addSchedule("userId", titleField.text, widget.selectedDay, selectedAlarm, color, linkField.text);
                                   },
                                   child: const Align(
                                     alignment: Alignment.topRight,
@@ -488,6 +488,10 @@ class _mCalendarDialog extends State<mCalendarDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+    String? userId = userProvider.firebaseUserId;
+    print('userId: $userId');
+
     return Row(
       children: [
         InkWell(
