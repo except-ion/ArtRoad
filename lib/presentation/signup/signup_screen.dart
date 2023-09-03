@@ -50,6 +50,9 @@ class _SignupScreenState extends State<SignupScreen> {
             'userName': name,
             'email': email,
       });
+      setState(() {
+        pwField.clear();
+      });
     }
   } on FirebaseAuthException catch (e) {
     print(e.message);
