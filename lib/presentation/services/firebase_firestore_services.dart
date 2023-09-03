@@ -8,18 +8,23 @@ final CollectionReference _schedulesCollection = _firestore.collection('schedule
 
 class FirebaseStoreService{
   // 일정 추가
-  Future<void> addSchedule(String userId, String title, DateTime date, String alarm, String color, String link) async {
-    try {
-      await _schedulesCollection.doc(userId).collection('user_schedules').add({
-        'title': title,
-        'date': date,
-        'alarm': alarm,
-        'color': color, // 컬러를 문자열로 저장 (예: "Color(0xFF176FF2)")
-        'link': link,
-      });
-    } catch (e) {
-      print('일정 추가 실패: $e');
+  Future<bool> addSchedule(String? userId, String title, DateTime date, String alarm, String color, String link) async {
+    if (userId != null) {
+      try {
+        await _schedulesCollection.doc(userId).collection('user_schedules').add({
+          'title': title,
+          'date': date,
+          'alarm': alarm,
+          'color': color, // 컬러를 문자열로 저장 (예: "Color(0xFF176FF2)")
+          'link': link,
+        });
+        return true;
+      } catch (e) {
+        print('일정 추가 실패: $e');
+        return false;
+      }
     }
+    return false;
   }
 
   // 사용자의 모든 일정 가져오기

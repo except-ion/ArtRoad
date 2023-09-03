@@ -23,7 +23,7 @@ class _mCalendarDialog extends State<mCalendarDialog> {
   final TextEditingController colorField = TextEditingController();
   final FirebaseStoreService _firebaseStoreService = FirebaseStoreService();
 
-  void _showScheduleDialog() {
+  void _showScheduleDialog(String? userId) {
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -94,9 +94,13 @@ class _mCalendarDialog extends State<mCalendarDialog> {
                                 child: InkWell(
                                   onTap: () async {
                                     Navigator.pop(context);
-                                    // --- 일정 추가 로직 구현 ---
                                     String color = selectedColor.toString();
-                                    await _firebaseStoreService.addSchedule("userId", titleField.text, widget.selectedDay, selectedAlarm, color, linkField.text);
+                                    bool isSuccess = await _firebaseStoreService.addSchedule(userId!, titleField.text, widget.selectedDay, selectedAlarm, color, linkField.text);
+                                    if (isSuccess) {
+                                      //일정 추가 성공 토스트 띄우기
+                                    } else {
+                                      //일정 추가 실패 토스트 띄우기
+                                    }
                                   },
                                   child: const Align(
                                     alignment: Alignment.topRight,
@@ -490,13 +494,12 @@ class _mCalendarDialog extends State<mCalendarDialog> {
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
     String? userId = userProvider.firebaseUserId;
-    print('userId: $userId');
 
     return Row(
       children: [
         InkWell(
           onTap: () {
-            _showScheduleDialog();
+            _showScheduleDialog(userId);
           },
           child: const Stack(
             children: [
