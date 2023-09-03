@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:artroad/presentation/basepage_screen/basepage_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:artroad/theme/theme_helper.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -24,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailField = TextEditingController();
   TextEditingController pwField = TextEditingController();
   final _auth = FirebaseAuth.instance;
+  final _firestore = FirebaseFirestore.instance;
 
   //firebase login
   void signInWithFirebase(String email, String pw) async {
@@ -60,9 +62,38 @@ class _LoginScreenState extends State<LoginScreen> {
           ? await UserApi.instance.loginWithKakaoTalk()
           : await UserApi.instance.loginWithKakaoAccount();
       print('token: $token');
+      bool isSavedFirebase = await saveUserData(token.accessToken);
+      if(isSavedFirebase) {
+        print('isSaveFirebase 성공');
+      } else {
+        print('isSaveFirebase 실패');
+      }
       return true;
     } catch (error) {
       print('카카오톡으로 로그인 실패 $error');
+      return false;
+    }
+  }
+
+  //카카오 로그인 정보 firebase에 유저 정보 저장
+  Future<bool> saveUserData(String token) async {
+    try{
+      final userCredential = await _auth.signInAnonymously();
+      print('userCredential : $userCredential');
+
+      if(userCredential.user != null) {
+        final uid = userCredential.user?.uid;
+        print('uid : $uid');
+        await _firestore.collection('Users').doc(uid).set({
+          'providerId': 'kakao.com',
+          'userName': (await UserApi.instance.me()).kakaoAccount!.profile!.nickname,
+          'idToken': token
+        });
+        print('collection 저장');
+      }
+      return true;
+    } catch (e) {
+      print('saveUserData error: $e');
       return false;
     }
   }

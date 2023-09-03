@@ -8,3 +8,6 @@
 /.packages
 /ios/Podfile
 /pubspec.lock
+
+google-services.json
+firebase_options.dart
