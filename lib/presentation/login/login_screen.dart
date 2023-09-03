@@ -52,6 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
       print(e);
     }
   }
+
   //Kakao login
   void signInWithKakao() async {
     try {

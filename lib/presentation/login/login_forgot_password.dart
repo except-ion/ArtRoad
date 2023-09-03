@@ -3,6 +3,7 @@ import 'package:artroad/widgets/custom_textformfield.dart';
 import 'package:artroad/widgets/custom_button_main_color.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginForgotPasswordScreen extends StatefulWidget {
   const LoginForgotPasswordScreen({super.key});
@@ -14,6 +15,36 @@ class LoginForgotPasswordScreen extends StatefulWidget {
 
 class _LoginForgotPasswordScreenState extends State<LoginForgotPasswordScreen> {
   final TextEditingController emailField = TextEditingController();
+  final _auth = FirebaseAuth.instance;
+
+  Future<bool> resetPassword({required String email}) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      return true;
+    } on FirebaseAuthException catch (e) {    
+      if (e.code.toString() == 'invalid-email') {
+        Fluttertoast.showToast(
+          msg: '이메일 형식이 올바르지 않습니다.',
+          toastLength: Toast.LENGTH_SHORT,
+          backgroundColor: Colors.grey,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      }
+      if (e.code.toString() == 'user-not-found') {
+        Fluttertoast.showToast(
+          msg: '등록되지 않은 사용자입니다.',
+          toastLength: Toast.LENGTH_SHORT,
+          backgroundColor: Colors.grey,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      }
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,17 +80,20 @@ class _LoginForgotPasswordScreenState extends State<LoginForgotPasswordScreen> {
                     height: 25,
                   ),
                   CustomButtonMainColor(
-                    onPressed: () {
-                      Navigator.pop(context); // 다이얼로그 닫기
-                      //회원가입 로직
-                      print('메일 발신 성공');
-                      Fluttertoast.showToast(
-                        msg: '메일을 보냈습니다.',
-                        toastLength: Toast.LENGTH_SHORT,
-                        backgroundColor: Colors.grey,
-                        textColor: Colors.white,
-                        fontSize: 16.0,
-                      );
+                    onPressed: () async {
+                      bool isSuccess =  await resetPassword(email: emailField.text);
+                      if (isSuccess) {
+                        Fluttertoast.showToast(
+                          msg: '메일을 보냈습니다.',
+                          toastLength: Toast.LENGTH_SHORT,
+                          backgroundColor: Colors.grey,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
+                        );
+                        print('메일 발신 성공');
+                      } else {
+                        print('메일 발신 실패');
+                      }
                     },
                     text: '비밀번호 재설정하기',
                   ),
