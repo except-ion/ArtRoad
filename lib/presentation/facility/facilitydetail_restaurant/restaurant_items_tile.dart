@@ -2,6 +2,7 @@ import 'package:artroad/presentation/facility/facilitydetail_restaurant/restaura
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class RestaurantItemsTile extends StatelessWidget {
   RestaurantItemsTile(this._RestaurantItems);
@@ -50,6 +51,13 @@ class RestaurantItemsTile extends StatelessWidget {
                   InkWell(
                     onTap: () {
                       Clipboard.setData(ClipboardData(text: _RestaurantItems.rAdress));
+                      Fluttertoast.showToast(
+                        msg: '주소가 복사되었습니다.',
+                        toastLength: Toast.LENGTH_SHORT,
+                        backgroundColor: Colors.grey,
+                        textColor: Colors.white,
+                        fontSize: 16.0,
+                      );
                       print('adress copy bt');
                     },
                     child: Icon(
@@ -95,6 +103,13 @@ class RestaurantItemsTile extends StatelessWidget {
               InkWell(
                 onTap: () {
                   Clipboard.setData(ClipboardData(text: _RestaurantItems.rPhoneNum));
+                  Fluttertoast.showToast(
+                    msg: '전화번호가 복사되었습니다.',
+                    toastLength: Toast.LENGTH_SHORT,
+                    backgroundColor: Colors.grey,
+                    textColor: Colors.white,
+                    fontSize: 16.0,
+                  );
                   print('phone number copy bt');
                 },
                 child: Icon(
