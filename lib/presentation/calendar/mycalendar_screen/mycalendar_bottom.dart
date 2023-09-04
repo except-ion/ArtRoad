@@ -5,14 +5,13 @@ import 'package:flutter/material.dart';
 class MyCalendarBottom extends StatefulWidget {
   final DateTime selectedDay; // 선택된 날짜를 인자로 받도록 수정
 
-  MyCalendarBottom({required this.selectedDay});
+  const MyCalendarBottom({super.key, required this.selectedDay});
 
   @override
   _MyCalendarBottom createState() => _MyCalendarBottom();
 }
 
 class _MyCalendarBottom extends State<MyCalendarBottom> {
-
   void _showScheduleDialog() {
     showModalBottomSheet<void>(
       context: context,
@@ -31,7 +30,7 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
           Colors.orange,
           Colors.yellow,
           Colors.green,
-          Color(0xFF176FF2),
+          const Color(0xFF176FF2),
           Colors.purple,
           Colors.pink,
         ];
@@ -61,7 +60,7 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
                                   onTap: () {
                                     Navigator.pop(context);
                                   },
-                                  child: Align(
+                                  child: const Align(
                                     alignment: Alignment.topLeft,
                                     child: Icon(
                                       Icons.close_rounded,
@@ -77,7 +76,7 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
                                     Navigator.pop(context);
                                     // --- 일정 추가 로직 구현 ---
                                   },
-                                  child: Align(
+                                  child: const Align(
                                     alignment: Alignment.topRight,
                                     child: Icon(
                                       Icons.check_rounded,
@@ -89,7 +88,7 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
 
                           Align(
                             alignment: Alignment.topLeft,
@@ -97,7 +96,7 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
                               padding: getPadding(left: 10),
                               child: Text(
                                 '${widget.selectedDay.month}월 ${widget.selectedDay.day}일 (${_getDayOfWeek(widget.selectedDay)})',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 15,
                                 ),
@@ -142,15 +141,15 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
                                             borderRadius: BorderRadius.circular(30.0),
                                           ),
                                           child: Container(
-                                            constraints: BoxConstraints(
+                                            constraints: const BoxConstraints(
                                               maxWidth: 300, // 최대 너비 조절
                                             ),
-                                            padding: EdgeInsets.all(20),
+                                            padding: const EdgeInsets.all(20),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.min,
                                               crossAxisAlignment: CrossAxisAlignment.center,
                                               children: [
-                                                Row(
+                                                const Row(
                                                   mainAxisAlignment: MainAxisAlignment.center,
                                                   children: [
                                                     Stack(
@@ -185,9 +184,9 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
                                                   ],
                                                 ),
 
-                                                SizedBox(height: 10),
+                                                const SizedBox(height: 10),
 
-                                                Text(
+                                                const Text(
                                                   '등록한 일정을 삭제하시겠어요?',
                                                   style: TextStyle(
                                                     fontSize: 16,
@@ -195,7 +194,7 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
                                                   ),
                                                 ),
 
-                                                SizedBox(height: 20),
+                                                const SizedBox(height: 20),
 
                                                 Row(
                                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -206,19 +205,19 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
                                                       },
                                                       child: Container(
                                                         decoration: BoxDecoration(
-                                                          color: Color(0xFFC7C7CC), // 배경색
+                                                          color: const Color(0xFFC7C7CC), // 배경색
                                                           borderRadius: BorderRadius.circular(30),
                                                           boxShadow: [
                                                             BoxShadow(
                                                               color: Colors.black.withOpacity(0.2), // 그림자 색상
                                                               spreadRadius: 1, // 그림자 확산 범위
                                                               blurRadius: 2, // 그림자 흐림 정도
-                                                              offset: Offset(0, 3), // 그림자 위치 (x, y)
+                                                              offset: const Offset(0, 3), // 그림자 위치 (x, y)
                                                             ),
                                                           ],
                                                         ),
-                                                        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                                                        child: Text(
+                                                        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                                                        child: const Text(
                                                           '취소',
                                                           style: TextStyle(
                                                             color: Colors.white,
@@ -229,7 +228,7 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
                                                       )
                                                     ),
 
-                                                    SizedBox(width: 10),
+                                                    const SizedBox(width: 10),
 
                                                     InkWell(
                                                       onTap: () {
@@ -237,19 +236,19 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
                                                       },
                                                       child: Container(
                                                         decoration: BoxDecoration(
-                                                          color: Color(0xFF176FF2), // 배경색
+                                                          color: const Color(0xFF176FF2), // 배경색
                                                           borderRadius: BorderRadius.circular(30),
                                                           boxShadow: [
                                                             BoxShadow(
                                                               color: Colors.black.withOpacity(0.2), // 그림자 색상
                                                               spreadRadius: 1, // 그림자 확산 범위
                                                               blurRadius: 2, // 그림자 흐림 정도
-                                                              offset: Offset(0, 3), // 그림자 위치 (x, y)
+                                                              offset: const Offset(0, 3), // 그림자 위치 (x, y)
                                                             ),
                                                           ],
                                                         ),
-                                                        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                                                        child: Text(
+                                                        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                                                        child: const Text(
                                                           '확인',
                                                           style: TextStyle(
                                                             color: Colors.white,
@@ -268,7 +267,7 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
                                       },
                                     );
                                   },
-                                  child: Align(
+                                  child: const Align(
                                     alignment: Alignment.topRight,
                                     child: Icon(
                                       Icons.delete_rounded,
@@ -283,27 +282,27 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
                           Container(
                             height: 1.5,
                             width: 370,
-                            color: Color(0xFFC7C7CC),
+                            color: const Color(0xFFC7C7CC),
                           ),
 
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
 
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.link_rounded,
                                 color: Colors.black,
                                 size: 25,
                               ),
-                              SizedBox(width: 7),
+                              const SizedBox(width: 7),
                               Expanded(
                                 child: TextFormField(
                                   cursorColor: Colors.black,
                                   cursorWidth: 1.5,
                                   showCursor: true,
 
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     hintText: '링크 추가',
                                     hintStyle: TextStyle(
                                       color: Colors.black,
@@ -317,11 +316,11 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
                             ],
                           ),
 
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
 
                           Column(
                             children: [
-                              Row(
+                              const Row(
                                 children: [
                                   Icon(
                                     Icons.alarm_rounded,
@@ -340,7 +339,7 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
                                 ],
                               ),
 
-                              SizedBox(height: 10),
+                              const SizedBox(height: 10),
 
                               Align(
                                 alignment: Alignment.topLeft,
@@ -349,7 +348,7 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
                                   width: 161,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10), // 모서리 둥글기 설정
-                                    border: Border.all(color: Color(0xFF176FF2), width: 1.5), // 테두리 설정
+                                    border: Border.all(color: const Color(0xFF176FF2), width: 1.5), // 테두리 설정
                                   ),
                                   child: Padding(
                                     padding: getPadding(left: 8),
@@ -359,12 +358,12 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
                                         bottomState(() { // bottomState를 사용하여 상태를 업데이트합니다
                                           setState(() {
                                             selectedValue = newValue!;
-                                            print("alarm option : " + selectedValue);
+                                            print("alarm option : $selectedValue");
                                           }); // 선택된 값을 업데이트
                                         });
                                       },
-                                      underline: SizedBox(), // 밑줄 제거
-                                      icon: Padding(
+                                      underline: const SizedBox(), // 밑줄 제거
+                                      icon: const Padding(
                                         padding: EdgeInsets.only(left: 25), // 아이콘 왼쪽 패딩 설정
                                         child: Icon(Icons.arrow_drop_down),
                                       ), // 드롭다운 아이콘
@@ -379,7 +378,7 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
                                           value: value,
                                           child: Text(
                                             value,
-                                            style: TextStyle(fontSize: 14), // 아이템 글씨 크기 설정
+                                            style: const TextStyle(fontSize: 14), // 아이템 글씨 크기 설정
                                           ),
                                         );
                                       }).toList(),
@@ -390,11 +389,11 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
                             ],
                           ),
 
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
 
                           Column(
                             children: [
-                              Row(
+                              const Row(
                                 children: [
                                   Icon(
                                     Icons.invert_colors_on_rounded,
@@ -413,7 +412,7 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
                                 ],
                               ),
 
-                              SizedBox(height: 10),
+                              const SizedBox(height: 10),
 
                               Row(
                                 children: List.generate(
@@ -425,11 +424,11 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
                                           setState(() {
                                             isToggledList = List.generate(isToggledList.length, (i) => i == index ? !isToggledList[i] : false);
                                             selectedColor = colors[index];
-                                            print("color option : " + selectedColor.toString());
+                                            print("color option : $selectedColor");
                                           });
                                         });
                                       },
-                                      child: Container(
+                                      child: SizedBox(
                                         width: 25,
                                         height: 25,
                                         child: Icon(
@@ -444,7 +443,7 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
                                   return Row(
                                     children: [
                                       widget,
-                                      SizedBox(width: 10), // 버튼 간 간격 조절
+                                      const SizedBox(width: 10), // 버튼 간 간격 조절
                                     ],
                                   );
                                 }).toList(),
@@ -476,7 +475,7 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   '${widget.selectedDay.month}/${widget.selectedDay.day} (${_getDayOfWeek(widget.selectedDay)})',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
@@ -495,7 +494,7 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
                       onTap: () {
                         _showScheduleDialog();
                       },
-                      child: Stack(
+                      child: const Stack(
                         children: [
                           Icon(
                             Icons.circle,
@@ -526,7 +525,10 @@ class _MyCalendarBottom extends State<MyCalendarBottom> {
   String _getDayOfWeek(DateTime date) {
     final List<String> daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
 
-    if (date.weekday == 7 ) return daysOfWeek[0]; // 일요일의 경우 0 인덱스를 사용
-    else return daysOfWeek[date.weekday];
+    if (date.weekday == 7 ) {
+      return daysOfWeek[0]; // 일요일의 경우 0 인덱스를 사용
+    } else {
+      return daysOfWeek[date.weekday];
+    }
   }
 }

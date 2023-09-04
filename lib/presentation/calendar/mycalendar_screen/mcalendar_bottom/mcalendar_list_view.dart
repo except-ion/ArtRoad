@@ -7,24 +7,20 @@ import 'package:provider/provider.dart';
 import 'package:artroad/presentation/services/firebase_firestore_services.dart';
 
 class mCalendarListView extends StatelessWidget {
+  final DateTime selectedDay;
   final FirebaseStoreService _firebaseStoreService = FirebaseStoreService();
 
-  mCalendarListView({super.key});
+  mCalendarListView({super.key, required this.selectedDay});
   Future<List<mCalendarItems>> getScheduleData(String? userId) async {
-    final List<mCalendarItems> mcalendarList = await _firebaseStoreService.getUserSchedules(userId);
-    print('mcalendarList: $mcalendarList');
+    final List<mCalendarItems> mcalendarList = await _firebaseStoreService.getUserSchedules(userId, selectedDay);
     return mcalendarList;
   }
-  // final List<mCalendarItems> mcalendarList = [
-  //   mCalendarItems(null, 'Schedule Name 1', '2023.01.01', '링크있음', '없음', Colors.red),
-  //   mCalendarItems(null, 'Schedule Name 2', '2023.02.01', null, '1일 전', Colors.orange),
-  //   mCalendarItems(null, 'Schedule Name 3', '2023.03.01', '링크있음', '1주일 전', Colors.purple),
-  // ];
 
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
     String? userId = userProvider.firebaseUserId;
+    print('selectedDay in list view $selectedDay');
 
     return FutureBuilder<List<mCalendarItems>>(
       future: getScheduleData(userId),

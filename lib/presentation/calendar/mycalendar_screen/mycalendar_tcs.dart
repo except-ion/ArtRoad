@@ -144,7 +144,7 @@ class _TableCalendarScreenState extends State<mTableCalendarScreen> {
                 ],
               ),
 
-              mCalendarListView(),
+              mCalendarListView(selectedDay: selectedDay),
             ],
           ),
         ),

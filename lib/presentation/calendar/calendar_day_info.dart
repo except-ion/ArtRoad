@@ -6,7 +6,7 @@ import 'day_of_week.dart';
 class CalendarDayInfo extends StatefulWidget {
   final DateTime selectedDay; // 선택된 날짜를 인자로 받도록 수정
 
-  CalendarDayInfo({required this.selectedDay});
+  const CalendarDayInfo({super.key, required this.selectedDay});
 
   String get selectedDate => selectedDate;
 
@@ -20,23 +20,28 @@ class _CalendarDayInfo extends State<CalendarDayInfo> {
   @override
   Widget build(BuildContext context) {
     String selectedDate = '${widget.selectedDay.year}.${widget.selectedDay.month}.${widget.selectedDay.day}';
+    print('selectedDate: $selectedDate');
 
-    if (widget.selectedDay.month < 10 && widget.selectedDay.day > 10)
-      selectedDate = '${widget.selectedDay.year}.0${widget.selectedDay.month}.${widget.selectedDay.day}';
-    if (widget.selectedDay.month > 10 && widget.selectedDay.day < 10)
-      selectedDate = '${widget.selectedDay.year}.${widget.selectedDay.month}.0${widget.selectedDay.day}';
-    if (widget.selectedDay.month < 10 && widget.selectedDay.day < 10)
-      selectedDate = '${widget.selectedDay.year}.0${widget.selectedDay.month}.0${widget.selectedDay.day}';
-    if (widget.selectedDay.month > 10 && widget.selectedDay.day > 10)
-      selectedDate = '${widget.selectedDay.year}.${widget.selectedDay.month}.${widget.selectedDay.day}';
+    // if (widget.selectedDay.month < 10 && widget.selectedDay.day > 10) {
+    //   selectedDate = '${widget.selectedDay.year}.0${widget.selectedDay.month}.${widget.selectedDay.day}';
+    // }
+    // if (widget.selectedDay.month > 10 && widget.selectedDay.day < 10) {
+    //   selectedDate = '${widget.selectedDay.year}.${widget.selectedDay.month}.0${widget.selectedDay.day}';
+    // }
+    // if (widget.selectedDay.month < 10 && widget.selectedDay.day < 10) {
+    //   selectedDate = '${widget.selectedDay.year}.0${widget.selectedDay.month}.0${widget.selectedDay.day}';
+    // }
+    // if (widget.selectedDay.month > 10 && widget.selectedDay.day > 10) {
+    //   selectedDate = '${widget.selectedDay.year}.${widget.selectedDay.month}.${widget.selectedDay.day}';
+    // }
 
-    print(selectedDate);
+    // print(selectedDate);
 
     return Row(
       children: [
         Text(
           '${widget.selectedDay.month}/${widget.selectedDay.day} (${dayOfWeek.getDayOfWeek(widget.selectedDay)})',
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.black,
             fontSize: 18,
             fontWeight: FontWeight.w700,
