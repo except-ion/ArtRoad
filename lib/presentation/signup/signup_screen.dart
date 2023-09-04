@@ -1,3 +1,4 @@
+import 'package:artroad/presentation/login/login_screen.dart';
 import 'package:artroad/presentation/signup/signup_terms_of_service.dart';
 import 'package:artroad/widgets/custom_header.dart';
 import 'package:artroad/widgets/custom_textformfield.dart';
@@ -55,6 +56,13 @@ class _SignupScreenState extends State<SignupScreen> {
             'userName': name,
             'email': email,
       });
+      ScaffoldMessenger.of(context)
+        .showSnackBar(const SnackBar(content: Text('회원가입 성공')));
+      Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const LoginScreen(),
+          ),
+        );       
     } else {
       ScaffoldMessenger.of(context)
         .showSnackBar(const SnackBar(content: Text('회원가입 실패')));
