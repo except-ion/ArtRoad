@@ -23,6 +23,7 @@ class _RankingItemsTileState extends State<RankingItemsTile> {
 
   @override
   Widget build(BuildContext context) {
+    print('rankingItems link : ${widget._RankingItems.poster}');
     return Container(
       height: 270,
       alignment: Alignment.center,
@@ -31,7 +32,7 @@ class _RankingItemsTileState extends State<RankingItemsTile> {
         child: _imageLoading
             ? const CircularProgressIndicator()
             : Image.asset(
-                '${widget._RankingItems.poster}',
+                'https://www.kopis.or.kr/${widget._RankingItems.poster}',
                 errorBuilder: (context, error, stackTrace) {
                   _updateImageLoading(false);
                   return const Text('이미지 로드 실패');

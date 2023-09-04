@@ -1,6 +1,8 @@
 import 'package:artroad/presentation/home/home_ranking_swiper.dart';
+import 'package:artroad/src/provider/ranking_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:artroad/theme/theme_helper.dart';
+import 'package:provider/provider.dart';
 import 'home_ranking_grid_view.dart';
 
 final List<String> imgList = [
@@ -40,6 +42,9 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
   @override
   Widget build(BuildContext context) {
+    final rankingProvider = Provider.of<RankingProvider>(context);
+    rankingProvider.loadTop10Rankings();
+    
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SingleChildScrollView(
@@ -84,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(
             height: 30,
           ),
-          HomeRankingSwiper(),
+          HomeRankingSwiper(rankingList: rankingProvider.rankings),
           const SizedBox(
             height: 10,
           ),

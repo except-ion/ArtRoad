@@ -61,7 +61,7 @@ class RankingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _rankingProvider = Provider.of<RankingProvider>(context, listen: false);
-    _rankingProvider.loadRankings(); 
+    _rankingProvider.loadTop10Rankings(); 
 
     return Scaffold(
       appBar: AppBar(

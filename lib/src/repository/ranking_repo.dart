@@ -9,16 +9,15 @@ import 'package:intl/intl.dart';
 
 class RankingRepository {
 
-  Future<List<RankingItems>?> loadRankings() async {
+  Future<List<RankingItems>?> loadTop10Rankings() async {
     await dotenv.load();
     DateTime now = DateTime.now();
     String currentDate = DateFormat('yyyyMMdd').format(now);
-    List<String> catecodeList = ["", "AAAA", "GGGA", "CCCD", "CCCA"];
+    // List<String> catecodeList = ["", "AAAA", "GGGA", "CCCD", "CCCA"];
     String apiKey = dotenv.env['API_KEY']!;
     List<RankingItems> rankings = [];
-    for(String catecode in catecodeList){
       String baseUrl =
-          "http://kopis.or.kr/openApi/restful/boxoffice?service=$apiKey&ststype=month&date=$currentDate&catecode=$catecode";
+          "http://kopis.or.kr/openApi/restful/boxoffice?service=$apiKey&ststype=month&date=$currentDate";
       final response = await http.get(Uri.parse(baseUrl));
 
       // 정상적으로 데이터를 불러왔다면
@@ -32,7 +31,7 @@ class RankingRepository {
         // 필요한 데이터 찾기
         Map<String, dynamic> jsonResult = convert.json.decode(json);
         final jsonRanking = jsonResult['boxofs']['boxof'];
-        
+        print('jsonRanking: $jsonRanking');
         // ranking 상위 10개만 return 보내기
         if (jsonRanking != null) {
           List<dynamic> items = jsonRanking as List;
@@ -41,7 +40,6 @@ class RankingRepository {
       } else{
         print(response);
       }
-    }
     }
     if (rankings.isNotEmpty) {
       return rankings;

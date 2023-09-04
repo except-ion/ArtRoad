@@ -10,10 +10,10 @@ class RankingProvider extends ChangeNotifier {
   List<RankingItems> get rankings => _rankings;
 
   // 데이터 로드
-  loadRankings() async {
+  loadTop10Rankings() async {
     // EvRepository 접근해서 데이터를 로드
     // listEvs에 _evs를 바로 작성해도 되지만 예외 처리와 추가적인 가공을 위해 나눠서 작성한다.
-    List<RankingItems>? listRankings = await _rankingRepository.loadRankings();
+    List<RankingItems>? listRankings = await _rankingRepository.loadTop10Rankings();
     _rankings = listRankings!;
     notifyListeners(); // 데이터가 업데이트가 됐으면 구독자에게 알린다.
   }
