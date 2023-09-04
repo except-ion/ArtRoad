@@ -1,7 +1,14 @@
+import 'package:artroad/core/app_export.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../../core/utils/size_utils.dart';
 import '../../theme/theme_helper.dart';
+import '../login/login_screen.dart';
+import 'announce/announce_list_view.dart';
+import 'artroadinfo/artroad_info.dart';
+import 'inquiry/inquiry_list_view.dart';
+import 'myinfo/my_info.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -11,12 +18,156 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+
+  // 친구에게 공유하기 Dialog
+  void _showShareDialog() {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(20),
+          topLeft: Radius.circular(20),
+        ),
+      ),
+      builder: (BuildContext context) {
+        print(MediaQuery.of(context).viewInsets.bottom);
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter bottomState) {
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    top: 20, left: 35, right: 35, bottom: 20),
+                child: Container(
+                  //키보드 창 크기만큼 컨텐츠 올리기
+                  // padding: EdgeInsets.only(
+                  //     bottom: MediaQuery.of(context).viewInsets.bottom),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Stack(
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              // --- 구현부 ---
+                              Text(
+                                '친구에게 공유하기',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+
+                              SizedBox(height: 15),
+
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CustomImageView(
+                                    imagePath: ImageConstant.imgAppLogo,
+                                    width: 40,
+                                    height: 40,
+                                  ),
+
+                                  SizedBox(width: 5),
+
+                                  Text(
+                                    '당신의 문화생활을 더욱 편리하게, ArtRoad!',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              SizedBox(height: 15),
+
+                              Divider(),
+
+                              SizedBox(height: 15),
+
+                              InkWell(
+                                onTap: () {
+                                  // 텍스트 복사 로직 구현
+                                  Clipboard.setData(ClipboardData(text: '앱 다운로드 링크'));
+                                  Fluttertoast.showToast(
+                                    msg: '링크가 복사되었습니다.',
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    backgroundColor: Colors.grey,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0,
+                                  );
+                                },
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.link_rounded,
+                                      size: 25,
+                                      color: Color(0xFFC7C7CC),
+                                    ),
+
+                                    SizedBox(width: 5),
+
+                                    Text(
+                                      '링크 복사하기',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              SizedBox(height: 10),
+
+                              InkWell(
+                                onTap: () {
+                                  print('Kakao Share bt clicked');
+                                },
+                                child: Row(
+                                  children: [
+                                    CustomImageView(
+                                      imagePath: ImageConstant.iconKakao,
+                                      width: 25,
+                                      height: 25,
+                                    ),
+
+                                    SizedBox(width: 5),
+
+                                    Text(
+                                      '카카오톡으로 공유하기',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       physics: AlwaysScrollableScrollPhysics(),
       child: Container(
         color: Color(0xFFF4F4F4),
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         child: Column(
           children: [
             Align(
@@ -80,6 +231,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         InkWell(
                           onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MyInfo(), // 이동할 페이지 위젯
+                              ),
+                            );
                             print('profile setting bt clicked');
                           },
                           child: Icon(
@@ -132,7 +289,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           physics: const NeverScrollableScrollPhysics(),
                           children: [
                             Container(
-                              height: 54,
+                              height: 42,
                               color: Colors.transparent,
                               child: InkWell(
                                 onTap: () {
@@ -157,17 +314,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             ),
 
-                            Container(
-                              height: 1,
-                              width: 310,
-                              color: Color(0xFFC7C7CC),
-                            ),
+                            Divider(),
 
                             Container(
-                              height: 54,
+                              height: 42,
                               color: Colors.transparent,
                               child: InkWell(
                                 onTap: () {
+                                  _showShareDialog();
                                   print('친구에게 공유하기  Dialog');
                                 },
                                 child: Row(
@@ -189,17 +343,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             ),
 
-                            Container(
-                              height: 1,
-                              width: 310,
-                              color: Color(0xFFC7C7CC),
-                            ),
+                            Divider(),
 
                             Container(
-                              height: 54,
+                              height: 42,
                               color: Colors.transparent,
                               child: InkWell(
                                 onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => AnnounceListView(), // 이동할 페이지 위젯
+                                    ),
+                                  );
                                   print('Move to 공지사항');
                                 },
                                 child: Row(
@@ -221,17 +377,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             ),
 
-                            Container(
-                              height: 1,
-                              width: 310,
-                              color: Color(0xFFC7C7CC),
-                            ),
+                            Divider(),
 
                             Container(
-                              height: 54,
+                              height: 42,
                               color: Colors.transparent,
                               child: InkWell(
                                 onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => InquiryListView(), // 이동할 페이지 위젯
+                                    ),
+                                  );
                                   print('Move to 고객센터/ 자주 묻는 문의사항');
                                 },
                                 child: Row(
@@ -253,17 +411,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             ),
 
-                            Container(
-                              height: 1,
-                              width: 310,
-                              color: Color(0xFFC7C7CC),
-                            ),
+                            Divider(),
 
                             Container(
-                              height: 54,
+                              height: 42,
                               color: Colors.transparent,
                               child: InkWell(
                                 onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ArtRoadInfo(), // 이동할 페이지 위젯
+                                    ),
+                                  );
                                   print('Move to About ArtRoad');
                                 },
                                 child: Row(
@@ -285,17 +445,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             ),
 
-                            Container(
-                              height: 1,
-                              width: 310,
-                              color: Color(0xFFC7C7CC),
-                            ),
+                            Divider(),
 
                             Container(
-                              height: 54,
+                              height: 42,
                               color: Colors.transparent,
                               child: InkWell(
                                 onTap: () {
+                                  Fluttertoast.showToast(
+                                    msg: '로그아웃 되었습니다.',
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    backgroundColor: Colors.grey,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0,
+                                  );
+
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => LoginScreen(), // 이동할 페이지 위젯
+                                    ),
+                                  );
                                   print('logout bt clicked');
                                 },
                                 child: Row(
