@@ -128,18 +128,22 @@ class _TableCalendarScreenState extends State<mTableCalendarScreen> {
               ),
 
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  if (isFiveWeeks)
-                    Padding(
+                  // if (isFiveWeeks)
+                  //   Padding(
+                  //     padding: getPadding(top: 100, left: 20),
+                  //     child: CalendarDayInfo(selectedDay: selectedDay),
+                  //   ),
+                  // if (!isFiveWeeks)
+                  //   Padding(
+                  //     padding: getPadding(top: 0, left: 20),
+                  //     child: CalendarDayInfo(selectedDay: selectedDay),
+                  //   ),
+                  Padding(
                       padding: getPadding(top: 100, left: 20),
-                      child: CalendarDayInfo(selectedDay: selectedDay),
-                    ),
-                  if (!isFiveWeeks)
-                    Padding(
-                      padding: getPadding(top: 0, left: 20),
-                      child: CalendarDayInfo(selectedDay: selectedDay),
-                    ),
+                    child: CalendarDayInfo(selectedDay: selectedDay),
+                  ),
                 ],
               ),
 
