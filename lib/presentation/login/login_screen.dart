@@ -151,22 +151,22 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _showLoginDialog() {
     showDialog<void>(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Error'),
-        content: const Text('Please enter an email.'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context); // Close the dialog
-            },
-            child: const Text('OK'),
-          ),
-        ],
-      );
-    },
-  );
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Error'),
+          content: const Text('Please enter an email.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
     //로그인 창
     showModalBottomSheet<void>(
       backgroundColor: Colors.white,
@@ -234,7 +234,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                         onChanged: (value) {
                                           bottomState(() {
                                             setState(() {
-                                              print('\n\n\n$value');
                                               _isCheckRemember = value!;
                                             });
                                           });
@@ -270,7 +269,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 onPressed: () {
                                   Navigator.pop(context); // 다이얼로그 닫기
                                   //로그인 로직 추가
-                                  signInWithFirebase(emailField.text, pwField.text);
+                                  signInWithFirebase(
+                                      emailField.text, pwField.text);
+                                      
                                 },
                                 text: '로그인',
                               ),
@@ -338,7 +339,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => const SignupScreen(),
+                                          builder: (context) =>
+                                              const SignupScreen(),
                                         ),
                                       );
                                     },

@@ -21,7 +21,7 @@ class _LoginForgotPasswordScreenState extends State<LoginForgotPasswordScreen> {
     try {
       await _auth.sendPasswordResetEmail(email: email);
       return true;
-    } on FirebaseAuthException catch (e) {    
+    } on FirebaseAuthException catch (e) {
       if (e.code.toString() == 'invalid-email') {
         Fluttertoast.showToast(
           msg: '이메일 형식이 올바르지 않습니다.',
@@ -81,7 +81,8 @@ class _LoginForgotPasswordScreenState extends State<LoginForgotPasswordScreen> {
                   ),
                   CustomButtonMainColor(
                     onPressed: () async {
-                      bool isSuccess =  await resetPassword(email: emailField.text);
+                      bool isSuccess =
+                          await resetPassword(email: emailField.text);
                       if (isSuccess) {
                         Fluttertoast.showToast(
                           msg: '메일을 보냈습니다.',
@@ -90,6 +91,7 @@ class _LoginForgotPasswordScreenState extends State<LoginForgotPasswordScreen> {
                           textColor: Colors.white,
                           fontSize: 16.0,
                         );
+                        Navigator.pop(context);
                         print('메일 발신 성공');
                       } else {
                         print('메일 발신 실패');

@@ -37,7 +37,8 @@ class _SignupScreenState extends State<SignupScreen> {
 
   }
   //firebase sign-up
-  void signUpWithFirebase(String name, String email, String pw, String pwcheck) async {
+  void signUpWithFirebase(
+      String name, String email, String pw, String pwcheck) async {
     if (pw != pwcheck) {
       Fluttertoast.showToast(
         msg: '비밀번호가 일치하지 않습니다.',
@@ -115,7 +116,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             ),
                             CustomTextformfield(
                               name: '비밀번호',
-                              isPassword: false,
+                              isPassword: true,
                               controller: pwField,
                             ),
                             const SizedBox(
@@ -123,7 +124,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             ),
                             CustomTextformfield(
                               name: '비밀번호 확인',
-                              isPassword: false,
+                              isPassword: true,
                               controller: pwcheckField,
                             ),
                             const SizedBox(
