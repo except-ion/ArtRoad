@@ -16,18 +16,34 @@ class fCalendarListView extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Flexible(
-            child: ListView.builder(
-              shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                padding: const EdgeInsets.all(20),
-                itemCount: fcalendarList.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    margin: EdgeInsets.only(bottom: 15), // 원하는 여백 값
-                    child: fCalendarItemsTile(fcalendarList[index]),
-                  );
-                }
-            ),
+            child: fcalendarList.isEmpty ?
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 20),
+                      child: Text(
+                        '예정된 일정이 없습니다.',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Color(0xFF939191),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+                :
+                ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: const EdgeInsets.all(20),
+                    itemCount: fcalendarList.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: EdgeInsets.only(bottom: 15), // 원하는 여백 값
+                        child: fCalendarItemsTile(fcalendarList[index]),
+                      );
+                    }
+                ),
         ),
       ],
     );
