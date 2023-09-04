@@ -1,6 +1,7 @@
 import 'package:artroad/core/app_export.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class mCalendarDialog extends StatefulWidget {
   final DateTime selectedDay; // 선택된 날짜를 인자로 받도록 수정
@@ -16,6 +17,8 @@ class mCalendarDialog extends StatefulWidget {
 }
 
 class _mCalendarDialog extends State<mCalendarDialog> {
+  BuildContext? _mainDialogContext;
+  BuildContext? _nestedDialogContext;
 
   void _showScheduleDialog() {
     showModalBottomSheet<void>(
@@ -53,6 +56,7 @@ class _mCalendarDialog extends State<mCalendarDialog> {
         print(MediaQuery.of(context).viewInsets.bottom);
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter bottomState) {
+            _mainDialogContext = context; // 메인 다이얼로그의 BuildContext 저장
             return SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.only(
@@ -88,7 +92,15 @@ class _mCalendarDialog extends State<mCalendarDialog> {
                                 child: InkWell(
                                   onTap: () {
                                     Navigator.pop(context);
+                                    Fluttertoast.showToast(
+                                      msg: '일정이 추가되었습니다.',
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      backgroundColor: Colors.grey,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0,
+                                    );
                                     // --- 일정 추가 로직 구현 ---
+
                                   },
                                   child: Align(
                                     alignment: Alignment.topRight,
@@ -150,6 +162,7 @@ class _mCalendarDialog extends State<mCalendarDialog> {
                                     showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
+                                        _nestedDialogContext = context;
                                         return Dialog(
                                           shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(30.0),
@@ -215,6 +228,7 @@ class _mCalendarDialog extends State<mCalendarDialog> {
                                                   children: [
                                                     InkWell(
                                                         onTap: () {
+                                                          Navigator.pop(context);
                                                           // 클릭 이벤트에 따른 로직 작성
                                                         },
                                                         child: Container(
@@ -246,6 +260,15 @@ class _mCalendarDialog extends State<mCalendarDialog> {
 
                                                     InkWell(
                                                         onTap: () {
+                                                          _closeAllDialogs();
+
+                                                          Fluttertoast.showToast(
+                                                            msg: '일정이 삭제되었습니다.',
+                                                            toastLength: Toast.LENGTH_SHORT,
+                                                            backgroundColor: Colors.grey,
+                                                            textColor: Colors.white,
+                                                            fontSize: 16.0,
+                                                          );
                                                           // 클릭 이벤트에 따른 로직 작성
                                                         },
                                                         child: Container(
@@ -474,6 +497,7 @@ class _mCalendarDialog extends State<mCalendarDialog> {
         );
       },
     );
+
   }
 
   @override
@@ -505,6 +529,19 @@ class _mCalendarDialog extends State<mCalendarDialog> {
         ),
       ],
     );
+  }
+
+// 중첩된 다이얼로그를 모두 닫기
+  void _closeAllDialogs() {
+    if (_nestedDialogContext != null) {
+      Navigator.pop(_nestedDialogContext!); // 중첩 다이얼로그 닫기
+      _nestedDialogContext = null;
+    }
+
+    if (_mainDialogContext != null) {
+      Navigator.pop(_mainDialogContext!); // 메인 다이얼로그 닫기
+      _mainDialogContext = null;
+    }
   }
 
   String _getDayOfWeek(DateTime date) {
