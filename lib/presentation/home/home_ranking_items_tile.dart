@@ -23,7 +23,8 @@ class _RankingItemsTileState extends State<RankingItemsTile> {
 
   @override
   Widget build(BuildContext context) {
-    print('rankingItems link : ${widget._RankingItems.poster}');
+    print('rankingItems link : ${widget._RankingItems.poster}');            
+    print('https://www.kopis.or.kr/${widget._RankingItems.poster}?service=2b70191f708148f191799a7ded91b068');
     return Container(
       height: 270,
       alignment: Alignment.center,
@@ -31,10 +32,12 @@ class _RankingItemsTileState extends State<RankingItemsTile> {
         borderRadius: BorderRadius.circular(16),
         child: _imageLoading
             ? const CircularProgressIndicator()
-            : Image.asset(
+            : Image.network(
                 'https://www.kopis.or.kr/${widget._RankingItems.poster}',
                 errorBuilder: (context, error, stackTrace) {
                   _updateImageLoading(false);
+                  print('url: https://www.kopis.or.kr/${widget._RankingItems.poster}');
+                  print('error: $error');
                   return const Text('이미지 로드 실패');
                 },
                 width: 200,
