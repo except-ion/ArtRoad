@@ -1,6 +1,7 @@
 import 'package:artroad/core/app_export.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CustomBottomBar extends StatefulWidget {
   CustomBottomBar({this.onChanged});
 
@@ -70,19 +71,6 @@ class CustomBottomBarState extends State<CustomBottomBar> {
                   ),
                   color: appTheme.black900,
                 ),
-                Padding(
-                  padding: getPadding(
-                    top: 4,
-                  ),
-                  child: Text(
-                    bottomMenuList[index].title ?? "",
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.left,
-                    style: theme.textTheme.bodySmall!.copyWith(
-                      color: appTheme.blueGray800,
-                    ),
-                  ),
-                ),
               ],
             ),
             activeIcon: Column(
@@ -99,19 +87,6 @@ class CustomBottomBarState extends State<CustomBottomBar> {
                     30,
                   ),
                   color: appTheme.blueA400,
-                ),
-                Padding(
-                  padding: getPadding(
-                    top: 3,
-                  ),
-                  child: Text(
-                    bottomMenuList[index].title ?? "",
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.left,
-                    style: CustomTextStyles.bodySmallBlueA400.copyWith(
-                      color: appTheme.blueA400,
-                    ),
-                  ),
                 ),
               ],
             ),
