@@ -14,8 +14,6 @@ class HomeRankingGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(selectedCategoryIndex);
-    print('gridViewRankingList: $rankingList');
     return Padding(
       padding: const EdgeInsets.all(10),
       child: SizedBox(

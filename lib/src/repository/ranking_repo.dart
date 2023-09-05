@@ -100,10 +100,6 @@ class RankingRepository {
     return _loadRankings(cate);
   }
 
-  Future<List<RankingItems>?> loadPopularDanceRankings(String cate) async {
-    return _loadRankings(cate);
-  }
-
   Future<List<RankingItems>?> loadCircusRankings(String cate) async {
     return _loadRankings(cate);
   }

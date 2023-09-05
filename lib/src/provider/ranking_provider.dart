@@ -27,9 +27,6 @@ class RankingProvider extends ChangeNotifier {
   List<RankingItems> _danceRankings = [];
   List<RankingItems> get danceRankings => _danceRankings;
 
-  List<RankingItems> _popularDanceRankings = [];
-  List<RankingItems> get popularDanceRankings => _popularDanceRankings;
-
   List<RankingItems> _circusRankings = [];
   List<RankingItems> get circusRankings => _circusRankings;
 
@@ -79,13 +76,6 @@ class RankingProvider extends ChangeNotifier {
   loadDanceRankings() async {
     List<RankingItems>? listDanceRankings = await _rankingRepository.loadDanceRankings('BBBC');
     _danceRankings = listDanceRankings!;
-    notifyListeners();
-  }
-
-  loadPopularDanceRankings() async {
-    List<RankingItems>? listPopularDanceRankings = await _rankingRepository.loadPopularDanceRankings('BBBR');
-    _popularDanceRankings = listPopularDanceRankings!;
-    print('_popularDanceRankings: $_popularDanceRankings');
     notifyListeners();
   }
 

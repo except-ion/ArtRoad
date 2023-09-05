@@ -36,7 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
     '국악',
     '대중음악',
     '무용',
-    '대중무용',
     '서커스/마술',
     '복합',
     '아동',
@@ -57,12 +56,10 @@ class _HomeScreenState extends State<HomeScreen> {
     case 5:
       return provider.danceRankings;
     case 6:
-      return provider.danceRankings;
-    case 7:
       return provider.circusRankings;
-    case 8:
+    case 7:
       return provider.complexRankings;
-    case 9:
+    case 8:
       return provider.kidRankings;
 
     default:
@@ -79,7 +76,6 @@ class _HomeScreenState extends State<HomeScreen> {
     rankingProvider.loadKoreanRankings();
     rankingProvider.loadPopularRankings();
     rankingProvider.loadDanceRankings();
-    // rankingProvider.loadPopularDanceRankings();
     rankingProvider.loadCircusRankings();
     rankingProvider.loadComplexRankings();
     rankingProvider.loadKidRankings();
