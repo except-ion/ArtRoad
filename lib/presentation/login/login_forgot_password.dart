@@ -1,4 +1,3 @@
-import 'package:artroad/presentation/login/login_screen.dart';
 import 'package:artroad/widgets/check_validate.dart';
 import 'package:artroad/widgets/custom_header.dart';
 import 'package:artroad/widgets/custom_textformfield.dart';
@@ -59,22 +58,22 @@ class _LoginForgotPasswordScreenState extends State<LoginForgotPasswordScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              CustomHeader(
+              const CustomHeader(
                 name: '비밀번호 찾기',
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
-              Text(
+              const Text(
                 '가입한 이메일 주소를 입력해주세요.\n비밀번호 재설정 메일을 보내드립니다.',
                 style: TextStyle(fontSize: 16),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
               Padding(
-                padding: EdgeInsets.only(left: 40, right: 40, bottom: 30),
+                padding: const EdgeInsets.only(left: 40, right: 40, bottom: 30),
                 child: Column(
                   children: [
                     CustomTextformfield(
@@ -85,7 +84,7 @@ class _LoginForgotPasswordScreenState extends State<LoginForgotPasswordScreen> {
                       validator: (value) =>
                           CheckValidate().validateEmail(emailFocus, '$value'),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 25,
                     ),
                     CustomButtonMainColor(
@@ -94,7 +93,7 @@ class _LoginForgotPasswordScreenState extends State<LoginForgotPasswordScreen> {
                           // validation 이 성공하면 폼 저장하기
                           _formKey.currentState!.save();
                           bool isSuccess =
-                          await resetPassword(email: emailField.text);
+                              await resetPassword(email: emailField.text);
                           if (isSuccess) {
                             Fluttertoast.showToast(
                               msg: '메일을 보냈습니다.',

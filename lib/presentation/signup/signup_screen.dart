@@ -8,7 +8,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/check_validate.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:artroad/presentation/services/firebase_auth_services.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -28,47 +27,29 @@ class _SignupScreenState extends State<SignupScreen> {
   //firebase signup
   final _auth = FirebaseAuth.instance;
 
-   @override
-  void initState() {
-    super.initState();
-
-    nameField.text = "yuda";
-    emailField.text = "dyj09087@gmail.com";
-    pwField.text = "r3OeR0UDal";
-    pwcheckField.text = "r3OeR0UDal";
-
-  }
   //firebase sign-up
   void signUpWithFirebase(
       String name, String email, String pw, String pwcheck) async {
-    if (pw != pwcheck) {
-      Fluttertoast.showToast(
-        msg: '비밀번호가 일치하지 않습니다.',
-        toastLength: Toast.LENGTH_SHORT,
-        backgroundColor: Colors.grey,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
-    }
-    final credential = await _firebaseAuthService.registerWithEmailPassword(name, email, pw, pwcheck);
+    final credential = await _firebaseAuthService.registerWithEmailPassword(
+        name, email, pw, pwcheck);
     if (credential != null) {
       await FirebaseFirestore.instance
           .collection('user')
           .doc(credential.uid)
           .set({
-            'userName': name,
-            'email': email,
+        'userName': name,
+        'email': email,
       });
       ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text('회원가입 성공')));
+          .showSnackBar(const SnackBar(content: Text('회원가입 성공')));
       Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const LoginScreen(),
-          ),
-        );
+        MaterialPageRoute(
+          builder: (context) => const LoginScreen(),
+        ),
+      );
     } else {
       ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text('회원가입 실패')));
+          .showSnackBar(const SnackBar(content: Text('회원가입 실패')));
     }
   }
 
@@ -86,12 +67,6 @@ class _SignupScreenState extends State<SignupScreen> {
     emailField.text = "dyj09087@gmail.com";
     pwField.text = "r3OeR0UDal";
     pwcheckField.text = "r3OeR0UDal";
-  }
-
-  //firebase sign-up
-  void signUpWithFirebase(
-      String name, String email, String pw, String pwcheck) async {
-    print('로그인 성공');
   }
 
   @override
@@ -200,7 +175,7 @@ class _SignupScreenState extends State<SignupScreen> {
               ],
             ),
           ),
-          CustomHeader(),
+          const CustomHeader(),
         ]),
       ),
     );

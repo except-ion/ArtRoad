@@ -33,24 +33,24 @@ class _LoginScreenState extends State<LoginScreen> {
   final FirebaseAuthService _firebaseAuthService = FirebaseAuthService();
 
   //firebase login
-   void signInWithFirebase(String email, String pw) async {
+  void signInWithFirebase(String email, String pw) async {
     final user = await _firebaseAuthService.signInWithFirebase(email, pw);
     if (user != null) {
       final userProvider = Provider.of<UserProvider>(context, listen: false);
       userProvider.setFirebaseUserId(user.uid);
       // 로그인 성공 후 처리
       ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text('로그인 성공')));
+          .showSnackBar(const SnackBar(content: Text('로그인 성공')));
 
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => BasepageScreen(),
-          ),
-        );
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => BasepageScreen(),
+        ),
+      );
     } else {
       // 로그인 실패 처리
-       ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text('로그인 실패')));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('로그인 실패')));
     }
   }
 
@@ -128,8 +128,6 @@ class _LoginScreenState extends State<LoginScreen> {
     'assets/images/login_background_image_10.png',
     'assets/images/login_background_image_11.png',
   ];
-  final TextEditingController emailField = TextEditingController();
-  final TextEditingController pwField = TextEditingController();
   int currentImageIndex = 0;
   late Timer timer;
   bool _isCheckRemember = false; //아이디 저장 checkbox
@@ -229,7 +227,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   validator: (value) => CheckValidate()
                                       .validateEmail(emailFocus, '$value'),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 25,
                                 ),
                                 CustomTextformfield(
@@ -248,7 +246,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     Row(
                                       children: [
                                         Checkbox(
-                                          activeColor: Color(0xFF00233D),
+                                          activeColor: const Color(0xFF00233D),
                                           value: _isCheckRemember,
                                           onChanged: (value) {
                                             bottomState(() {
@@ -270,17 +268,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                LoginForgotPasswordScreen(),
+                                                const LoginForgotPasswordScreen(),
                                           ),
                                         );
                                       },
                                       style: TextButton.styleFrom(
-                                        textStyle: TextStyle(
+                                        textStyle: const TextStyle(
                                           decoration: TextDecoration.underline,
                                           color: Colors.blue,
                                         ),
                                       ),
-                                      child: Text('비밀번호를 잃어버리셨나요?'),
+                                      child: const Text('비밀번호를 잃어버리셨나요?'),
                                     )
                                   ],
                                 ),
@@ -323,7 +321,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     }
                                   },
                                   style: TextButton.styleFrom(
-                                      textStyle: TextStyle(
+                                      textStyle: const TextStyle(
                                           textBaseline:
                                               TextBaseline.alphabetic),
                                       backgroundColor: const Color(0xFFFEE500),
@@ -342,7 +340,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             child: Image.asset(
                                                 'assets/images/login_kakao.png')),
                                       ),
-                                      Text(
+                                      const Text(
                                         '카카오 로그인',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
@@ -360,24 +358,24 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text('기존 회원이 아니신가요?'),
+                                    const Text('기존 회원이 아니신가요?'),
                                     TextButton(
                                       onPressed: () {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                SignupScreen(),
+                                                const SignupScreen(),
                                           ),
                                         );
                                       },
                                       style: TextButton.styleFrom(
-                                        textStyle: TextStyle(
+                                        textStyle: const TextStyle(
                                           decoration: TextDecoration.underline,
                                           color: Colors.blue,
                                         ),
                                       ),
-                                      child: Text('회원가입'),
+                                      child: const Text('회원가입'),
                                     )
                                   ],
                                 )
@@ -442,14 +440,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: TextButton(
                           onPressed: _showLoginDialog,
                           style: TextButton.styleFrom(
-                            backgroundColor: Color(0x5F5E5E5E),
-                            maximumSize: Size(300, 64),
-                            minimumSize: Size(250, 58),
+                            backgroundColor: const Color(0x5F5E5E5E),
+                            maximumSize: const Size(300, 64),
+                            minimumSize: const Size(250, 58),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(16),
                             ),
                           ),
-                          child: Text(
+                          child: const Text(
                             '시작하기',
                             textAlign: TextAlign.center,
                             style: TextStyle(
