@@ -39,17 +39,17 @@ class fCalendarItemsTile extends StatelessWidget {
 
               Row(
                 children: [
-                  if (_fCalendarItems.prfpdto == null)
-                    Text(
-                      '${_fCalendarItems.prfpdfrom}',
-                      style: const TextStyle(
+                  if (_fCalendarItems.prfpd == null)
+                    const Text(
+                      '날짜 없음',
+                      style: TextStyle(
                         fontSize: 14,
                         color: Color(0xFF939191),
                       ),
                     ),
-                  if (_fCalendarItems.prfpdto != null)
+                  if (_fCalendarItems.prfpd != null)
                     Text(
-                      '${_fCalendarItems.prfpdfrom} ~ ${_fCalendarItems.prfpdto}',
+                      '${_fCalendarItems.prfpd}',
                       style: const TextStyle(
                         fontSize: 14,
                         color: Color(0xFF939191),

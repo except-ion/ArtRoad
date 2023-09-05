@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:artroad/presentation/calendar/favoritecalendar_screen/favoritecalendar_bottom/fcalendar_items.dart';
 import 'package:artroad/presentation/calendar/mycalendar_screen/mcalendar_bottom/mcalendar_items.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
@@ -107,6 +108,7 @@ class FirebaseStoreService{
   Future<void> addLikedStatus(String userId, String concertID, String prfnm, String concertDate) async {
     try {
       await _likedConcertsCollection.doc(userId).collection('user_liked_concerts').doc(concertID).set({
+        'concertID': concertID,
         'prfnm': prfnm,
         'prfpd': concertDate,
         'timestamp': FieldValue.serverTimestamp(), // 좋아요한 시간 기록
@@ -145,21 +147,28 @@ class FirebaseStoreService{
   }
 
   //favorite Calendar 정보 불러오기
-  Future<bool> getLikedConcert(String userId, String concertID) async {
+  Future<List<fCalendarItems>> getUserLikedConcert(String userId) async {
+    List<fCalendarItems> favorites = [];
     try {
-        DocumentSnapshot documentSnapshot = await _likedConcertsCollection
+        QuerySnapshot querySnapshot = await _likedConcertsCollection
             .doc(userId)
             .collection('user_liked_concerts')
-            .doc(concertID)
             .get();
-      if (documentSnapshot.exists) {
-        return false;
-      } else {
-        return true;
-      }
+      for (var doc in querySnapshot.docs) {
+          Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+          favorites.add(
+            fCalendarItems(
+              data['concertID'],
+              data['prfnm'],
+              "fcltynm",
+              data['prfpd']
+            ),
+          );
+        }
+      return favorites;
     } catch (e) {
-      print('좋아요 누른 공연 추가 실패: $e');
-      return true;
+      print('좋아요 누른 공연 가져오기 실패: $e');
+      return [];
     }
   }
 
