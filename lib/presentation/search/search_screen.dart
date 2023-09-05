@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../../src/model/condetail.dart';
 import '../../src/model/facdetail.dart';
 import '../../theme/theme_helper.dart';
@@ -117,17 +118,24 @@ class _SearchScreenState extends State<SearchScreen> {
   void filterItems(String query) {
     // 검색 필터링
     setState(() {
-      filteredPrfItems.clear(); // 검색어가 바뀔 때마다 비우기
-      filteredFcltItems.clear(); // 검색어가 바뀔 때마다 비우기
-      if (selectedCategory == '공연') {
-        if (query.isNotEmpty) {
+      if (query.trim().isEmpty) {
+        // 검색어가 없는 경우
+        // 검색어가 없을 때 토스트 메시지 표시
+        Fluttertoast.showToast(
+          msg: '검색어를 입력하세요',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+        );
+      } else {
+        filteredPrfItems.clear();
+        filteredFcltItems.clear();
+
+        if (selectedCategory == '공연') {
           filteredPrfItems = concertList
               .where((item) =>
                   item.prfnm!.toLowerCase().contains(query.toLowerCase()))
               .toList();
-        }
-      } else if (selectedCategory == '공연장') {
-        if (query.isNotEmpty) {
+        } else if (selectedCategory == '공연장') {
           filteredFcltItems = facilityList
               .where((item) =>
                   item.fcltynm!.toLowerCase().contains(query.toLowerCase()))
@@ -177,47 +185,44 @@ class _SearchScreenState extends State<SearchScreen> {
                   borderRadius: BorderRadius.circular(32),
                 ),
               ),
-              child: Row(
-                children: [
-                  DropdownButton<String>(
-                    value: selectedCategory,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        selectedCategory = newValue!;
-                        filteredPrfItems.clear(); // 카테고리 변경시 비우기
-                        filteredFcltItems.clear(); // 카테고리 변경시 비우기
-                      });
-                    },
-                    items: <String>['공연', '공연장'].map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: TextStyle(fontSize: 13),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                  Expanded(
-                    child: TextField(
-                      controller: searchController,
-                      decoration: InputDecoration(
-                        hintText: '공연 및 공연장을 검색하세요',
-                        hintStyle: TextStyle(fontSize: 14),
-                        suffixIcon: GestureDetector(
-                          onTap: () => filterItems(searchController.text),
-                          child: Icon(Icons.search),
-                        ),
-                        filled: true,
-                        fillColor: Colors.transparent,
-                        border: InputBorder.none,
-                        prefixIcon: Padding(
-                          padding: const EdgeInsets.only(left: 15),
-                        ),
+              child: Expanded(
+                child: TextField(
+                  controller: searchController,
+                  onEditingComplete: () => filterItems(searchController.text),
+                  decoration: InputDecoration(
+                    hintText: '공연 및 공연장을 검색하세요',
+                    hintStyle: TextStyle(fontSize: 14),
+                    suffixIcon: GestureDetector(
+                      onTap: () => filterItems(searchController.text),
+                      child: Icon(Icons.search),
+                    ),
+                    filled: true,
+                    fillColor: Colors.transparent,
+                    border: InputBorder.none,
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: DropdownButton<String>(
+                        value: selectedCategory,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedCategory = newValue!;
+                            filteredPrfItems.clear(); // 카테고리 변경시 비우기
+                            filteredFcltItems.clear(); // 카테고리 변경시 비우기
+                          });
+                        },
+                        items: <String>['공연', '공연장'].map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value,
+                              style: TextStyle(fontSize: 13),
+                            ),
+                          );
+                        }).toList(),
                       ),
                     ),
                   ),
-                ],
+                ),
               ),
             ),
           ),
