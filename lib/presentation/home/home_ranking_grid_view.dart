@@ -1,6 +1,7 @@
-import 'package:artroad/presentation/home/home_ranking_items.dart';
 import 'package:flutter/material.dart';
 import 'package:artroad/presentation/home/home_ranking_items_tile.dart';
+
+import '../../src/model/ranking.dart';
 
 class HomeRankingGridView extends StatelessWidget {
   final int selectedCategoryIndex; // 선택된 칩의 인덱스를 받을 변수
@@ -8,48 +9,48 @@ class HomeRankingGridView extends StatelessWidget {
   HomeRankingGridView({Key? key, required this.selectedCategoryIndex})
       : super(key: key);
 
-  final List<RankingItems> rankingList = [
-    RankingItems(
+  final List<Ranking> rankingList = [
+    Ranking(
         mt20id: "aaa",
         cate: "연극",
         poster: "assets/images/poster_example1.jpg",
         rnum: "1"),
-    RankingItems(
+    Ranking(
         mt20id: "aaa",
         cate: "연극",
         poster: "assets/images/poster_example1.jpg",
         rnum: "2"),
-    RankingItems(
+    Ranking(
         mt20id: "aaa",
         cate: "연극",
         poster: "assets/images/poster_example1.jpg",
         rnum: "3"),
-    RankingItems(
+    Ranking(
         mt20id: "aaa",
         cate: "연극",
         poster: "assets/images/poster_example3.jpg",
         rnum: "4"),
-    RankingItems(
+    Ranking(
         mt20id: "aaa",
         cate: "연극",
         poster: "assets/images/poster_example2.jpg",
         rnum: "5"),
-    RankingItems(
+    Ranking(
         mt20id: "aaa",
         cate: "연극",
         poster: "assets/images/poster_example3.jpg",
         rnum: "6"),
-    RankingItems(
+    Ranking(
         mt20id: "aaa",
         cate: "연극",
         poster: "assets/images/poster_example4.jpg",
         rnum: "7"),
-    RankingItems(
+    Ranking(
         mt20id: "aaa",
         cate: "연극",
         poster: "assets/images/poster_example1.jpg",
         rnum: "8"),
-    RankingItems(
+    Ranking(
         mt20id: "aaa",
         cate: "연극",
         poster: "assets/images/poster_example2.jpg",
@@ -77,7 +78,7 @@ class HomeRankingGridView extends StatelessWidget {
             //item 의 반목문 항목 형성
             return Padding(
                 padding: EdgeInsets.all(5),
-                child: RankingItemsTile(rankingList[index]));
+                child: RankingTile(rankingList[index]));
           },
         ),
       ),

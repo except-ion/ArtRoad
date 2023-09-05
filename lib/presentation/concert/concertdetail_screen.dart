@@ -1,8 +1,8 @@
-import 'package:artroad/presentation/concert/concertdetail_items.dart';
 import 'package:artroad/widgets/custom_detail_text.dart';
 import 'package:artroad/widgets/custom_header.dart';
 import 'package:flutter/material.dart';
 
+import '../../src/model/condetail.dart';
 import '../facility/facilitydetail_screen.dart';
 
 class ConcertDetailScreen extends StatefulWidget {
@@ -13,7 +13,7 @@ class ConcertDetailScreen extends StatefulWidget {
 }
 
 class _ConcertDetailScreenState extends State<ConcertDetailScreen> {
-  ConcertItems concert = ConcertItems(
+  ConcertDetail concert = ConcertDetail(
       mt20id: 'PF132236',
       prfnm: '멤피스',
       poster: 'assets/images/poster_example5.jpeg',

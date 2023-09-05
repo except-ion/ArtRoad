@@ -1,16 +1,17 @@
-import 'package:artroad/presentation/home/home_ranking_items.dart';
 import 'package:flutter/material.dart';
 
-class RankingItemsTile extends StatefulWidget {
-  RankingItemsTile(this._RankingItems);
+import '../../src/model/ranking.dart';
 
-  final RankingItems _RankingItems;
+class RankingTile extends StatefulWidget {
+  RankingTile(this._Ranking);
+
+  final Ranking _Ranking;
 
   @override
-  State<RankingItemsTile> createState() => _RankingItemsTileState();
+  State<RankingTile> createState() => _RankingTileState();
 }
 
-class _RankingItemsTileState extends State<RankingItemsTile> {
+class _RankingTileState extends State<RankingTile> {
   bool _imageLoading = false; //network로 수정할 때 true로 바꾸기
 
   void _updateImageLoading(bool isLoading) {
@@ -31,7 +32,7 @@ class _RankingItemsTileState extends State<RankingItemsTile> {
         child: _imageLoading
             ? CircularProgressIndicator()
             : Image.asset(
-                '${widget._RankingItems.poster}',
+                '${widget._Ranking.poster}',
                 errorBuilder: (context, error, stackTrace) {
                   _updateImageLoading(false);
                   return Text('이미지 로드 실패');

@@ -1,6 +1,4 @@
-import 'dart:core';
-
-class ConcertItems {
+class ConcertDetail {
   String? mt20id; // 공연 ID
   String? prfnm; // 공연명
   String? poster; //포스터
@@ -12,20 +10,21 @@ class ConcertItems {
   String? fcltynm; // 공연시설명
   String? styurls; //소개이미지 목록
 
-  ConcertItems(
-      {this.mt20id,
-      this.prfnm,
-      this.poster,
-      this.prfpdfrom,
-      this.prfpdto,
-      this.prfruntime,
-      this.prfage,
-      this.genrenm,
-      this.fcltynm,
-      this.styurls});
+  ConcertDetail({
+    this.mt20id,
+    this.prfnm,
+    this.poster, 
+    this.prfpdfrom, 
+    this.prfpdto,
+    this.prfruntime, 
+    this.prfage,
+    this.genrenm, 
+    this.fcltynm, 
+    this.styurls
+  });
 
-  factory ConcertItems.fromJson(Map<String, dynamic> json) {
-    return ConcertItems(
+  factory ConcertDetail.fromJson(Map<String, dynamic> json) {
+    return ConcertDetail(
       mt20id: json["mt20id"] as String?,
       prfnm: json["prfnm"] as String?,
       poster: json["poster"] as String?,
@@ -35,7 +34,7 @@ class ConcertItems {
       prfage: json["prfage"] as String?,
       genrenm: json["genrenm"] as String?,
       fcltynm: json["fcltynm"] as String?,
-      styurls: (json["styurls"] as Map<String, dynamic>)['styurl'] as String?,
+      styurls: (json["styurls"] as Map<String, dynamic>)  ['styurl'] as String?,
     );
   }
 }

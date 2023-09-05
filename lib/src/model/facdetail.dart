@@ -1,4 +1,4 @@
-class FacilityItems {
+class FacilityDetail {
   String? mt10id; // 공연시설 ID
   String? fcltynm; // 공연시설명
   String? telno; //전화번호
@@ -7,7 +7,7 @@ class FacilityItems {
   String? la; //위도
   String? lo; //경도
 
-  FacilityItems({
+  FacilityDetail({
     this.mt10id,
     this.fcltynm,
     this.telno,
@@ -17,8 +17,8 @@ class FacilityItems {
     this.lo,
   });
 
-  factory FacilityItems.fromJson(Map<String, dynamic> json) {
-    return FacilityItems(
+  factory FacilityDetail.fromJson(Map<String, dynamic> json) {
+    return FacilityDetail(
       mt10id: json["mt10id"] as String,
       fcltynm: json["fcltynm"] as String,
       telno: json["telno"] as String,
