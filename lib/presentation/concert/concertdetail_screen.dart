@@ -1,9 +1,8 @@
 import 'package:artroad/src/provider/condetail_provider.dart';
 import 'package:artroad/widgets/custom_detail_text.dart';
-import 'package:artroad/widgets/custom_header.dart';
+import 'package:artroad/widgets/custom_concertdetail_header.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../src/model/condetail.dart';
 import '../facility/facilitydetail_screen.dart';
 
 class ConcertDetailScreen extends StatefulWidget {
@@ -146,8 +145,9 @@ class _ConcertDetailScreenState extends State<ConcertDetailScreen> {
                 );
               },
             ),
-            CustomHeader(
-              name: widget.prfnm, // ConcertDetailProvider에서 가져온 공연 이름으로 대체
+            CustomConcertDetailHeader(
+              concertName: widget.prfnm,
+              concertId: widget.concertID,
               hasLiked: true,
               isDetail: true,
             ),

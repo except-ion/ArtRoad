@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 // Firestore 컬렉션 및 문서 참조
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final CollectionReference _schedulesCollection = _firestore.collection('schedules');
+final CollectionReference _likedConcertsCollection = _firestore.collection('likedConcert');
 
 class FirebaseStoreService{
   //일정 추가
@@ -30,7 +31,7 @@ class FirebaseStoreService{
     return false;
   }
 
-  // 사용자의 모든 일정 가져오기
+  // 사용자의 일정 가져오기
   Future<List<mCalendarItems>> getUserSchedules(
     String? userId,
     DateTime date
@@ -91,5 +92,35 @@ class FirebaseStoreService{
       print('일정 삭제 실패: $e');
     }
   }
+
+  Future<void> updateLikeStatus(String userId, String concertID, String prfnm, bool isLiked) async {
+    if (!isLiked) {
+      // 좋아요를 누른 경우, 데이터를 추가
+      await addLikedConcert(userId, concertID, prfnm);
+    } else {
+      // 좋아요를 취소한 경우, 데이터를 삭제
+      await removeLikedConcert(userId, concertID);
+    }
+  }
+
+  Future<void> addLikedConcert(String userId, String concertID, String prfnm) async {
+    try {
+      await _likedConcertsCollection.doc(userId).collection('user_liked_concerts').doc(concertID).set({
+        'prfnm': prfnm,
+        'timestamp': FieldValue.serverTimestamp(), // 좋아요한 시간 기록
+      });
+    } catch (e) {
+      print('좋아요 누른 공연 추가 실패: $e');
+    }
+  }
+
+  Future<void> removeLikedConcert(String userId, String concertID) async {
+  try {
+    await _likedConcertsCollection.doc(userId).collection('user_liked_concerts').doc(concertID).delete();
+  } catch (e) {
+    print('좋아요 누른 공연 삭제 실패: $e');
+  }
+}
+
 }
 
