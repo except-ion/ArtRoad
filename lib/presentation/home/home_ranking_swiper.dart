@@ -63,7 +63,7 @@ class HomeRankingSwiper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('rankingList: $rankingList');
+    print('rankingList: ${rankingList.first.toString()}');
     return SizedBox(
       height: 300, // 스와이퍼의 높이 설정해야함
       child: Swiper(

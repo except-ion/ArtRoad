@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final rankingProvider = Provider.of<RankingProvider>(context);
     rankingProvider.loadTop10Rankings();
-    
+    print('ranking provider: ${rankingProvider.rankings}');
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SingleChildScrollView(

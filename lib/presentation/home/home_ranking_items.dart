@@ -22,4 +22,9 @@ class RankingItems {
       rnum: json["rnum"] as String?,
     );
   }
+
+  @override
+  String toString() {
+    return 'mt20id: $mt20id, cate: $cate, poster: $poster, rnum: $rnum';
+  }
 }
