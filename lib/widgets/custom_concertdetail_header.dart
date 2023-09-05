@@ -5,6 +5,7 @@ import 'package:artroad/src/provider/user_provider.dart';
 
 class CustomConcertDetailHeader extends StatefulWidget {
   final String concertName;
+  final String concertDate;
   final bool hasLiked;
   final bool isDetail;
   final String concertId;
@@ -14,6 +15,8 @@ class CustomConcertDetailHeader extends StatefulWidget {
     super.key, 
     required this.concertName,
     required this.concertId,
+    required this.concertDate,
+
     this.hasLiked = false,
     this.isDetail = false
   });
@@ -37,12 +40,18 @@ class _CustomConcertDetailHeaderState extends State<CustomConcertDetailHeader> {
   void toggleLiked(String? userId) {
     setState(() async {
       isLiked = !isLiked;
-      await _firebaseStoreService.updateLikeStatus(userId!, widget.concertId, widget.concertName, isLiked);
-    });
+      await _firebaseStoreService.updateLikeStatus(
+                                        userId!,
+                                        widget.concertId, 
+                                        widget.concertName, 
+                                        widget.concertDate, 
+                                        isLiked
+                                        );
+                                      });
   }
 
   Future<bool> getInitialLikeStatus(String userId, String concertId) async {
-    return await _firebaseStoreService.getLikedConcert(userId, concertId);
+    return await _firebaseStoreService.getLikedStatus(userId, concertId);
   }
 
   @override

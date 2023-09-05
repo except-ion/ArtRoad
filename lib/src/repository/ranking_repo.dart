@@ -27,6 +27,7 @@ class RankingRepository {
       // 필요한 데이터 찾기
       Map<String, dynamic> jsonResult = convert.json.decode(json);
       final jsonRanking = jsonResult['boxofs']['boxof'];
+      print('jsonRanking: $jsonRanking');
       if (jsonRanking != null) {
         List<dynamic> items = jsonRanking as List;
         int itemCount = items.length < 9 ? items.length : 9;

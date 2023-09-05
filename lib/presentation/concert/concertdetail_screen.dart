@@ -8,10 +8,12 @@ import '../facility/facilitydetail_screen.dart';
 class ConcertDetailScreen extends StatefulWidget {
   String concertID;
   String prfnm;
+  String prfpd;
 
   ConcertDetailScreen(
     this.concertID, 
     this.prfnm,
+    this.prfpd,
     {super.key}
     );
 
@@ -148,6 +150,7 @@ class _ConcertDetailScreenState extends State<ConcertDetailScreen> {
             CustomConcertDetailHeader(
               concertName: widget.prfnm,
               concertId: widget.concertID,
+              concertDate: widget.prfpd,
               hasLiked: true,
               isDetail: true,
             ),

@@ -93,20 +93,22 @@ class FirebaseStoreService{
     }
   }
 
-  Future<void> updateLikeStatus(String userId, String concertID, String prfnm, bool isLiked) async {
+  Future<void> updateLikeStatus(String userId, String concertID, String prfnm, String concertDate, bool isLiked) async {
     if (!isLiked) {
       // 좋아요를 누른 경우, 데이터를 추가
-      await addLikedConcert(userId, concertID, prfnm);
+      await addLikedStatus(userId, concertID, prfnm, concertDate);
     } else {
       // 좋아요를 취소한 경우, 데이터를 삭제
-      await removeLikedConcert(userId, concertID);
+      await removeLikedStatus(userId, concertID);
     }
   }
 
-  Future<void> addLikedConcert(String userId, String concertID, String prfnm) async {
+  //좋아요 누른 경우 추가
+  Future<void> addLikedStatus(String userId, String concertID, String prfnm, String concertDate) async {
     try {
       await _likedConcertsCollection.doc(userId).collection('user_liked_concerts').doc(concertID).set({
         'prfnm': prfnm,
+        'prfpd': concertDate,
         'timestamp': FieldValue.serverTimestamp(), // 좋아요한 시간 기록
       });
     } catch (e) {
@@ -114,7 +116,8 @@ class FirebaseStoreService{
     }
   }
 
-  Future<void> removeLikedConcert(String userId, String concertID) async {
+  //좋아요 누른 경우 삭제
+  Future<void> removeLikedStatus(String userId, String concertID) async {
     try {
       await _likedConcertsCollection.doc(userId).collection('user_liked_concerts').doc(concertID).delete();
     } catch (e) {
@@ -122,6 +125,26 @@ class FirebaseStoreService{
     }
   }
 
+  //concertDetailScreen Header 초기 상태
+  Future<bool> getLikedStatus(String userId, String concertID) async {
+    try {
+        DocumentSnapshot documentSnapshot = await _likedConcertsCollection
+            .doc(userId)
+            .collection('user_liked_concerts')
+            .doc(concertID)
+            .get();
+      if (documentSnapshot.exists) {
+        return false;
+      } else {
+        return true;
+      }
+    } catch (e) {
+      print('좋아요 누른 공연 추가 실패: $e');
+      return true;
+    }
+  }
+
+  //favorite Calendar 정보 불러오기
   Future<bool> getLikedConcert(String userId, String concertID) async {
     try {
         DocumentSnapshot documentSnapshot = await _likedConcertsCollection
