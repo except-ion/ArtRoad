@@ -46,10 +46,25 @@ class _HomeScreenState extends State<HomeScreen> {
   switch (index) {
     case 0:
       return provider.playRankings;
-    // case 1:
-    //   return provider.musicalRankings;
-    // case 2:
-    //   return provider.classicRankings;
+    case 1:
+      return provider.musicalRankings;
+    case 2:
+      return provider.classicRankings;
+    case 3:
+      return provider.koreanRankings;
+    case 4:
+      return provider.popularRankings;
+    case 5:
+      return provider.danceRankings;
+    case 6:
+      return provider.danceRankings;
+    case 7:
+      return provider.circusRankings;
+    case 8:
+      return provider.complexRankings;
+    case 9:
+      return provider.kidRankings;
+
     default:
       return [];
   }
@@ -59,6 +74,16 @@ class _HomeScreenState extends State<HomeScreen> {
     final rankingProvider = Provider.of<RankingProvider>(context);
     rankingProvider.loadTop10Rankings();
     rankingProvider.loadPlayRankings();
+    rankingProvider.loadMusicalRankings();
+    rankingProvider.loadClassicRankings();
+    rankingProvider.loadKoreanRankings();
+    rankingProvider.loadPopularRankings();
+    rankingProvider.loadDanceRankings();
+    // rankingProvider.loadPopularDanceRankings();
+    rankingProvider.loadCircusRankings();
+    rankingProvider.loadComplexRankings();
+    rankingProvider.loadKidRankings();
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SingleChildScrollView(
