@@ -8,9 +8,15 @@ class ConcertDetailProvider extends ChangeNotifier{
   List<ConcertDetail> _concertDetails = [];
   List<ConcertDetail> get concertDetails => _concertDetails;
 
-  loadConcertDetails() async {
-    List<ConcertDetail>? listConcertDetails = await _concertDetailRepository.loadConcertDetails();
-    _concertDetails = listConcertDetails!;
-    notifyListeners();
-  }
+  loadConcertDetails(String concertID) async {
+    try {
+      List<ConcertDetail>? listConcertDetails = await _concertDetailRepository.loadConcertDetails(concertID);
+      if (listConcertDetails != null) {
+        _concertDetails = listConcertDetails;
+        notifyListeners();
+      }
+    } catch (error) {
+      print("Error loading concert details: $error");
+    }
+  } 
 }

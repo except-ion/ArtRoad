@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     default:
       return [];
-  }
+    }
   }
   @override
   Widget build(BuildContext context) {

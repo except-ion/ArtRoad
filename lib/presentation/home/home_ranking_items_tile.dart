@@ -1,5 +1,5 @@
+import 'package:artroad/presentation/concert/concertdetail_screen.dart';
 import 'package:artroad/src/model/ranking.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
 
 class RankingTile extends StatefulWidget {
@@ -13,6 +13,7 @@ class RankingTile extends StatefulWidget {
 
 class _RankingTileState extends State<RankingTile> {
   bool _imageLoading = false; //network로 수정할 때 true로 바꾸기
+
   void _updateImageLoading(bool isLoading) {
     if (_imageLoading != isLoading) {
       setState(() {
@@ -21,9 +22,28 @@ class _RankingTileState extends State<RankingTile> {
     }
   }
 
+  //이미지 클릭시 detailScreen으로 이동
+  void _onImageTap() {
+    final mt20id = widget._Ranking.mt20id;
+    if (mt20id != null){
+      Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) {
+                return ConcertDetailScreen(mt20id); // _Ranking을 넘겨줄 수 있음
+              },
+            ),
+          );
+    } else{
+      print('ranking is null');
+    }
+    
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return GestureDetector(
+    onTap: _onImageTap,
+    child: Container(
       height: 270,
       alignment: Alignment.center,
       child: ClipRRect(
@@ -51,7 +71,8 @@ class _RankingTileState extends State<RankingTile> {
                 //   }
                 // },
               ),
-      ),
+        ),
+      )
     );
   }
 }

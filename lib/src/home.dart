@@ -45,15 +45,6 @@ class Home extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ConcertDetailPage()),
-                );
-              },
-              child: const Text('Concert Detail'),
-            ),
-             ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
                   MaterialPageRoute(builder: (context) => FacilityDetailPage()),
                 );
               },

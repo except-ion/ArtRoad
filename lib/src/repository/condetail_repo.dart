@@ -7,17 +7,16 @@ import 'dart:convert' as convert;
 import 'package:xml2json/xml2json.dart';
 
 class ConcertDetailRepository {
-  Future<List<ConcertDetail>?> loadConcertDetails() async{
+  Future<List<ConcertDetail>?> loadConcertDetails(String concertID) async{
     await dotenv.load();
     String apiKey = dotenv.env['API_KEY']!;
-    String concertID = "PF223521";
     String baseUrl = 
       "http://www.kopis.or.kr/openApi/restful/pblprfr/$concertID?service=$apiKey";
     
     //null값일때 none으로 바꾸기
-        String replaceNullWithFieldKey(String key, dynamic value) {
-          return value ?? key;
-        }
+    String replaceNullWithFieldKey(String key, dynamic value) {
+      return value ?? key;
+    }
 
     final response = await http.get(Uri.parse(baseUrl));
 
@@ -30,8 +29,7 @@ class ConcertDetailRepository {
         Map<String, dynamic> jsonResult = convert.jsonDecode(json);
         final jsonConcertDetail = jsonResult['dbs']['db'];
         // jsonConcertDetail.removeWhere((key, value) => value == null);
-        print(jsonConcertDetail);
-
+        print('jsonConcertDetail: $jsonConcertDetail');
         if (jsonConcertDetail != null) {
           return [ConcertDetail.fromJson(jsonConcertDetail)];
         } else{
