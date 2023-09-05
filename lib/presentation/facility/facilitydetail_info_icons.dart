@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 
-class FacilityDetailInfoIcons extends StatefulWidget{
+class FacilityDetailInfoIcons extends StatefulWidget {
   const FacilityDetailInfoIcons({super.key});
 
   @override
@@ -11,294 +11,311 @@ class FacilityDetailInfoIcons extends StatefulWidget{
 }
 
 class _FacilityDetailInfoIconsState extends State<FacilityDetailInfoIcons> {
-  List facilityInfoList = [];
-  
-  Future<void> readJson() async {
+  Future<List> readJson() async {
     final String response = await rootBundle.loadString('assets/facilitydetail_convinence.json');
     final data = await json.decode(response);
 
     const desiredFacilityCode = "FC223076";
-    final filteredItems = data.where((item) => item['facilityCode'] == desiredFacilityCode);
-    setState(() {
-      facilityInfoList = filteredItems;
-    });
-    print('facilityInfoList: $facilityInfoList');
-    print('facilityInfoList[0]: $facilityInfoList[0]');
-  }
+    final filteredItems = data.where((item) => item['facilityCode'] == desiredFacilityCode).toList();
 
-  @override
-  void initState(){
-    super.initState();
-    readJson();
+    return filteredItems;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // 레스토랑
-              Column(
+    return FutureBuilder<List>(
+      future: readJson(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator(); // 데이터 로딩 중에는 로딩 스피너를 표시
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}'); // 오류가 발생한 경우 오류 메시지 표시
+        } else if (snapshot.data == null || (snapshot.data is List && (snapshot.data as List).isEmpty)) {
+          return const Text('No data available'); // 데이터가 없거나 빈 경우 처리
+        }
+        else {
+          // 데이터가 준비되면 UI를 렌더링
+          final facilityInfoList = snapshot.data;
+
+          if (facilityInfoList != null && facilityInfoList.isNotEmpty) {
+            // facilityInfoList가 널이 아니고 비어있지 않을 때만 접근
+            final item = facilityInfoList[0];
+            return Container(
+              child: Column(
                 children: [
-                  Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF176FF2), // 배경색
-                      borderRadius: BorderRadius.circular(20), // 모서리 둥글기 설정
-                    ),
-                    child: const Center(
-                      child: 
-                        Icon(
-                          Icons.restaurant,
-                          color: Colors.white,
-                          size: 35,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // 레스토랑
+                      Column(
+                        children: [
+                          Container(
+                            width: 60,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              color: item['restaurant'] == 'Y' ? const Color(0xFF176FF2) : const Color(0xFF939191),
+                              borderRadius: BorderRadius.circular(20), // 모서리 둥글기 설정
+                            ),
+                            child: const Center(
+                              child:
+                              Icon(
+                                Icons.restaurant,
+                                color: Colors.white,
+                                size: 35,
+                              ),
+                            ),
+                          ),
+
+                          const SizedBox(height: 2),
+
+                          const Text(
+                            '레스토랑',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Color(0xFF939191),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
+
+                      // 카페
+                      Column(
+                        children: [
+                          Container(
+                            width: 60,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              color: item['cafe'] == 'Y' ? const Color(0xFF176FF2) : const Color(0xFF939191),
+                              borderRadius: BorderRadius.circular(20), // 모서리 둥글기 설정
+                            ),
+                            child: const Center(
+                              child: Icon(
+                                Icons.local_cafe_rounded,
+                                color: Colors.white,
+                                size: 35,
+                              ),
+                            ),
+                          ),
+
+                          const SizedBox(height: 2),
+
+                          const Text(
+                            '카페',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Color(0xFF939191),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      // 편의점
+                      Column(
+                        children: [
+                          Container(
+                            width: 60,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              color: item['convinenceStore'] == 'Y' ? const Color(0xFF176FF2) : const Color(0xFF939191),
+                              borderRadius: BorderRadius.circular(20), // 모서리 둥글기 설정
+                            ),
+                            child: const Center(
+                              child: Icon(
+                                Icons.local_convenience_store_rounded,
+                                color: Colors.white,
+                                size: 35,
+                              ),
+                            ),
+                          ),
+
+                          const SizedBox(height: 2),
+
+                          const Text(
+                            '편의점',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Color(0xFF939191),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      // 놀이방
+                      Column(
+                        children: [
+                          Container(
+                            width: 60,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              color: item['playground'] == 'Y' ? const Color(0xFF176FF2) : const Color(0xFF939191),
+                              borderRadius: BorderRadius.circular(20), // 모서리 둥글기 설정
+                            ),
+                            child: const Center(
+                              child: Icon(
+                                Icons.bedroom_baby_rounded,
+                                color: Colors.white,
+                                size: 35,
+                              ),
+                            ),
+                          ),
+
+                          const SizedBox(height: 2),
+
+                          const Text(
+                            '놀이방',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Color(0xFF939191),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
 
-                  const SizedBox(height: 2),
+                  const SizedBox(height: 10),
 
-                  const Text(
-                      '레스토랑',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Color(0xFF939191),
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // 수유실
+                      Column(
+                        children: [
+                          Container(
+                            width: 60,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              color: item['nursingRoom'] == 'Y' ? const Color(0xFF176FF2) : const Color(0xFF939191),
+                              borderRadius: BorderRadius.circular(20), // 모서리 둥글기 설정
+                            ),
+                            child: const Center(
+                              child: Icon(
+                                Icons.child_care_rounded,
+                                color: Colors.white,
+                                size: 35,
+                              ),
+                            ),
+                          ),
+
+                          const SizedBox(height: 2),
+
+                          const Text(
+                            '수유실',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Color(0xFF939191),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      // 장애인 화장실
+                      Column(
+                        children: [
+                          Container(
+                            width: 60,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              color: item['toilet'] == 'Y' ? const Color(0xFF176FF2) : const Color(0xFF939191),
+                              borderRadius: BorderRadius.circular(20), // 모서리 둥글기 설정
+                            ),
+                            child: const Center(
+                              child: Icon(
+                                Icons.wheelchair_pickup_rounded,
+                                color: Colors.white,
+                                size: 35,
+                              ),
+                            ),
+                          ),
+
+                          const SizedBox(height: 2),
+
+                          const Text(
+                            '장애인 화장실',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Color(0xFF939191),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      // 엘리베이터
+                      Column(
+                        children: [
+                          Container(
+                            width: 60,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              color: item['elevator'] == 'Y' ? const Color(0xFF176FF2) : const Color(0xFF939191),
+                              borderRadius: BorderRadius.circular(20), // 모서리 둥글기 설정
+                            ),
+                            child: const Center(
+                              child: Icon(
+                                Icons.elevator_rounded,
+                                color: Colors.white,
+                                size: 35,
+                              ),
+                            ),
+                          ),
+
+                          const SizedBox(height: 2),
+
+                          const Text(
+                            '엘리베이터',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Color(0xFF939191),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      // 주차장
+                      Column(
+                        children: [
+                          Container(
+                            width: 60,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              color: item['parking'] == 'Y' ? const Color(0xFF176FF2) : const Color(0xFF939191),
+                              borderRadius: BorderRadius.circular(20), // 모서리 둥글기 설정
+                            ),
+                            child: const Center(
+                              child: Icon(
+                                Icons.local_parking_rounded,
+                                color: Colors.white,
+                                size: 35,
+                              ),
+                            ),
+                          ),
+
+                          const SizedBox(height: 2),
+
+                          const Text(
+                            '주차장',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Color(0xFF939191),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ],
               ),
-
-              // 카페
-              Column(
-                children: [
-                  Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF176FF2), // 배경색
-                      borderRadius: BorderRadius.circular(20), // 모서리 둥글기 설정
-                    ),
-                    child: const Center(
-                      child: Icon(
-                        Icons.local_cafe_rounded,
-                        color: Colors.white,
-                        size: 35,
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 2),
-
-                  const Text(
-                    '카페',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Color(0xFF939191),
-                    ),
-                  ),
-                ],
+            );
+          } else {
+            return Container(
+              child: const Text(
+                '데이터 준비 중입니다.',
               ),
-
-              // 편의점
-              Column(
-                children: [
-                  Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF176FF2), // 배경색
-                      borderRadius: BorderRadius.circular(20), // 모서리 둥글기 설정
-                    ),
-                    child: const Center(
-                      child: Icon(
-                        Icons.local_convenience_store_rounded,
-                        color: Colors.white,
-                        size: 35,
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 2),
-
-                  const Text(
-                    '편의점',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Color(0xFF939191),
-                    ),
-                  ),
-                ],
-              ),
-
-              // 놀이방
-              Column(
-                children: [
-                  Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF176FF2), // 배경색
-                      borderRadius: BorderRadius.circular(20), // 모서리 둥글기 설정
-                    ),
-                    child: const Center(
-                      child: Icon(
-                        Icons.bedroom_baby_rounded,
-                        color: Colors.white,
-                        size: 35,
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 2),
-
-                  const Text(
-                    '놀이방',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Color(0xFF939191),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-
-          const SizedBox(height: 10),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // 수유실
-              Column(
-                children: [
-                  Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF176FF2), // 배경색
-                      borderRadius: BorderRadius.circular(20), // 모서리 둥글기 설정
-                    ),
-                    child: const Center(
-                      child: Icon(
-                        Icons.child_care_rounded,
-                        color: Colors.white,
-                        size: 35,
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 2),
-
-                  const Text(
-                    '수유실',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Color(0xFF939191),
-                    ),
-                  ),
-                ],
-              ),
-
-              // 장애인 화장실
-              Column(
-                children: [
-                  Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF176FF2), // 배경색
-                      borderRadius: BorderRadius.circular(20), // 모서리 둥글기 설정
-                    ),
-                    child: const Center(
-                      child: Icon(
-                        Icons.wheelchair_pickup_rounded,
-                        color: Colors.white,
-                        size: 35,
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 2),
-
-                  const Text(
-                    '장애인 화장실',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Color(0xFF939191),
-                    ),
-                  ),
-                ],
-              ),
-
-              // 엘리베이터
-              Column(
-                children: [
-                  Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF176FF2), // 배경색
-                      borderRadius: BorderRadius.circular(20), // 모서리 둥글기 설정
-                    ),
-                    child: const Center(
-                      child: Icon(
-                        Icons.elevator_rounded,
-                        color: Colors.white,
-                        size: 35,
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 2),
-
-                  const Text(
-                    '엘리베이터',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Color(0xFF939191),
-                    ),
-                  ),
-                ],
-              ),
-
-              // 주차장
-              Column(
-                children: [
-                  Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF176FF2), // 배경색
-                      borderRadius: BorderRadius.circular(20), // 모서리 둥글기 설정
-                    ),
-                    child: const Center(
-                      child: Icon(
-                        Icons.local_parking_rounded,
-                        color: Colors.white,
-                        size: 35,
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 2),
-
-                  const Text(
-                    '주차장',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Color(0xFF939191),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),
+            );
+          }
+        }
+      },
     );
   }
 }
+

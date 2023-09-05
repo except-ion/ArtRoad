@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'accommodation_items.dart';
 import 'accommodation_items_tile.dart';
