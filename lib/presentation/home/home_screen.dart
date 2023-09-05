@@ -1,7 +1,10 @@
 import 'package:artroad/presentation/home/home_ranking_swiper.dart';
+import 'package:artroad/src/provider/ranking_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:artroad/theme/theme_helper.dart';
+import 'package:provider/provider.dart';
 import 'home_ranking_grid_view.dart';
+import 'home_ranking_items.dart';
 
 final List<String> imgList = [
   'assets/images/login_background_image_1.png',
@@ -33,13 +36,50 @@ class _HomeScreenState extends State<HomeScreen> {
     '국악',
     '대중음악',
     '무용',
-    '대중무용',
     '서커스/마술',
     '복합',
     '아동',
   ];
+
+  List<RankingItems> getSelectedCategoryRankings(int index, RankingProvider provider) {
+  switch (index) {
+    case 0:
+      return provider.playRankings;
+    case 1:
+      return provider.musicalRankings;
+    case 2:
+      return provider.classicRankings;
+    case 3:
+      return provider.koreanRankings;
+    case 4:
+      return provider.popularRankings;
+    case 5:
+      return provider.danceRankings;
+    case 6:
+      return provider.circusRankings;
+    case 7:
+      return provider.complexRankings;
+    case 8:
+      return provider.kidRankings;
+
+    default:
+      return [];
+  }
+  }
   @override
   Widget build(BuildContext context) {
+    final rankingProvider = Provider.of<RankingProvider>(context);
+    rankingProvider.loadTop10Rankings();
+    rankingProvider.loadPlayRankings();
+    rankingProvider.loadMusicalRankings();
+    rankingProvider.loadClassicRankings();
+    rankingProvider.loadKoreanRankings();
+    rankingProvider.loadPopularRankings();
+    rankingProvider.loadDanceRankings();
+    rankingProvider.loadCircusRankings();
+    rankingProvider.loadComplexRankings();
+    rankingProvider.loadKidRankings();
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SingleChildScrollView(
@@ -84,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(
             height: 30,
           ),
-          HomeRankingSwiper(),
+          HomeRankingSwiper(rankingList: rankingProvider.top10rankings),
           const SizedBox(
             height: 10,
           ),
@@ -103,7 +143,11 @@ class _HomeScreenState extends State<HomeScreen> {
               children: _buildCategoryChips(),
             ),
           ),
-          HomeRankingGridView(selectedCategoryIndex: _selectedCategoryIndex),
+          //index별로 다른 list 보내도록 설정
+          HomeRankingGridView(
+            selectedCategoryIndex: _selectedCategoryIndex,
+            rankingList: getSelectedCategoryRankings(_selectedCategoryIndex, rankingProvider)
+            )
         ]),
       ),
     );

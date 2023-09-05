@@ -4,62 +4,16 @@ import 'package:artroad/presentation/home/home_ranking_items_tile.dart';
 
 class HomeRankingGridView extends StatelessWidget {
   final int selectedCategoryIndex; // 선택된 칩의 인덱스를 받을 변수
+  final List<RankingItems> rankingList;
 
-  HomeRankingGridView({Key? key, required this.selectedCategoryIndex})
-      : super(key: key);
-
-  final List<RankingItems> rankingList = [
-    RankingItems(
-        mt20id: "aaa",
-        cate: "연극",
-        poster: "assets/images/poster_example1.jpg",
-        rnum: "1"),
-    RankingItems(
-        mt20id: "aaa",
-        cate: "연극",
-        poster: "assets/images/poster_example1.jpg",
-        rnum: "2"),
-    RankingItems(
-        mt20id: "aaa",
-        cate: "연극",
-        poster: "assets/images/poster_example1.jpg",
-        rnum: "3"),
-    RankingItems(
-        mt20id: "aaa",
-        cate: "연극",
-        poster: "assets/images/poster_example3.jpg",
-        rnum: "4"),
-    RankingItems(
-        mt20id: "aaa",
-        cate: "연극",
-        poster: "assets/images/poster_example2.jpg",
-        rnum: "5"),
-    RankingItems(
-        mt20id: "aaa",
-        cate: "연극",
-        poster: "assets/images/poster_example3.jpg",
-        rnum: "6"),
-    RankingItems(
-        mt20id: "aaa",
-        cate: "연극",
-        poster: "assets/images/poster_example4.jpg",
-        rnum: "7"),
-    RankingItems(
-        mt20id: "aaa",
-        cate: "연극",
-        poster: "assets/images/poster_example1.jpg",
-        rnum: "8"),
-    RankingItems(
-        mt20id: "aaa",
-        cate: "연극",
-        poster: "assets/images/poster_example2.jpg",
-        rnum: "9"),
-  ];
+  const HomeRankingGridView({
+    Key? key, 
+    required this.selectedCategoryIndex,
+    required this.rankingList,
+    }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    print(selectedCategoryIndex);
-    //선택된 칩에 따라 api 불러오는 함수 추가하면 됨
     return Padding(
       padding: const EdgeInsets.all(10),
       child: SizedBox(

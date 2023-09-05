@@ -1,11 +1,10 @@
 import 'package:artroad/presentation/calendar/favoritecalendar_screen/favoritecalendar_bottom/fcalendar_items.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/utils/image_constant.dart';
 
 class fCalendarItemsTile extends StatelessWidget {
-  fCalendarItemsTile(this._fCalendarItems);
+  const fCalendarItemsTile(this._fCalendarItems, {super.key});
 
   final fCalendarItems _fCalendarItems;
 
@@ -18,16 +17,16 @@ class fCalendarItemsTile extends StatelessWidget {
           top: 1,
           child: Image.asset(
             ImageConstant.imageVerticalLine,
-            color: Color(0xFF176FF2),
+            color: const Color(0xFF176FF2),
           ),
         ),
 
-        SizedBox(width: 10),
+        const SizedBox(width: 10),
 
         ListTile(
           title: Text(
             '${_fCalendarItems.prfnm}',
-            style: TextStyle(
+            style: const TextStyle(
               color: Color(0xFF176FF2),
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -36,14 +35,14 @@ class fCalendarItemsTile extends StatelessWidget {
 
           subtitle: Column(
             children: [
-              SizedBox(height: 3.5),
+              const SizedBox(height: 3.5),
 
               Row(
                 children: [
                   if (_fCalendarItems.prfpdto == null)
                     Text(
                       '${_fCalendarItems.prfpdfrom}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                         color: Color(0xFF939191),
                       ),
@@ -51,7 +50,7 @@ class fCalendarItemsTile extends StatelessWidget {
                   if (_fCalendarItems.prfpdto != null)
                     Text(
                       '${_fCalendarItems.prfpdfrom} ~ ${_fCalendarItems.prfpdto}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                         color: Color(0xFF939191),
                       ),
@@ -59,17 +58,17 @@ class fCalendarItemsTile extends StatelessWidget {
                 ],
               ),
 
-              SizedBox(height: 3),
+              const SizedBox(height: 3),
 
               Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.location_on_sharp,
                     color: Color(0xFF939191),
                     size: 18,
                   ),
 
-                  SizedBox(width: 2.5),
+                  const SizedBox(width: 2.5),
 
                   InkWell(
                     onTap: () {
@@ -77,7 +76,7 @@ class fCalendarItemsTile extends StatelessWidget {
                     },
                     child: Text(
                       '${_fCalendarItems.fcltynm}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                         color: Color(0xFF939191),
                       ),
@@ -91,7 +90,7 @@ class fCalendarItemsTile extends StatelessWidget {
             onTap: () {
               print("Concert info button clicked");
             },
-            child: Icon(
+            child: const Icon(
               Icons.keyboard_arrow_right_rounded,
               color: Color(0xFF939191),
               size: 30,

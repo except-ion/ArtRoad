@@ -3,7 +3,6 @@ import 'package:artroad/src/provider/user_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:artroad/presentation/services/firebase_firestore_services.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 
 class mCalendarDialog extends StatefulWidget {

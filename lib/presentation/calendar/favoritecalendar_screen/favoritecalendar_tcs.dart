@@ -2,13 +2,8 @@
 import 'package:artroad/core/app_export.dart';
 import 'package:artroad/presentation/calendar/calendar_day_info.dart';
 import 'package:artroad/presentation/calendar/favoritecalendar_screen/favoritecalendar_bottom/fcalendar_list_view.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import '../../../theme/theme_helper.dart';
-import 'favoritecalendar_bottom.dart';
-// import 'favoritecalendar_screen.dart';
-// import 'max_num_of_weeks.dart';
 import '../max_num_of_weeks.dart';
 
 typedef OnDaySelected = void Function(

@@ -1,4 +1,5 @@
 import 'package:artroad/presentation/home/home_ranking_items.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
 
 class RankingItemsTile extends StatefulWidget {
@@ -12,7 +13,6 @@ class RankingItemsTile extends StatefulWidget {
 
 class _RankingItemsTileState extends State<RankingItemsTile> {
   bool _imageLoading = false; //network로 수정할 때 true로 바꾸기
-
   void _updateImageLoading(bool isLoading) {
     if (_imageLoading != isLoading) {
       setState(() {
@@ -30,23 +30,24 @@ class _RankingItemsTileState extends State<RankingItemsTile> {
         borderRadius: BorderRadius.circular(16),
         child: _imageLoading
             ? const CircularProgressIndicator()
-            : Image.asset(
-                '${widget._RankingItems.poster}',
+            : Image.network(
+                'http://www.kopis.or.kr/${widget._RankingItems.poster}',
                 errorBuilder: (context, error, stackTrace) {
                   _updateImageLoading(false);
+                  print('error: $error');
                   return const Text('이미지 로드 실패');
                 },
                 width: 200,
                 height: 270,
-                fit: BoxFit.fitWidth,
+                fit: BoxFit.cover,
                 //아래는 network로 수정할 때 true로 바꾸기
                 // loadingBuilder: (context, child, loadingProgress) {
                 //   if (loadingProgress == null) {
-                //     _updateImageLoading(false);
+                //     _updateImageLoading(true);
                 //     return child;
                 //   } else {
                 //     _updateImageLoading(true);
-                //     return CircularProgressIndicator();
+                //     return const CircularProgressIndicator();
                 //   }
                 // },
               ),
