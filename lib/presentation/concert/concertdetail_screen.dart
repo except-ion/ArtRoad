@@ -97,10 +97,10 @@ class _ConcertDetailScreenState extends State<ConcertDetailScreen> {
                                       const SizedBox(height: 20),
                                       const Divider(),
                                       const SizedBox(height: 20),
-                                      const Column(
+                                      Column(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
-                                          Text(
+                                          const Text(
                                             '상세 정보',
                                             style: TextStyle(
                                               color: Colors.black,
@@ -109,11 +109,12 @@ class _ConcertDetailScreenState extends State<ConcertDetailScreen> {
                                             ),
                                           ),
                                           Padding(
-                                            padding: EdgeInsets.only(top: 40),
-                                            // child: Image.network(
-                                            //   'http://www.kopis.or.kr/${concertDetailList[0].styurls}',
-                                            //   fit: BoxFit.cover,
-                                            //   ),
+                                            padding: const EdgeInsets.only(top: 40),
+                                            // syturls넣는곳
+                                            child: Image.network(
+                                              '${concertDetailList[0].styurls}',
+                                              fit: BoxFit.cover,
+                                              ),
                                           )
                                         ],
                                       )
@@ -126,11 +127,15 @@ class _ConcertDetailScreenState extends State<ConcertDetailScreen> {
                               offset: const Offset(30, 65),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(16),
-                                // child: Image.network(
-                                //   'http://www.kopis.or.kr/${concertDetailList[0].poster}',
-                                //   width: 170,
-                                //   fit: BoxFit.cover,
-                                // ),
+                                child: Image.network(
+                                  '${concertDetailList[0].poster}',
+                                  width: 170,
+                                  fit: BoxFit.cover,
+                                   errorBuilder: (context, error, stackTrace) {
+                                    print('error: $error');
+                                    return const Text('이미지 로딩 중 오류가 발생했습니다.');
+                                  },
+                                ),
                               ),
                             ),
                           ],
