@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:artroad/theme/theme_helper.dart';
 import 'package:provider/provider.dart';
 import 'home_ranking_grid_view.dart';
+import 'home_ranking_items.dart';
 
 final List<String> imgList = [
   'assets/images/login_background_image_1.png',
@@ -40,10 +41,24 @@ class _HomeScreenState extends State<HomeScreen> {
     '복합',
     '아동',
   ];
+
+  List<RankingItems> getSelectedCategoryRankings(int index, RankingProvider provider) {
+  switch (index) {
+    case 0:
+      return provider.playRankings;
+    // case 1:
+    //   return provider.musicalRankings;
+    // case 2:
+    //   return provider.classicRankings;
+    default:
+      return [];
+  }
+  }
   @override
   Widget build(BuildContext context) {
     final rankingProvider = Provider.of<RankingProvider>(context);
     rankingProvider.loadTop10Rankings();
+    rankingProvider.loadPlayRankings();
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SingleChildScrollView(
@@ -107,7 +122,11 @@ class _HomeScreenState extends State<HomeScreen> {
               children: _buildCategoryChips(),
             ),
           ),
-          HomeRankingGridView(selectedCategoryIndex: _selectedCategoryIndex),
+          //index별로 다른 list 보내도록 설정
+          HomeRankingGridView(
+            selectedCategoryIndex: _selectedCategoryIndex,
+            rankingList: getSelectedCategoryRankings(_selectedCategoryIndex, rankingProvider)
+            )
         ]),
       ),
     );

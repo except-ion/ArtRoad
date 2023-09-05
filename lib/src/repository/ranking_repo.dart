@@ -46,4 +46,41 @@ class RankingRepository {
     }
     return null;
   }
+
+    Future<List<RankingItems>?> loadPlayRankings(String cate) async {
+    await dotenv.load();
+    DateTime now = DateTime.now();
+    String currentDate = DateFormat('yyyyMMdd').format(now);
+    String apiKey = dotenv.env['API_KEY']!;
+    List<RankingItems> rankings = [];
+      String baseUrl =
+          "http://kopis.or.kr/openApi/restful/boxoffice?service=$apiKey&ststype=month&date=$currentDate&catecode=$cate";
+      final response = await http.get(Uri.parse(baseUrl));
+
+      // 정상적으로 데이터를 불러왔다면
+      if (response.statusCode == 200) {
+        // 데이터 가져오기
+        final body = convert.utf8.decode(response.bodyBytes);
+        // xml => json으로 변환
+        final xml = Xml2Json()..parse(body);
+        final json = xml.toParker();
+
+        // 필요한 데이터 찾기
+        Map<String, dynamic> jsonResult = convert.json.decode(json);
+        final jsonRanking = jsonResult['boxofs']['boxof'];
+        print('jsonRanking: $jsonRanking');
+        // ranking 상위 10개만 return 보내기
+        if (jsonRanking != null) {
+          List<dynamic> items = jsonRanking as List;
+          int itemCount = items.length < 9 ? items.length : 9;
+          rankings.addAll(items.sublist(0, itemCount).map<RankingItems>((item) => RankingItems.fromJson(item)));
+      } else{
+        print(response);
+      }
+    }
+    if (rankings.isNotEmpty) {
+      return rankings;
+    }
+    return null;
+  }
 }

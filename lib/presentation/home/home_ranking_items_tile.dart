@@ -23,7 +23,6 @@ class _RankingItemsTileState extends State<RankingItemsTile> {
 
   @override
   Widget build(BuildContext context) {
-    String apiKey = dotenv.env['API_KEY']!;
     return Container(
       height: 270,
       alignment: Alignment.center,
