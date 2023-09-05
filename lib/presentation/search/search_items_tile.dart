@@ -55,11 +55,35 @@ class _SearchItemsTileState extends State<SearchItemsTile> {
                   borderRadius: BorderRadius.circular(6),
                   child: _imageLoading
                       ? CircularProgressIndicator()
-                      : Image.asset('${widget.item.poster}',
-                          errorBuilder: (context, error, stackTrace) {
-                          _updateImageLoading(false);
-                          return Text('이미지 로드 실패');
-                        }, height: 70, fit: BoxFit.fitHeight),
+                      : (widget.item is ConcertDetail &&
+                              widget.item.poster != null)
+                          ? Image.asset('${widget.item.poster}',
+                              errorBuilder: (context, error, stackTrace) {
+                              _updateImageLoading(false);
+                              return Text('이미지 로드 실패');
+                            }, height: 70, fit: BoxFit.fitHeight)
+                          : Container(
+                              color: Colors.grey[100],
+                              height: 70,
+                              width: 48,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.no_photography_outlined,
+                                    size: 24,
+                                    color: Colors.grey[600],
+                                  ),
+                                  Text(
+                                    'No Image',
+                                    style: TextStyle(
+                                      fontSize: 7,
+                                      color: Colors.grey[600],
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              )),
                 ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -72,8 +96,8 @@ class _SearchItemsTileState extends State<SearchItemsTile> {
                     ),
                     child: Text(
                       widget.item is ConcertDetail
-                          ? '${widget.item.prfnm}' // 공연 이름
-                          : '${widget.item.fcltynm}',
+                          ? widget.item.prfnm ?? '제공된 정보가 없습니다.' // 공연 이름
+                          : widget.item.fcltynm ?? '제공된 정보가 없습니다.', //공연장 이름
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 15,
@@ -91,15 +115,15 @@ class _SearchItemsTileState extends State<SearchItemsTile> {
                       Icon(Icons.location_on_sharp),
                       Text(
                         widget.item is ConcertDetail
-                            ? '${widget.item.fcltynm}' // 공연의 공연장
-                            : '${widget.item.adres}',
+                            ? widget.item.fcltynm ?? '제공되지 않은 정보입니다.' // 공연의 공연장
+                            : widget.item.adres ?? '제공되지 않은 정보입니다.', //공연장 주소
                         style: TextStyle(
                           color: Color(0xFF828282),
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
                           height: 1,
                         ),
-                      ), //공연장 주소
+                      ),
                     ],
                   )
                 ],
