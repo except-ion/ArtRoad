@@ -36,11 +36,6 @@ class _ConcertDetailScreenState extends State<ConcertDetailScreen> {
         backgroundColor: const Color(0xFF00233D),
         body: Stack(
           children: [
-            CustomHeader(
-              name: widget.prfnm, // ConcertDetailProvider에서 가져온 공연 이름으로 대체
-              hasLiked: true,
-              isDetail: true,
-            ),
             Consumer<ConcertDetailProvider>(
               builder: (context, concertDetailProvider, child) {
                 final concertDetailList = concertDetailProvider.concertDetails;
@@ -145,6 +140,11 @@ class _ConcertDetailScreenState extends State<ConcertDetailScreen> {
                   ],
                 );
               },
+            ),
+            CustomHeader(
+              name: widget.prfnm, // ConcertDetailProvider에서 가져온 공연 이름으로 대체
+              hasLiked: true,
+              isDetail: true,
             ),
           ],
         ),

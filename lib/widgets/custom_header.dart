@@ -6,7 +6,7 @@ class CustomHeader extends StatefulWidget {
   final bool isDetail;
 
   const CustomHeader(
-      {Key? key, this.name, this.hasLiked = false, this.isDetail = false});
+      {super.key, this.name, this.hasLiked = false, this.isDetail = false});
 
   @override
   _CustomHeaderState createState() => _CustomHeaderState();
@@ -30,7 +30,6 @@ class _CustomHeaderState extends State<CustomHeader> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.isDetail);
     return Container(
       child: Stack(
         children: [
@@ -38,7 +37,7 @@ class _CustomHeaderState extends State<CustomHeader> {
               ? Image.asset('assets/images/header_dark.png')
               : Image.asset('assets/images/header_light.png'),
           Padding(
-            padding: EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 5),
+            padding: const EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 5),
             child: Stack(
               alignment: Alignment.center,
               children: [
@@ -50,7 +49,7 @@ class _CustomHeaderState extends State<CustomHeader> {
                       icon: Icon(
                         Icons.arrow_back_rounded,
                         color:
-                            widget.isDetail ? Colors.white : Color(0xFF00233D),
+                            widget.isDetail ? Colors.white : const Color(0xFF00233D),
                       ),
                       onPressed: () {
                         Navigator.pop(context);
@@ -86,9 +85,9 @@ class _CustomHeaderState extends State<CustomHeader> {
                                 Icons.favorite_border,
                                 color: widget.isDetail
                                     ? Colors.white
-                                    : Color(0xFF00233D),
+                                    : const Color(0xFF00233D),
                               )
-                            : Icon(
+                            : const Icon(
                                 //좋아요 클릭 후
                                 Icons.favorite,
                                 color: Colors.red,
