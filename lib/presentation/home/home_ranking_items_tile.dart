@@ -1,16 +1,17 @@
-import 'package:artroad/presentation/home/home_ranking_items.dart';
 import 'package:flutter/material.dart';
 
-class RankingItemsTile extends StatefulWidget {
-  RankingItemsTile(this._RankingItems);
+import '../../src/model/ranking.dart';
 
-  final RankingItems _RankingItems;
+class RankingTile extends StatefulWidget {
+  RankingTile(this._Ranking);
+
+  final Ranking _Ranking;
 
   @override
-  State<RankingItemsTile> createState() => _RankingItemsTileState();
+  State<RankingTile> createState() => _RankingTileState();
 }
 
-class _RankingItemsTileState extends State<RankingItemsTile> {
+class _RankingTileState extends State<RankingTile> {
   bool _imageLoading = false; //network로 수정할 때 true로 바꾸기
 
   void _updateImageLoading(bool isLoading) {
@@ -30,26 +31,40 @@ class _RankingItemsTileState extends State<RankingItemsTile> {
         borderRadius: BorderRadius.circular(16),
         child: _imageLoading
             ? CircularProgressIndicator()
-            : Image.asset(
-                '${widget._RankingItems.poster}',
-                errorBuilder: (context, error, stackTrace) {
-                  _updateImageLoading(false);
-                  return Text('이미지 로드 실패');
-                },
-                width: 200,
-                height: 270,
-                fit: BoxFit.fitWidth,
-                //아래는 network로 수정할 때 true로 바꾸기
-                // loadingBuilder: (context, child, loadingProgress) {
-                //   if (loadingProgress == null) {
-                //     _updateImageLoading(false);
-                //     return child;
-                //   } else {
-                //     _updateImageLoading(true);
-                //     return CircularProgressIndicator();
-                //   }
-                // },
-              ),
+            : (widget._Ranking.poster != null)
+                ? Image.asset(
+                    '${widget._Ranking.poster}',
+                    errorBuilder: (context, error, stackTrace) {
+                      _updateImageLoading(false);
+                      return Text('이미지 로드 실패');
+                    },
+                    width: 200,
+                    height: 270,
+                    fit: BoxFit.fitWidth,
+                  )
+                : Container(
+                    color: Colors.grey[100],
+                    height: 270,
+                    width: 200,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.no_photography_outlined,
+                          size: 38,
+                          color: Colors.grey[600],
+                        ),
+                        Text(
+                          'No Image',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.grey[600],
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
       ),
     );
   }
