@@ -1,98 +1,98 @@
+import 'package:artroad/src/model/ranking.dart';
 import 'package:artroad/src/repository/ranking_repo.dart';
 import 'package:flutter/material.dart';
-import 'package:artroad/presentation/home/home_ranking_items.dart';
 
 class RankingProvider extends ChangeNotifier {
   // EvRepository를 접근(데이터를 받아와야 하기 때문에)
   final RankingRepository _rankingRepository = RankingRepository();
 
-  List<RankingItems> _top10rankings = [];
-  List<RankingItems> get top10rankings => _top10rankings;
+  List<Ranking> _top10rankings = [];
+  List<Ranking> get top10rankings => _top10rankings;
 
-  List<RankingItems> _playRankings = [];
-  List<RankingItems> get playRankings => _playRankings;
+  List<Ranking> _playRankings = [];
+  List<Ranking> get playRankings => _playRankings;
 
-  List<RankingItems> _musicalRankings = [];
-  List<RankingItems> get musicalRankings => _musicalRankings;
+  List<Ranking> _musicalRankings = [];
+  List<Ranking> get musicalRankings => _musicalRankings;
 
-  List<RankingItems> _classicRankings = [];
-  List<RankingItems> get classicRankings => _classicRankings;
+  List<Ranking> _classicRankings = [];
+  List<Ranking> get classicRankings => _classicRankings;
 
-  List<RankingItems> _koreanRankings = [];
-  List<RankingItems> get koreanRankings => _koreanRankings;
+  List<Ranking> _koreanRankings = [];
+  List<Ranking> get koreanRankings => _koreanRankings;
 
-  List<RankingItems> _popularRankings = [];
-  List<RankingItems> get popularRankings => _popularRankings;
+  List<Ranking> _popularRankings = [];
+  List<Ranking> get popularRankings => _popularRankings;
 
-  List<RankingItems> _danceRankings = [];
-  List<RankingItems> get danceRankings => _danceRankings;
+  List<Ranking> _danceRankings = [];
+  List<Ranking> get danceRankings => _danceRankings;
 
-  List<RankingItems> _circusRankings = [];
-  List<RankingItems> get circusRankings => _circusRankings;
+  List<Ranking> _circusRankings = [];
+  List<Ranking> get circusRankings => _circusRankings;
 
-  List<RankingItems> _complexRankings = [];
-  List<RankingItems> get complexRankings => _complexRankings;
+  List<Ranking> _complexRankings = [];
+  List<Ranking> get complexRankings => _complexRankings;
 
-  List<RankingItems> _kidRankings = [];
-  List<RankingItems> get kidRankings => _kidRankings;
+  List<Ranking> _kidRankings = [];
+  List<Ranking> get kidRankings => _kidRankings;
 
   // 데이터 로드
   loadTop10Rankings() async {
-    List<RankingItems>? listRankings = await _rankingRepository.loadTop10Rankings();
+    List<Ranking>? listRankings = await _rankingRepository.loadTop10Rankings();
     _top10rankings = listRankings!;
     notifyListeners(); // 데이터가 업데이트가 됐으면 구독자에게 알린다.
   }
 
   loadPlayRankings() async {
-    List<RankingItems>? listPlayRankings = await _rankingRepository.loadPlayRankings('AAAA');
+    List<Ranking>? listPlayRankings = await _rankingRepository.loadPlayRankings('AAAA');
     _playRankings = listPlayRankings!;
     notifyListeners();
   }
 
   loadMusicalRankings() async {
-    List<RankingItems>? listMusicalRankings = await _rankingRepository.loadMusicalRankings('GGGA');
+    List<Ranking>? listMusicalRankings = await _rankingRepository.loadMusicalRankings('GGGA');
     _musicalRankings = listMusicalRankings!;
     notifyListeners();
   }
 
   loadClassicRankings() async {
-    List<RankingItems>? listClassicRankings = await _rankingRepository.loadClassicRankings('CCCA');
+    List<Ranking>? listClassicRankings = await _rankingRepository.loadClassicRankings('CCCA');
     _classicRankings = listClassicRankings!;
     notifyListeners();
   }
 
   loadKoreanRankings() async {
-    List<RankingItems>? listKoreanRankings = await _rankingRepository.loadKoreanRankings('CCCC');
+    List<Ranking>? listKoreanRankings = await _rankingRepository.loadKoreanRankings('CCCC');
     _koreanRankings = listKoreanRankings!;
     notifyListeners();
   }
 
   loadPopularRankings() async {
-    List<RankingItems>? listPopularyRankings = await _rankingRepository.loadPopularRankings('CCCD');
+    List<Ranking>? listPopularyRankings = await _rankingRepository.loadPopularRankings('CCCD');
     _popularRankings = listPopularyRankings!;
     notifyListeners();
   }
 
   loadDanceRankings() async {
-    List<RankingItems>? listDanceRankings = await _rankingRepository.loadDanceRankings('BBBC');
+    List<Ranking>? listDanceRankings = await _rankingRepository.loadDanceRankings('BBBC');
     _danceRankings = listDanceRankings!;
     notifyListeners();
   }
 
   loadCircusRankings() async {
-    List<RankingItems>? listCircusRankings = await _rankingRepository.loadCircusRankings('EEEB');
+    List<Ranking>? listCircusRankings = await _rankingRepository.loadCircusRankings('EEEB');
     _circusRankings = listCircusRankings!;
     notifyListeners();
   }
 
   loadComplexRankings() async {
-    List<RankingItems>? listComplexRankings = await _rankingRepository.loadComplexRankings('EEEA');
+    List<Ranking>? listComplexRankings = await _rankingRepository.loadComplexRankings('EEEA');
     _complexRankings = listComplexRankings!;
     notifyListeners();
   }
 
   loadKidRankings() async {
-    List<RankingItems>? listKidRankings = await _rankingRepository.loadKidRankings('KID');
+    List<Ranking>? listKidRankings = await _rankingRepository.loadKidRankings('KID');
     _kidRankings = listKidRankings!;
     notifyListeners();
   }

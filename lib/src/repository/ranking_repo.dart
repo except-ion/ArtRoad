@@ -1,17 +1,17 @@
 import 'dart:convert' as convert;
-import 'package:artroad/presentation/home/home_ranking_items.dart';
+import 'package:artroad/src/model/ranking.dart';
 import 'package:http/http.dart' as http;
 import 'package:xml2json/xml2json.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
 
 class RankingRepository {
-  Future<List<RankingItems>?> _loadRankings(String cate) async {
+  Future<List<Ranking>?> _loadRankings(String cate) async {
     await dotenv.load();
     DateTime now = DateTime.now();
     String currentDate = DateFormat('yyyyMMdd').format(now);
     String apiKey = dotenv.env['API_KEY']!;
-    List<RankingItems> rankings = [];
+    List<Ranking> rankings = [];
     String baseUrl =
         "http://kopis.or.kr/openApi/restful/boxoffice?service=$apiKey&ststype=month&date=$currentDate&catecode=$cate";
     final response = await http.get(Uri.parse(baseUrl));
@@ -30,7 +30,7 @@ class RankingRepository {
       if (jsonRanking != null) {
         List<dynamic> items = jsonRanking as List;
         int itemCount = items.length < 9 ? items.length : 9;
-        rankings.addAll(items.sublist(0, itemCount).map<RankingItems>((item) => RankingItems.fromJson(item)));
+        rankings.addAll(items.sublist(0, itemCount).map<Ranking>((item) => Ranking.fromJson(item)));
       } else {
         print(response);
       }
@@ -41,12 +41,12 @@ class RankingRepository {
     return null;
   }
 
-  Future<List<RankingItems>?> loadTop10Rankings() async {
+  Future<List<Ranking>?> loadTop10Rankings() async {
     await dotenv.load();
     DateTime now = DateTime.now();
     String currentDate = DateFormat('yyyyMMdd').format(now);
     String apiKey = dotenv.env['API_KEY']!;
-    List<RankingItems> rankings = [];
+    List<Ranking> rankings = [];
     String baseUrl =
         "http://kopis.or.kr/openApi/restful/boxoffice?service=$apiKey&ststype=month&date=$currentDate";
     final response = await http.get(Uri.parse(baseUrl));
@@ -65,7 +65,7 @@ class RankingRepository {
       if (jsonRanking != null) {
         List<dynamic> items = jsonRanking as List;
         int itemCount = items.length < 10 ? items.length : 10;
-        rankings.addAll(items.sublist(0, itemCount).map<RankingItems>((item) => RankingItems.fromJson(item)));
+        rankings.addAll(items.sublist(0, itemCount).map<Ranking>((item) => Ranking.fromJson(item)));
       } else {
         print(response);
       }
@@ -76,39 +76,39 @@ class RankingRepository {
     return null;
   }
 
-  Future<List<RankingItems>?> loadPlayRankings(String cate) async {
+  Future<List<Ranking>?> loadPlayRankings(String cate) async {
     return _loadRankings(cate);
   }
 
-  Future<List<RankingItems>?> loadMusicalRankings(String cate) async {
+  Future<List<Ranking>?> loadMusicalRankings(String cate) async {
     return _loadRankings(cate);
   }
 
-  Future<List<RankingItems>?> loadClassicRankings(String cate) async {
+  Future<List<Ranking>?> loadClassicRankings(String cate) async {
     return _loadRankings(cate);
   }
 
-  Future<List<RankingItems>?> loadKoreanRankings(String cate) async {
+  Future<List<Ranking>?> loadKoreanRankings(String cate) async {
     return _loadRankings(cate);
   }
 
-  Future<List<RankingItems>?> loadPopularRankings(String cate) async {
+  Future<List<Ranking>?> loadPopularRankings(String cate) async {
     return _loadRankings(cate);
   }
 
-  Future<List<RankingItems>?> loadDanceRankings(String cate) async {
+  Future<List<Ranking>?> loadDanceRankings(String cate) async {
     return _loadRankings(cate);
   }
 
-  Future<List<RankingItems>?> loadCircusRankings(String cate) async {
+  Future<List<Ranking>?> loadCircusRankings(String cate) async {
     return _loadRankings(cate);
   }
 
-  Future<List<RankingItems>?> loadComplexRankings(String cate) async {
+  Future<List<Ranking>?> loadComplexRankings(String cate) async {
     return _loadRankings(cate);
   }
 
-  Future<List<RankingItems>?> loadKidRankings(String cate) async {
+  Future<List<Ranking>?> loadKidRankings(String cate) async {
     return _loadRankings(cate);
   }
 }
