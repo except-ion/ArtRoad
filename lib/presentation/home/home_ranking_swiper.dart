@@ -8,62 +8,8 @@ class HomeRankingSwiper extends StatelessWidget {
 
   const HomeRankingSwiper({super.key, required this.rankingList});
 
-  // final List<RankingItems> rankingList = [
-  //   RankingItems(
-  //       mt20id: "aaa",
-  //       cate: "연극",
-  //       poster: "assets/images/poster_example1.jpg",
-  //       rnum: "1"),
-  //   RankingItems(
-  //       mt20id: "aaa",
-  //       cate: "연극",
-  //       poster: "assets/images/poster_example1.jpg",
-  //       rnum: "2"),
-  //   RankingItems(
-  //       mt20id: "aaa",
-  //       cate: "연극",
-  //       poster: "assets/images/poster_example1.jpg",
-  //       rnum: "3"),
-  //   RankingItems(
-  //       mt20id: "aaa",
-  //       cate: "연극",
-  //       poster: "assets/images/poster_example3.jpg",
-  //       rnum: "4"),
-  //   RankingItems(
-  //       mt20id: "aaa",
-  //       cate: "연극",
-  //       poster: "assets/images/poster_example2.jpg",
-  //       rnum: "5"),
-  //   RankingItems(
-  //       mt20id: "aaa",
-  //       cate: "연극",
-  //       poster: "assets/images/poster_example3.jpg",
-  //       rnum: "6"),
-  //   RankingItems(
-  //       mt20id: "aaa",
-  //       cate: "연극",
-  //       poster: "assets/images/poster_example4.jpg",
-  //       rnum: "7"),
-  //   RankingItems(
-  //       mt20id: "aaa",
-  //       cate: "연극",
-  //       poster: "assets/images/poster_example1.jpg",
-  //       rnum: "8"),
-  //   RankingItems(
-  //       mt20id: "aaa",
-  //       cate: "연극",
-  //       poster: "assets/images/poster_example2.jpg",
-  //       rnum: "9"),
-  //   RankingItems(
-  //       mt20id: "aaa",
-  //       cate: "연극",
-  //       poster: "assets/images/poster_example2.jpg",
-  //       rnum: "10"),
-  // ];
-
   @override
   Widget build(BuildContext context) {
-    print('rankingList: ${rankingList.first.toString()}');
     return SizedBox(
       height: 300, // 스와이퍼의 높이 설정해야함
       child: Swiper(

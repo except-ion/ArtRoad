@@ -38,8 +38,8 @@ class _RankingItemsTileState extends State<RankingItemsTile> {
                   print('error: $error');
                   return const Text('이미지 로드 실패');
                 },
-                // width: 200,
-                // height: 270,
+                width: 200,
+                height: 270,
                 fit: BoxFit.cover,
                 //아래는 network로 수정할 때 true로 바꾸기
                 // loadingBuilder: (context, child, loadingProgress) {
