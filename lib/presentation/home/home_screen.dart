@@ -1,10 +1,10 @@
 import 'package:artroad/presentation/home/home_ranking_swiper.dart';
+import 'package:artroad/src/model/ranking.dart';
 import 'package:artroad/src/provider/ranking_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:artroad/theme/theme_helper.dart';
 import 'package:provider/provider.dart';
 import 'home_ranking_grid_view.dart';
-import 'home_ranking_items.dart';
 
 final List<String> imgList = [
   'assets/images/login_background_image_1.png',
@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
     '아동',
   ];
 
-  List<RankingItems> getSelectedCategoryRankings(int index, RankingProvider provider) {
+  List<Ranking> getSelectedCategoryRankings(int index, RankingProvider provider) {
   switch (index) {
     case 0:
       return provider.playRankings;
