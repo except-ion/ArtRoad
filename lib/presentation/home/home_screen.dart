@@ -33,7 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
     '국악',
     '대중음악',
     '무용',
-    '대중무용',
     '서커스/마술',
     '복합',
     '아동',
@@ -41,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.transparent,
       body: SingleChildScrollView(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Padding(

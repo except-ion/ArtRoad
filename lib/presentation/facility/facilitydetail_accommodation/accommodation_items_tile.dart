@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'accommodation_items.dart';
 
 class AccommodationItemsTile extends StatelessWidget {
@@ -50,6 +51,13 @@ class AccommodationItemsTile extends StatelessWidget {
                   InkWell(
                     onTap: () {
                       Clipboard.setData(ClipboardData(text: _AccommodationItems.aAdress));
+                      Fluttertoast.showToast(
+                        msg: '주소가 복사되었습니다.',
+                        toastLength: Toast.LENGTH_SHORT,
+                        backgroundColor: Colors.grey,
+                        textColor: Colors.white,
+                        fontSize: 16.0,
+                      );
                       print('adress copy bt');
                     },
                     child: Icon(
@@ -62,16 +70,18 @@ class AccommodationItemsTile extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Icon(
-                    Icons.star_rounded,
-                    color: Colors.yellow,
-                    size: 16,
-                  ),
-                  SizedBox(width: 2),
                   Text(
-                    _AccommodationItems.aReview.toString(),
+                    '이 장소에서 ',
                     style: TextStyle(
                       fontSize: 12,
+                      color: Color(0xFF939191),
+                    ),
+                  ),
+                  Text(
+                    "${_AccommodationItems.aDistance.toString()}m",
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.orange,
                     ),
                   ),
                 ],
@@ -93,6 +103,13 @@ class AccommodationItemsTile extends StatelessWidget {
               InkWell(
                 onTap: () {
                   Clipboard.setData(ClipboardData(text: _AccommodationItems.aPhoneNum));
+                  Fluttertoast.showToast(
+                    msg: '전화번호가 복사되었습니다.',
+                    toastLength: Toast.LENGTH_SHORT,
+                    backgroundColor: Colors.grey,
+                    textColor: Colors.white,
+                    fontSize: 16.0,
+                  );
                   print('phone number copy bt');
                 },
                 child: Icon(
