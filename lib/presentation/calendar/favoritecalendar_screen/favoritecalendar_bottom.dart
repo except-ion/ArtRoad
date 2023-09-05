@@ -1,11 +1,10 @@
 import 'package:artroad/core/app_export.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class fTableCalendarBottom extends StatefulWidget {
   final DateTime selectedDay; // 선택된 날짜를 인자로 받도록 수정
 
-  fTableCalendarBottom({required this.selectedDay});
+  const fTableCalendarBottom({super.key, required this.selectedDay});
 
   @override
   _fTableCalendarBottomState createState() => _fTableCalendarBottomState();
@@ -26,7 +25,7 @@ class _fTableCalendarBottomState extends State<fTableCalendarBottom> {
             alignment: Alignment.topLeft,
             child: Text(
               '${widget.selectedDay.month}/${widget.selectedDay.day} (${_getDayOfWeek(widget.selectedDay)})',
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black,
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
@@ -37,11 +36,11 @@ class _fTableCalendarBottomState extends State<fTableCalendarBottom> {
           ),
         ),
 
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
 
         Column(
           children: [
-            Container(
+            SizedBox(
               width: 381,
               height: 67,
               child: Stack(
@@ -49,7 +48,7 @@ class _fTableCalendarBottomState extends State<fTableCalendarBottom> {
                   Positioned(
                     left: 20,
                     top: 45,
-                    child: Container(
+                    child: SizedBox(
                       width: 181,
                       height: 20,
                       child: Stack(
@@ -67,10 +66,10 @@ class _fTableCalendarBottomState extends State<fTableCalendarBottom> {
                                     ImageConstant.imageLocation,
                                     width: 17,
                                     height: 17,
-                                    color: Color(0xFF939191),
+                                    color: const Color(0xFF939191),
                                   ),
-                                  SizedBox(width: 3),
-                                  SizedBox(
+                                  const SizedBox(width: 3),
+                                  const SizedBox(
                                     width: 159,
                                     child: Text(
                                       '송도컨벤시아',
@@ -102,7 +101,7 @@ class _fTableCalendarBottomState extends State<fTableCalendarBottom> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             '2023.06.24. (토)~2023.06.25. (일)',
                             style: TextStyle(
                               color: Color(0xFF939191),
@@ -117,7 +116,7 @@ class _fTableCalendarBottomState extends State<fTableCalendarBottom> {
                             onTap: () {
                               print("Concert info button clicked");
                             },
-                            child: Icon(
+                            child: const Icon(
                               Icons.keyboard_arrow_right_rounded,
                               color: Color(0xFF939191),
                               size: 30,
@@ -127,7 +126,7 @@ class _fTableCalendarBottomState extends State<fTableCalendarBottom> {
                       ),
                     ),
                   ),
-                  Positioned(
+                  const Positioned(
                     left: 24,
                     top: 0,
                     child: SizedBox(
@@ -151,7 +150,7 @@ class _fTableCalendarBottomState extends State<fTableCalendarBottom> {
                     top: 0,
                     child: Image.asset(
                       ImageConstant.imageVerticalLine,
-                      color: Color(0xFF176FF2),
+                      color: const Color(0xFF176FF2),
                     ),
                   ),
                 ],
@@ -166,8 +165,11 @@ class _fTableCalendarBottomState extends State<fTableCalendarBottom> {
   String _getDayOfWeek(DateTime date) {
     final List<String> daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
 
-    if (date.weekday == 7 ) return daysOfWeek[0]; // 일요일의 경우 0 인덱스를 사용
-    else return daysOfWeek[date.weekday];
+    if (date.weekday == 7 ) {
+      return daysOfWeek[0]; // 일요일의 경우 0 인덱스를 사용
+    } else {
+      return daysOfWeek[date.weekday];
+    }
   }
 
 }

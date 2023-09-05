@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:artroad/src/ui/search/concert_page.dart';
 import 'package:artroad/src/ui/search/facility_page.dart';
 import 'package:artroad/src/ui/condetail_page.dart';
-import 'package:artroad/src/ui/ranking_page.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -59,15 +58,6 @@ class Home extends StatelessWidget {
                 );
               },
               child: const Text('Facility Detail'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => RankingPage()),
-                );
-              },
-              child: const Text('Ranking'),
             ),
           ],
         ),

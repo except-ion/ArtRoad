@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../widgets/custom_header.dart';
 import 'facilitydetail_accommodation/accommodation_list_view.dart';
@@ -67,9 +68,14 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                                       InkWell(
                                         onTap: () {
                                           // 텍스트 복사 로직 구현
-                                          Clipboard.setData(const ClipboardData(
-                                              text: '서울 서초구 남부순환로 2406'));
-                                          // 복사 완료 메시지 표시 등의 로직 추가 가능
+                                          Clipboard.setData(const ClipboardData(text: '서울 서초구 남부순환로 2406'));
+                                          Fluttertoast.showToast(
+                                            msg: '주소가 복사되었습니다.',
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            backgroundColor: Colors.grey,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0,
+                                          );
                                           print('adress copy bt');
                                         },
                                         child: const Icon(
@@ -100,9 +106,14 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                                       InkWell(
                                         onTap: () {
                                           // 텍스트 복사 로직 구현
-                                          Clipboard.setData(
-                                              const ClipboardData(text: '1668-1352'));
-                                          // 복사 완료 메시지 표시 등의 로직 추가 가능
+                                          Clipboard.setData(const ClipboardData(text: '1668-1352'));
+                                          Fluttertoast.showToast(
+                                            msg: '전화번호가 복사되었습니다.',
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            backgroundColor: Colors.grey,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0,
+                                          );
                                           print('phone number copy bt');
                                         },
                                         child: const Icon(
@@ -195,7 +206,7 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                                                                 0xFFC7C7CC))),
                                               ),
                                               child: Text(
-                                                '맛집',
+                                                '음식점',
                                                 style: TextStyle(
                                                   fontSize: 18,
                                                   fontWeight:
