@@ -8,9 +8,12 @@ import '../facility/facilitydetail_screen.dart';
 
 class ConcertDetailScreen extends StatefulWidget {
   String concertID;
+  String prfnm;
 
   ConcertDetailScreen(
-    this.concertID, {super.key}
+    this.concertID, 
+    this.prfnm,
+    {super.key}
     );
 
   @override
@@ -18,17 +21,6 @@ class ConcertDetailScreen extends StatefulWidget {
 }
 
 class _ConcertDetailScreenState extends State<ConcertDetailScreen> {
-  ConcertDetail concert = ConcertDetail(
-      mt20id: 'PF132236',
-      prfnm: '멤피스',
-      poster: 'assets/images/poster_example5.jpeg',
-      prfpdfrom: '2023.07.12',
-      prfpdto: '2023.09.03',
-      prfruntime: '165분',
-      prfage: '14세 이상 관람가',
-      genrenm: '뮤지컬',
-      fcltynm: '예술의 전당 오페라 극장',
-      styurls: 'assets/images/concert_example.jpg');
 
  @override
   void initState() {
@@ -44,8 +36,8 @@ class _ConcertDetailScreenState extends State<ConcertDetailScreen> {
         backgroundColor: const Color(0xFF00233D),
         body: Stack(
           children: [
-            const CustomHeader(
-              name: '공연 이름', // ConcertDetailProvider에서 가져온 공연 이름으로 대체
+            CustomHeader(
+              name: widget.prfnm, // ConcertDetailProvider에서 가져온 공연 이름으로 대체
               hasLiked: true,
               isDetail: true,
             ),

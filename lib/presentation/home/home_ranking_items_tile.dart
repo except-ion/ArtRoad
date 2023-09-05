@@ -25,18 +25,18 @@ class _RankingTileState extends State<RankingTile> {
   //이미지 클릭시 detailScreen으로 이동
   void _onImageTap() {
     final mt20id = widget._Ranking.mt20id;
-    if (mt20id != null){
+    final prfnm = widget._Ranking.prfnm;
+    if (mt20id != null && prfnm != null){
       Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) {
-                return ConcertDetailScreen(mt20id); // _Ranking을 넘겨줄 수 있음
+                return ConcertDetailScreen(mt20id, prfnm); // _Ranking을 넘겨줄 수 있음
               },
             ),
           );
     } else{
       print('ranking is null');
     }
-    
   }
 
   @override
