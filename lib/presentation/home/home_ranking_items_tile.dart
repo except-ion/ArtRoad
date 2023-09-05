@@ -1,17 +1,17 @@
-import 'package:artroad/presentation/home/home_ranking_items.dart';
+import 'package:artroad/src/model/ranking.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
 
-class RankingItemsTile extends StatefulWidget {
-  const RankingItemsTile(this._RankingItems, {super.key});
+class RankingTile extends StatefulWidget {
+  const RankingTile(this._Ranking, {super.key});
 
-  final RankingItems _RankingItems;
+  final Ranking _Ranking;
 
   @override
-  State<RankingItemsTile> createState() => _RankingItemsTileState();
+  State<RankingTile> createState() => _RankingTileState();
 }
 
-class _RankingItemsTileState extends State<RankingItemsTile> {
+class _RankingTileState extends State<RankingTile> {
   bool _imageLoading = false; //network로 수정할 때 true로 바꾸기
   void _updateImageLoading(bool isLoading) {
     if (_imageLoading != isLoading) {
@@ -31,7 +31,7 @@ class _RankingItemsTileState extends State<RankingItemsTile> {
         child: _imageLoading
             ? const CircularProgressIndicator()
             : Image.network(
-                'http://www.kopis.or.kr/${widget._RankingItems.poster}',
+                'http://www.kopis.or.kr/${widget._Ranking.poster}',
                 errorBuilder: (context, error, stackTrace) {
                   _updateImageLoading(false);
                   print('error: $error');

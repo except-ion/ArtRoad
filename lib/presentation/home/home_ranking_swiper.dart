@@ -1,10 +1,10 @@
-import 'package:artroad/presentation/home/home_ranking_items.dart';
 import 'package:flutter/material.dart';
 import 'package:artroad/presentation/home/home_ranking_items_tile.dart';
 import 'package:card_swiper/card_swiper.dart';
+import '../../src/model/ranking.dart';
 
 class HomeRankingSwiper extends StatelessWidget {
-  final List<RankingItems> rankingList;
+  final List<Ranking> rankingList;
 
   const HomeRankingSwiper({super.key, required this.rankingList});
 
@@ -20,7 +20,7 @@ class HomeRankingSwiper extends StatelessWidget {
         itemCount: rankingList.length,
         itemBuilder: (BuildContext context, int index) {
           return Stack(children: [
-            RankingItemsTile(
+            RankingTile(
               rankingList[index],
             ),
             Transform.translate(

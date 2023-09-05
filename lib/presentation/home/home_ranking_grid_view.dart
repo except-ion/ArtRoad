@@ -1,10 +1,11 @@
-import 'package:artroad/presentation/home/home_ranking_items.dart';
+import 'package:artroad/src/model/ranking.dart';
 import 'package:flutter/material.dart';
 import 'package:artroad/presentation/home/home_ranking_items_tile.dart';
 
+
 class HomeRankingGridView extends StatelessWidget {
   final int selectedCategoryIndex; // 선택된 칩의 인덱스를 받을 변수
-  final List<RankingItems> rankingList;
+  final List<Ranking> rankingList;
 
   const HomeRankingGridView({
     Key? key, 
@@ -31,7 +32,7 @@ class HomeRankingGridView extends StatelessWidget {
             //item 의 반목문 항목 형성
             return Padding(
                 padding: const EdgeInsets.all(5),
-                child: RankingItemsTile(rankingList[index]));
+                child: RankingTile(rankingList[index]));
           },
         ),
       ),
