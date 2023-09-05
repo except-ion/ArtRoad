@@ -66,8 +66,10 @@ class _HomeScreenState extends State<HomeScreen> {
       return [];
     }
   }
-  @override
-  Widget build(BuildContext context) {
+
+   @override
+  void initState() {
+    super.initState();
     final rankingProvider = Provider.of<RankingProvider>(context);
     rankingProvider.loadTop10Rankings();
     rankingProvider.loadPlayRankings();
@@ -79,7 +81,11 @@ class _HomeScreenState extends State<HomeScreen> {
     rankingProvider.loadCircusRankings();
     rankingProvider.loadComplexRankings();
     rankingProvider.loadKidRankings();
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    final rankingProvider = Provider.of<RankingProvider>(context);
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SingleChildScrollView(
