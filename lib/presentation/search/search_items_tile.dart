@@ -96,8 +96,8 @@ class _SearchItemsTileState extends State<SearchItemsTile> {
                     ),
                     child: Text(
                       widget.item is ConcertDetail
-                          ? widget.item.prfnm ?? '제공되지 않은 정보입니다.' // 공연 이름
-                          : widget.item.fcltynm ?? '제공되지 않은 정보입니다.', //공연장 이름
+                          ? widget.item.prfnm ?? '제공된 정보가 없습니다.' // 공연 이름
+                          : widget.item.fcltynm ?? '제공된 정보가 없습니다.', //공연장 이름
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 15,
