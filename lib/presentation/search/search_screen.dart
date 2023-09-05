@@ -4,19 +4,6 @@ import '../../src/model/facdetail.dart';
 import '../../theme/theme_helper.dart';
 import 'search_items_tile.dart';
 
-void main() {
-  runApp(SearchApp());
-}
-
-class SearchApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: SearchScreen(),
-    );
-  }
-}
-
 class SearchScreen extends StatefulWidget {
   @override
   _SearchScreenState createState() => _SearchScreenState();
@@ -24,7 +11,6 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   TextEditingController searchController = TextEditingController();
-  List<String> items = List.generate(100, (index) => '공연 $index');
   String selectedCategory = '공연';
 
   final List<ConcertDetail> concertList = [
@@ -131,23 +117,24 @@ class _SearchScreenState extends State<SearchScreen> {
   void filterItems(String query) {
     // 검색 필터링
     setState(() {
+      filteredPrfItems.clear(); // 검색어가 바뀔 때마다 비우기
+      filteredFcltItems.clear(); // 검색어가 바뀔 때마다 비우기
       if (selectedCategory == '공연') {
-        filteredPrfItems = concertList
-            .where((item) =>
-                item.prfnm!.toLowerCase().contains(query.toLowerCase()))
-            .toList();
+        if (query.isNotEmpty) {
+          filteredPrfItems = concertList
+              .where((item) =>
+                  item.prfnm!.toLowerCase().contains(query.toLowerCase()))
+              .toList();
+        }
       } else if (selectedCategory == '공연장') {
-        filteredFcltItems = facilityList
-            .where((item) =>
-                item.fcltynm!.toLowerCase().contains(query.toLowerCase()))
-            .toList();
+        if (query.isNotEmpty) {
+          filteredFcltItems = facilityList
+              .where((item) =>
+                  item.fcltynm!.toLowerCase().contains(query.toLowerCase()))
+              .toList();
+        }
       }
     });
-  }
-
-  @override
-  void initState() {
-    super.initState();
   }
 
   @override
@@ -164,8 +151,8 @@ class _SearchScreenState extends State<SearchScreen> {
                   return LinearGradient(
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
-                    colors: [Colors.transparent, Colors.white], // 그라데이션 색상 설정
-                    stops: [0.0, 1.0], // 그라데이션 위치 설정
+                    colors: [Colors.transparent, Colors.white],
+                    stops: [0.0, 1.0],
                   ).createShader(bounds);
                 },
                 child: Text(
@@ -173,17 +160,16 @@ class _SearchScreenState extends State<SearchScreen> {
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
                   style: theme.textTheme.displaySmall?.copyWith(
-                    fontSize: 30.0, // 폰트 사이즈 조절
-                    fontWeight: FontWeight.normal, // 폰트 굵기 조절
-                    color:
-                        Colors.grey, // 텍스트 색상 설정 (그라데이션에 의해 가려지므로 원하는 색상 사용 가능)
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.grey,
                   ),
                 ),
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 16,right: 16, bottom: 16),
+            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
             child: Container(
               decoration: ShapeDecoration(
                 color: Color(0xFFF2F2F2),
@@ -191,62 +177,85 @@ class _SearchScreenState extends State<SearchScreen> {
                   borderRadius: BorderRadius.circular(32),
                 ),
               ),
-              child: TextField(
-                controller: searchController,
-                onChanged: (query) => filterItems(query),
-                decoration: InputDecoration(
-                  hintText: '공연 및 공연장을 검색하세요',
-                  hintStyle: TextStyle(fontSize: 14),
-                  suffixIcon: Icon(Icons.search),
-                  filled: true,
-                  fillColor: Colors.transparent,
-                  border: InputBorder.none,
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.only(left: 15),
-                    child: DropdownButton<String>(
-                      value: selectedCategory,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedCategory = newValue!;
-                        });
-                        filterItems(searchController.text);
-                      },
-                      items: <String>['공연', '공연장'].map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: TextStyle(fontSize: 13),
-                          ),
-                        );
-                      }).toList(),
+              child: Row(
+                children: [
+                  DropdownButton<String>(
+                    value: selectedCategory,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        selectedCategory = newValue!;
+                        filteredPrfItems.clear(); // 카테고리 변경시 비우기
+                        filteredFcltItems.clear(); // 카테고리 변경시 비우기
+                      });
+                    },
+                    items: <String>['공연', '공연장'].map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: TextStyle(fontSize: 13),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                  Expanded(
+                    child: TextField(
+                      controller: searchController,
+                      decoration: InputDecoration(
+                        hintText: '공연 및 공연장을 검색하세요',
+                        hintStyle: TextStyle(fontSize: 14),
+                        suffixIcon: GestureDetector(
+                          onTap: () => filterItems(searchController.text),
+                          child: Icon(Icons.search),
+                        ),
+                        filled: true,
+                        fillColor: Colors.transparent,
+                        border: InputBorder.none,
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.only(left: 15),
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: selectedCategory == '공연'
-                  ? filteredPrfItems.length
-                  : filteredFcltItems.length,
-              itemBuilder: (context, index) {
-                if (selectedCategory == '공연') {
-                  return ListTile(
-                    title: SearchItemsTile(filteredPrfItems[index]),
-                  );
-                } else if (selectedCategory == '공연장') {
-                  return ListTile(
-                    title: SearchItemsTile(filteredFcltItems[index]),
-                  );
-                }
-                return Container();
-              },
-            ),
+            child: _buildSearchResults(),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildSearchResults() {
+    if (selectedCategory == '공연' &&
+        filteredPrfItems.isEmpty &&
+        searchController.text.isNotEmpty) {
+      return Center(child: Text('검색결과가 없습니다.'));
+    } else if (selectedCategory == '공연장' &&
+        filteredFcltItems.isEmpty &&
+        searchController.text.isNotEmpty) {
+      return Center(child: Text('검색결과가 없습니다.'));
+    }
+
+    return ListView.builder(
+      itemCount: selectedCategory == '공연'
+          ? filteredPrfItems.length
+          : filteredFcltItems.length,
+      itemBuilder: (context, index) {
+        if (selectedCategory == '공연') {
+          return ListTile(
+            title: SearchItemsTile(filteredPrfItems[index]),
+          );
+        } else if (selectedCategory == '공연장') {
+          return ListTile(
+            title: SearchItemsTile(filteredFcltItems[index]),
+          );
+        }
+        return Container();
+      },
     );
   }
 }
