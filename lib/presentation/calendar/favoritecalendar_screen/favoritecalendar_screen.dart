@@ -2,7 +2,6 @@ import 'package:artroad/core/app_export.dart';
 import 'package:flutter/material.dart';
 import '../mycalendar_screen/mycalendar_tcs.dart';
 import 'favoritecalendar_tcs.dart';
-import 'max_num_of_weeks.dart';
 
 class FavoritecalendarScreen extends StatefulWidget {
   const FavoritecalendarScreen({Key? key}) : super(key: key);
