@@ -117,6 +117,13 @@ class _InquiryListView extends State<InquiryListView> {
 
                               InkWell(
                                   onTap: () {
+                                    Fluttertoast.showToast(
+                                      msg: '서비스 준비 중입니다.',
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      backgroundColor: Colors.grey,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0,
+                                    );
                                     print('Kakao Ch bt clicked');
                                   },
                                   child: Row(
