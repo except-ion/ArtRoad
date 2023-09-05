@@ -115,12 +115,30 @@ class FirebaseStoreService{
   }
 
   Future<void> removeLikedConcert(String userId, String concertID) async {
-  try {
-    await _likedConcertsCollection.doc(userId).collection('user_liked_concerts').doc(concertID).delete();
-  } catch (e) {
-    print('좋아요 누른 공연 삭제 실패: $e');
+    try {
+      await _likedConcertsCollection.doc(userId).collection('user_liked_concerts').doc(concertID).delete();
+    } catch (e) {
+      print('좋아요 누른 공연 삭제 실패: $e');
+    }
   }
-}
+
+  Future<bool> getLikedConcert(String userId, String concertID) async {
+    try {
+        DocumentSnapshot documentSnapshot = await _likedConcertsCollection
+            .doc(userId)
+            .collection('user_liked_concerts')
+            .doc(concertID)
+            .get();
+      if (documentSnapshot.exists) {
+        return false;
+      } else {
+        return true;
+      }
+    } catch (e) {
+      print('좋아요 누른 공연 추가 실패: $e');
+      return true;
+    }
+  }
 
 }
 

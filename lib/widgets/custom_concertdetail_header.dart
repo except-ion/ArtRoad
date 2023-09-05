@@ -23,13 +23,12 @@ class CustomConcertDetailHeader extends StatefulWidget {
 }
 
 class _CustomConcertDetailHeaderState extends State<CustomConcertDetailHeader> {
-  bool isLiked = false;
   final FirebaseStoreService _firebaseStoreService = FirebaseStoreService();
+  late bool isLiked; 
 
   @override
   void initState() {
     super.initState();
-    isLiked = widget.hasLiked;
     final userProvider = Provider.of<UserProvider>(context);
     String? userId = userProvider.firebaseUserId;
   }
@@ -42,79 +41,95 @@ class _CustomConcertDetailHeaderState extends State<CustomConcertDetailHeader> {
     });
   }
 
+  Future<bool> getInitialLikeStatus(String userId, String concertId) async {
+    return await _firebaseStoreService.getLikedConcert(userId, concertId);
+  }
+
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
-    return Container(
-      child: Stack(
-        children: [
-          widget.isDetail
-              ? Image.asset('assets/images/header_dark.png')
-              : Image.asset('assets/images/header_light.png'),
-          Padding(
-            padding: const EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 5),
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Transform.scale(
-                    scale: 1.5,
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.arrow_back_rounded,
-                        color:
-                            widget.isDetail ? Colors.white : const Color(0xFF00233D),
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 14,
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    child: Text(
-                      widget.concertName,
-                      style: TextStyle(
-                        color: widget.isDetail ? Colors.white : Colors.black,
-                        fontSize: 21,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-                if (widget.hasLiked)
-                  Positioned(
-                    right: 0,
-                    top: 0,
+     return FutureBuilder<bool>(
+      future: getInitialLikeStatus(userProvider.firebaseUserId!, widget.concertId),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator(); 
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          isLiked = snapshot.data ?? true; 
+        }
+      return Container(
+        child: Stack(
+          children: [
+            widget.isDetail
+                ? Image.asset('assets/images/header_dark.png')
+                : Image.asset('assets/images/header_light.png'),
+            Padding(
+              padding: const EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 5),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Align(
+                    alignment: Alignment.topLeft,
                     child: Transform.scale(
                       scale: 1.5,
                       child: IconButton(
-                        icon: isLiked
-                            ? Icon(
-                                //좋아요 클릭 전
-                                Icons.favorite_border,
-                                color: widget.isDetail
-                                    ? Colors.white
-                                    : const Color(0xFF00233D),
-                              )
-                            : const Icon(
-                                //좋아요 클릭 후
-                                Icons.favorite,
-                                color: Colors.red,
-                              ),
-                        onPressed: () => toggleLiked(userProvider.firebaseUserId!),
+                        icon: Icon(
+                          Icons.arrow_back_rounded,
+                          color:
+                              widget.isDetail ? Colors.white : const Color(0xFF00233D),
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                       ),
                     ),
                   ),
-              ],
+                  Positioned(
+                    top: 14,
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: Text(
+                        widget.concertName,
+                        style: TextStyle(
+                          color: widget.isDetail ? Colors.white : Colors.black,
+                          fontSize: 21,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  if (widget.hasLiked)
+                    Positioned(
+                      right: 0,
+                      top: 0,
+                      child: Transform.scale(
+                        scale: 1.5,
+                        child: IconButton(
+                          icon: isLiked
+                              ? Icon(
+                                  //좋아요 클릭 전
+                                  Icons.favorite_border,
+                                  color: widget.isDetail
+                                      ? Colors.white
+                                      : const Color(0xFF00233D),
+                                )
+                              : const Icon(
+                                  //좋아요 클릭 후
+                                  Icons.favorite,
+                                  color: Colors.red,
+                                ),
+                          onPressed: () => toggleLiked(userProvider.firebaseUserId!),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    }
+    ); 
   }
 }
