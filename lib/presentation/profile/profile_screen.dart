@@ -7,6 +7,7 @@ import '../../theme/theme_helper.dart';
 import '../login/login_screen.dart';
 import 'announce/announce_list_view.dart';
 import 'artroadinfo/artroad_info.dart';
+import 'favorite/favorite_screen.dart';
 import 'inquiry/inquiry_list_view.dart';
 import 'myinfo/my_info.dart';
 
@@ -293,6 +294,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               color: Colors.transparent,
                               child: InkWell(
                                 onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => FavoriteScreen(), // 이동할 페이지 위젯
+                                    ),
+                                  );
                                   print('Move to 관심공연 목록');
                                 },
                                 child: Row(
@@ -459,6 +466,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     textColor: Colors.white,
                                     fontSize: 16.0,
                                   );
+
+                                  Navigator.of(context).popUntil((route) => route.isFirst);
 
                                   Navigator.push(
                                     context,
