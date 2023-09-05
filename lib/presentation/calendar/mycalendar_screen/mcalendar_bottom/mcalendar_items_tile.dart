@@ -1,4 +1,4 @@
-import 'package:artroad/presentation/calendar/mycalendar_screen/mcalendar_bottom/show_schedule_dialog.dart';
+import 'package:artroad/presentation/calendar/mycalendar_screen/mcalendar_bottom/mcalendar_show_schedule_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
