@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 
 class ConcertRepository {
 
-  Future<List<Concert>?> loadConcerts() async {
+  Future<List<Concert>?> loadConcerts(String searchTerm) async {
   await dotenv.load();
   String apiKey = dotenv.env['API_KEY']!;
 
@@ -21,7 +21,6 @@ class ConcertRepository {
 
   var startDate = formattedSixMonthsAgo;
   var endDate = formattedDate;
-  var searchTerm = "뮤지컬";
 
     String baseUrl =
         "http://www.kopis.or.kr/openApi/restful/pblprfr?service=$apiKey&stdate=$startDate&eddate=$endDate&rows=500&cpage=1&shprfnm=$searchTerm";
