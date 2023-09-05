@@ -51,65 +51,39 @@ class _RankingTileState extends State<RankingTile> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: _imageLoading
-      //       ? const CircularProgressIndicator()
-      //       : Image.network(
-      //           'http://www.kopis.or.kr/${widget._Ranking.poster}',
-      //           errorBuilder: (context, error, stackTrace) {
-      //             _updateImageLoading(false);
-      //             print('error: $error');
-      //             return const Text('이미지 로드 실패');
-      //           },
-      //           width: 200,
-      //           height: 270,
-      //           fit: BoxFit.cover,
-      //           //아래는 network로 수정할 때 true로 바꾸기
-      //           // loadingBuilder: (context, child, loadingProgress) {
-      //           //   if (loadingProgress == null) {
-      //           //     _updateImageLoading(true);
-      //           //     return child;
-      //           //   } else {
-      //           //     _updateImageLoading(true);
-      //           //     return const CircularProgressIndicator();
-      //           //   }
-      //           // },
-      //         ),
-      //   ),
-      // )
             ? const CircularProgressIndicator()
-            : (widget._Ranking.poster != null)
-                ? Image.network(
-                    'http://www.kopis.or.kr/${widget._Ranking.poster}',
-                    errorBuilder: (context, error, stackTrace) {
-                      _updateImageLoading(false);
-                      return const Text('이미지 로드 실패');
-                    },
-                    width: 200,
-                    height: 270,
-                    fit: BoxFit.fitWidth,
-                  )
-                : Container(
-                    color: Colors.grey[100],
-                    height: 270,
-                    width: 200,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.no_photography_outlined,
-                          size: 38,
-                          color: Colors.grey[600],
-                        ),
-                        Text(
-                          'No Image',
-                          style: TextStyle(
-                            fontSize: 15,
+            :  Image.network(
+                  'http://www.kopis.or.kr/${widget._Ranking.poster}',
+                  width: 200,
+                  height: 270,
+                  fit: BoxFit.fitWidth,
+                  errorBuilder: (context, error, stackTrace) {
+                    _updateImageLoading(false);
+                    return Container(
+                      color: Colors.grey[100],
+                      height: 270,
+                      width: 200,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.no_photography_outlined,
+                            size: 38,
                             color: Colors.grey[600],
-                            fontWeight: FontWeight.bold,
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
+                          Text(
+                            'No Image',
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.grey[600],
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                )
       ),
     )
     );
