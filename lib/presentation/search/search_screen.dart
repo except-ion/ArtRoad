@@ -17,14 +17,14 @@ class _SearchScreenState extends State<SearchScreen> {
   final List<ConcertDetail> concertList = [
     ConcertDetail(
         mt20id: 'PF132236',
-        prfnm: '멤피스',
-        poster: 'assets/images/poster_example5.jpeg',
+        prfnm: '멤',
+        poster: null,
         prfpdfrom: '2023.07.12',
         prfpdto: '2023.09.03',
         prfruntime: '165분',
         prfage: '14세 이상 관람가',
         genrenm: '뮤지컬',
-        fcltynm: '예술의 전당 오페라 극장',
+        fcltynm: null,
         styurls: 'assets/images/concert_example.jpg'),
     ConcertDetail(
         mt20id: 'PF132236',
