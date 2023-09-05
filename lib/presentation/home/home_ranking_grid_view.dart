@@ -10,15 +10,11 @@ class HomeRankingGridView extends StatelessWidget {
       : super(key: key);
 
   final List<Ranking> rankingList = [
+    Ranking(mt20id: "aaa", cate: "연극", poster: null, rnum: "1"),
     Ranking(
         mt20id: "aaa",
         cate: "연극",
-        poster: "assets/images/poster_example1.jpg",
-        rnum: "1"),
-    Ranking(
-        mt20id: "aaa",
-        cate: "연극",
-        poster: "assets/images/poster_example1.jpg",
+        poster: null,
         rnum: "2"),
     Ranking(
         mt20id: "aaa",

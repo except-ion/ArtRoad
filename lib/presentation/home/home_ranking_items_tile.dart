@@ -31,26 +31,40 @@ class _RankingTileState extends State<RankingTile> {
         borderRadius: BorderRadius.circular(16),
         child: _imageLoading
             ? CircularProgressIndicator()
-            : Image.asset(
-                '${widget._Ranking.poster}',
-                errorBuilder: (context, error, stackTrace) {
-                  _updateImageLoading(false);
-                  return Text('이미지 로드 실패');
-                },
-                width: 200,
-                height: 270,
-                fit: BoxFit.fitWidth,
-                //아래는 network로 수정할 때 true로 바꾸기
-                // loadingBuilder: (context, child, loadingProgress) {
-                //   if (loadingProgress == null) {
-                //     _updateImageLoading(false);
-                //     return child;
-                //   } else {
-                //     _updateImageLoading(true);
-                //     return CircularProgressIndicator();
-                //   }
-                // },
-              ),
+            : (widget._Ranking.poster != null)
+                ? Image.asset(
+                    '${widget._Ranking.poster}',
+                    errorBuilder: (context, error, stackTrace) {
+                      _updateImageLoading(false);
+                      return Text('이미지 로드 실패');
+                    },
+                    width: 200,
+                    height: 270,
+                    fit: BoxFit.fitWidth,
+                  )
+                : Container(
+                    color: Colors.grey[100],
+                    height: 270,
+                    width: 200,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.no_photography_outlined,
+                          size: 38,
+                          color: Colors.grey[600],
+                        ),
+                        Text(
+                          'No Image',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.grey[600],
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
       ),
     );
   }

@@ -9,7 +9,7 @@ class HomeRankingSwiper extends StatelessWidget {
     Ranking(
         mt20id: "aaa",
         cate: "연극",
-        poster: "assets/images/poster_example1.jpg",
+        poster: null,
         rnum: "1"),
     Ranking(
         mt20id: "aaa",
