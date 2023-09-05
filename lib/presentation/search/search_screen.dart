@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../src/model/condetail.dart';
+import '../../src/model/facdetail.dart';
 import '../../theme/theme_helper.dart';
-import '../concert/concertdetail_items.dart';
-import 'search_facility_items.dart';
 import 'search_items_tile.dart';
 
 void main() {
@@ -27,8 +27,8 @@ class _SearchScreenState extends State<SearchScreen> {
   List<String> items = List.generate(100, (index) => '공연 $index');
   String selectedCategory = '공연';
 
-  final List<ConcertItems> concertList = [
-    ConcertItems(
+  final List<ConcertDetail> concertList = [
+    ConcertDetail(
         mt20id: 'PF132236',
         prfnm: '멤피스',
         poster: 'assets/images/poster_example5.jpeg',
@@ -39,7 +39,7 @@ class _SearchScreenState extends State<SearchScreen> {
         genrenm: '뮤지컬',
         fcltynm: '예술의 전당 오페라 극장',
         styurls: 'assets/images/concert_example.jpg'),
-    ConcertItems(
+    ConcertDetail(
         mt20id: 'PF132236',
         prfnm: '멤피스 1',
         poster: 'assets/images/poster_example5.jpeg',
@@ -50,7 +50,7 @@ class _SearchScreenState extends State<SearchScreen> {
         genrenm: '뮤지컬',
         fcltynm: '예술의 전당 오페라 극장',
         styurls: 'assets/images/concert_example.jpg'),
-    ConcertItems(
+    ConcertDetail(
         mt20id: 'PF132236',
         prfnm: '멤피스 2',
         poster: 'assets/images/poster_example5.jpeg',
@@ -61,7 +61,7 @@ class _SearchScreenState extends State<SearchScreen> {
         genrenm: '뮤지컬',
         fcltynm: '예술의 전당 오페라 극장',
         styurls: 'assets/images/concert_example.jpg'),
-    ConcertItems(
+    ConcertDetail(
         mt20id: 'PF132236',
         prfnm: '멤피스 3',
         poster: 'assets/images/poster_example5.jpeg',
@@ -74,8 +74,8 @@ class _SearchScreenState extends State<SearchScreen> {
         styurls: 'assets/images/concert_example.jpg'),
   ];
 
-  final List<FacilityItems> facilityList = [
-    FacilityItems(
+  final List<FacilityDetail> facilityList = [
+    FacilityDetail(
       mt10id: '23424',
       fcltynm: '올림픽 공원 1',
       relateurl: 'https://www.olympicpark.co.kr',
@@ -83,7 +83,7 @@ class _SearchScreenState extends State<SearchScreen> {
       la: '',
       lo: '',
     ),
-    FacilityItems(
+    FacilityDetail(
       mt10id: '23424',
       fcltynm: '올림픽 공원 2',
       relateurl: 'https://www.olympicpark.co.kr',
@@ -91,7 +91,7 @@ class _SearchScreenState extends State<SearchScreen> {
       la: '',
       lo: '',
     ),
-    FacilityItems(
+    FacilityDetail(
       mt10id: '23424',
       fcltynm: '올림픽 공원 3',
       relateurl: 'https://www.olympicpark.co.kr',
@@ -99,7 +99,7 @@ class _SearchScreenState extends State<SearchScreen> {
       la: '',
       lo: '',
     ),
-    FacilityItems(
+    FacilityDetail(
       mt10id: '23424',
       fcltynm: '올림픽 공원 4',
       relateurl: 'https://www.olympicpark.co.kr',
@@ -107,7 +107,7 @@ class _SearchScreenState extends State<SearchScreen> {
       la: '',
       lo: '',
     ),
-    FacilityItems(
+    FacilityDetail(
       mt10id: '23424',
       fcltynm: '올림픽 공원 5',
       relateurl: 'https://www.olympicpark.co.kr',
@@ -115,7 +115,7 @@ class _SearchScreenState extends State<SearchScreen> {
       la: '',
       lo: '',
     ),
-    FacilityItems(
+    FacilityDetail(
       mt10id: '23424',
       fcltynm: '올림픽 공원 abc',
       relateurl: 'https://www.olympicpark.co.kr',
@@ -125,8 +125,8 @@ class _SearchScreenState extends State<SearchScreen> {
     ),
   ];
 
-  List<ConcertItems> filteredPrfItems = []; //검색결과 리스트 - 공연
-  List<FacilityItems> filteredFcltItems = []; //검색결과 리스트 - 공연장
+  List<ConcertDetail> filteredPrfItems = []; //검색결과 리스트 - 공연
+  List<FacilityDetail> filteredFcltItems = []; //검색결과 리스트 - 공연장
 
   void filterItems(String query) {
     // 검색 필터링

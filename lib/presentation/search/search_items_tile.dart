@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../concert/concertdetail_items.dart';
+import '../../src/model/condetail.dart';
 
 class SearchItemsTile extends StatefulWidget {
   SearchItemsTile(this.item);
 
   final dynamic
-      item; // FacilityItems 또는 ConcertItems 모두 받을 수 있도록 동적(dynamic) 타입으로 선언
+      item; // FacilityItems 또는 ConcertDetail 모두 받을 수 있도록 동적(dynamic) 타입으로 선언
 
   @override
   State<SearchItemsTile> createState() => _SearchItemsTileState();
@@ -50,7 +50,7 @@ class _SearchItemsTileState extends State<SearchItemsTile> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              if (widget.item is ConcertItems)
+              if (widget.item is ConcertDetail)
                 ClipRRect(
                   borderRadius: BorderRadius.circular(6),
                   child: _imageLoading
@@ -67,11 +67,11 @@ class _SearchItemsTileState extends State<SearchItemsTile> {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(
-                      left: widget.item is ConcertItems ? 15 : 5,
+                      left: widget.item is ConcertDetail ? 15 : 5,
                       bottom: 5,
                     ),
                     child: Text(
-                      widget.item is ConcertItems
+                      widget.item is ConcertDetail
                           ? '${widget.item.prfnm}' // 공연 이름
                           : '${widget.item.fcltynm}',
                       style: TextStyle(
@@ -84,13 +84,13 @@ class _SearchItemsTileState extends State<SearchItemsTile> {
                   ), //공연장 이름
                   Row(
                     children: [
-                      if (widget.item is ConcertItems)
+                      if (widget.item is ConcertDetail)
                         SizedBox(
                           width: 10,
                         ),
                       Icon(Icons.location_on_sharp),
                       Text(
-                        widget.item is ConcertItems
+                        widget.item is ConcertDetail
                             ? '${widget.item.fcltynm}' // 공연의 공연장
                             : '${widget.item.adres}',
                         style: TextStyle(
