@@ -4,18 +4,27 @@ import 'package:flutter/services.dart';
 import 'dart:convert';
 
 class FacilityDetailInfoIcons extends StatefulWidget {
-  const FacilityDetailInfoIcons({super.key});
+  final String desiredFacilityCode;
+
+  const FacilityDetailInfoIcons(this.desiredFacilityCode, {Key? key}) : super(key: key);
 
   @override
   _FacilityDetailInfoIconsState createState() => _FacilityDetailInfoIconsState();
 }
 
 class _FacilityDetailInfoIconsState extends State<FacilityDetailInfoIcons> {
+  late String desiredFacilityCode;
+
+  @override
+  void initState() {
+    super.initState();
+    desiredFacilityCode = widget.desiredFacilityCode; // 생성자에서 전달된 mt10id 값을 초기화
+  }
+
   Future<List> readJson() async {
     final String response = await rootBundle.loadString('assets/facilitydetail_convinence.json');
     final data = await json.decode(response);
 
-    const desiredFacilityCode = "FC223076";
     final filteredItems = data.where((item) => item['facilityCode'] == desiredFacilityCode).toList();
 
     return filteredItems;
@@ -31,7 +40,13 @@ class _FacilityDetailInfoIconsState extends State<FacilityDetailInfoIcons> {
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}'); // 오류가 발생한 경우 오류 메시지 표시
         } else if (snapshot.data == null || (snapshot.data is List && (snapshot.data as List).isEmpty)) {
-          return Text('No data available'); // 데이터가 없거나 빈 경우 처리
+          return Text(
+            "시설 정보를 제공하지 않는 공연장입니다.",
+            style: TextStyle(
+              fontSize: 14,
+              color: Color(0xFF939191),
+            ),
+          ); // 데이터가 없거나 빈 경우 처리
         }
         else {
           // 데이터가 준비되면 UI를 렌더링
