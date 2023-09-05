@@ -1,21 +1,21 @@
-import 'package:artroad/presentation/calendar/mycalendar_screen/mcalendar_bottom/show_schedule_dialog.dart';
+import 'package:artroad/presentation/calendar/mycalendar_screen/mcalendar_bottom/mcalendar_show_schedule_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class mCalendarDialog extends StatefulWidget {
+class mCalendarScheduleAdd extends StatefulWidget {
   final DateTime selectedDay; // 선택된 날짜를 인자로 받도록 수정
 
-  mCalendarDialog({required this.selectedDay});
+  mCalendarScheduleAdd({required this.selectedDay});
 
   get alarm => alarm;
 
   get colors => colors;
 
   @override
-  _mCalendarDialog createState() => _mCalendarDialog();
+  _mCalendarScheduleAdd createState() => _mCalendarScheduleAdd();
 }
 
-class _mCalendarDialog extends State<mCalendarDialog> {
+class _mCalendarScheduleAdd extends State<mCalendarScheduleAdd> {
   @override
   Widget build(BuildContext context) {
     return Row(
