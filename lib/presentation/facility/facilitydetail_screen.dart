@@ -173,10 +173,10 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                                       ),
                                       const SizedBox(height: 7),
                                       InkWell(
-                                        onTap: () {
+                                        onTap: () async {
                                           if (facilityDetailList[0].relateurl !=
                                               null) {
-                                            CustomLaunchUrl(
+                                            await CustomLaunchUrl(
                                                 '${facilityDetailList[0].relateurl}');
                                           }
                                         },
