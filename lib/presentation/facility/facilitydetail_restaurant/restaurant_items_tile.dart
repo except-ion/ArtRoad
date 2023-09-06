@@ -78,7 +78,7 @@ class RestaurantItemsTile extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "${_RestaurantItems.distance.toString()}m",
+                    "${_RestaurantItems.phone.toString()}m",
                     style: const TextStyle(
                       fontSize: 12,
                       color: Colors.orange,
@@ -92,7 +92,7 @@ class RestaurantItemsTile extends StatelessWidget {
           Row(
             children: [
               Text(
-                _RestaurantItems.phone,
+                _RestaurantItems.distance,
                 style: const TextStyle(
                     fontSize: 14
                 ),
@@ -102,7 +102,7 @@ class RestaurantItemsTile extends StatelessWidget {
 
               InkWell(
                 onTap: () {
-                  Clipboard.setData(ClipboardData(text: _RestaurantItems.phone));
+                  Clipboard.setData(ClipboardData(text: _RestaurantItems.distance));
                   Fluttertoast.showToast(
                     msg: '전화번호가 복사되었습니다.',
                     toastLength: Toast.LENGTH_SHORT,
