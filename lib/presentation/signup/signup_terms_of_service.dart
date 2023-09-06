@@ -135,7 +135,7 @@ class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
                         content: SizedBox(
                           height: 400,
                           child: SfPdfViewer.asset(
-                            'assets/docs/서비스 이용약관.pdf',
+                            'assets/docs/서비스이용약관.pdf',
                           ),
                         ),
                         actions: [

@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
           SizedBox(
             height: 30,
           ),
-          FittedBox(child: HomeRankingSwiper()),
+          HomeRankingSwiper(),
           SizedBox(
             height: 10,
           ),
@@ -102,9 +102,8 @@ class _HomeScreenState extends State<HomeScreen> {
               children: _buildCategoryChips(),
             ),
           ),
-          FittedBox(
-              child: HomeRankingGridView(
-                  selectedCategoryIndex: _selectedCategoryIndex)),
+          HomeRankingGridView(
+              selectedCategoryIndex: _selectedCategoryIndex),
         ]),
       ),
     );

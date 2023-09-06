@@ -45,19 +45,15 @@ class _CustomHeaderState extends State<CustomHeader> {
               children: [
                 Align(
                   alignment: Alignment.center,
-                  child: FittedBox(
-                    // 텍스트에 FittedBox 적용
-                    fit: BoxFit.fitHeight,
-                    child: AutoSizeText(
-                      widget.name!,
-                      style: TextStyle(
-                        color: widget.isDetail ? Colors.white : Colors.black,
-                        fontSize: 21,
-                      ),
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      maxFontSize: 21,
+                  child: AutoSizeText(
+                    widget.name!,
+                    style: TextStyle(
+                      color: widget.isDetail ? Colors.white : Colors.black,
+                      fontSize: 21,
                     ),
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    maxFontSize: 21,
                   ),
                 ),
                 Row(

@@ -139,7 +139,7 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
           ),
           Expanded(
-            child: FittedBox(child: _buildSearchResults()),
+            child: _buildSearchResults(),
           ),
         ],
       ),
