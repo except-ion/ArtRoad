@@ -23,7 +23,8 @@ class RestaurantListView extends StatelessWidget {
             padding: const EdgeInsets.only(top: 20),
             itemCount: restaurantList.length,
             itemBuilder: (context, index) {
-              return RestaurantItemsTile(restaurantList[index]);
+              return FittedBox(
+                  child: RestaurantItemsTile(restaurantList[index]));
             },
             separatorBuilder: (context, index) {
               return const Divider();

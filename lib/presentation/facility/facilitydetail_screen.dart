@@ -5,9 +5,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../../widgets/custom_header.dart';
 import '../../widgets/custom_launch_url.dart';
 import 'facilitydetail_accommodation/accommodation_list_view.dart';
-import 'facilitydetail_info_icons.dart';
 import 'facilitydetail_restaurant/restaurant_list_view.dart';
 import '../../src/model/facdetail.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class FacilityDetailScreen extends StatefulWidget {
   const FacilityDetailScreen({Key? key}) : super(key: key);
@@ -24,16 +24,7 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
       relateurl: 'https://www.ksponco.or.kr/olympicpark/',
       adres: '서울 서초구 남부순환로 2406',
       la: '123',
-      lo: '123' );
-
-  // FacilityDetail facility = FacilityDetail(
-  //     mt10id: null,
-  //     fcltynm: null,
-  //     telno: null,
-  //     relateurl: null,
-  //     adres: null,
-  //     la: '123',
-  //     lo: '123' );
+      lo: '123');
 
   bool isRestaurantSelected = true;
   bool isAccommodationSelected = false;
@@ -77,28 +68,29 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                                         size: 20,
                                       ),
                                       SizedBox(width: 5),
-                                      (facility.adres == null) ?
-                                          Text(
-                                            "주소 정보 없음",
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              color: Color(0xFF939191),
+                                      (facility.adres == null)
+                                          ? AutoSizeText(
+                                              "주소 정보 없음",
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                color: Color(0xFF939191),
+                                              ),
+                                            )
+                                          : AutoSizeText(
+                                              '${facility.adres}',
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                color: Color(0xFF939191),
+                                              ),
+                                              maxLines: 1,
                                             ),
-                                          )
-                                          :
-                                          Text(
-                                            '${facility.adres}',
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              color: Color(0xFF939191),
-                                            ),
-                                          ),
                                       SizedBox(width: 5),
                                       if (facility.adres != null)
                                         InkWell(
                                           onTap: () {
                                             // 텍스트 복사 로직 구현
-                                            Clipboard.setData(ClipboardData(text: '${facility.adres}'));
+                                            Clipboard.setData(ClipboardData(
+                                                text: '${facility.adres}'));
                                             Fluttertoast.showToast(
                                               msg: '주소가 복사되었습니다.',
                                               toastLength: Toast.LENGTH_SHORT,
@@ -125,28 +117,30 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                                         size: 20,
                                       ),
                                       SizedBox(width: 5),
-                                      (facility.telno == null) ?
-                                          Text(
-                                            "전화번호 정보 없음",
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              color: Color(0xFF939191),
+                                      (facility.telno == null)
+                                          ? AutoSizeText(
+                                              "전화번호 정보 없음",
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                color: Color(0xFF939191),
+                                              ),
+                                            )
+                                          : AutoSizeText(
+                                              '${facility.telno}',
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                color: Color(0xFF939191),
+                                              ),
+                                              maxLines: 1,
                                             ),
-                                          )
-                                          :
-                                          Text(
-                                            '${facility.telno}',
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              color: Color(0xFF939191),
-                                            ),
-                                          ),
                                       SizedBox(width: 5),
-                                      if(facility.telno != null)
+                                      if (facility.telno != null)
                                         InkWell(
                                           onTap: () {
                                             // 텍스트 복사 로직 구현
-                                            Clipboard.setData(ClipboardData(text: '${facility.telno}',));
+                                            Clipboard.setData(ClipboardData(
+                                              text: '${facility.telno}',
+                                            ));
                                             Fluttertoast.showToast(
                                               msg: '전화번호가 복사되었습니다.',
                                               toastLength: Toast.LENGTH_SHORT,
@@ -167,8 +161,9 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                                   SizedBox(height: 7),
                                   InkWell(
                                     onTap: () {
-                                      if(facility.relateurl != null)
-                                        CustomLaunchUrl('${facility.relateurl}');
+                                      if (facility.relateurl != null)
+                                        CustomLaunchUrl(
+                                            '${facility.relateurl}');
                                     },
                                     child: Row(
                                       children: [
@@ -178,26 +173,27 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                                           size: 20,
                                         ),
                                         SizedBox(width: 5),
-                                        (facility.relateurl == null) ?
-                                            Text(
-                                              '사이트 링크 없음',
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                color: Color(0xFF939191),
-                                              ),
-                                            )
-                                            :
-                                            Flexible(
-                                                child: Text(
+                                        (facility.relateurl == null)
+                                            ? AutoSizeText(
+                                                '사이트 링크 없음',
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: Color(0xFF939191),
+                                                ),
+                                              )
+                                            : Flexible(
+                                                child: AutoSizeText(
                                                   '${facility.relateurl}',
                                                   style: TextStyle(
                                                     fontSize: 16,
                                                     color: Color(0xFF939191),
                                                   ),
-                                                  maxLines: 2, // 텍스트가 최대 2줄로 표시되도록 설정 (원하는 줄 수로 조정 가능)
-                                                  overflow: TextOverflow.ellipsis,
+                                                  maxLines:
+                                                      2, // 텍스트가 최대 2줄로 표시되도록 설정 (원하는 줄 수로 조정 가능)
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                 ),
-                                            ),
+                                              ),
                                       ],
                                     ),
                                   ),
@@ -211,7 +207,7 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text(
+                                      AutoSizeText(
                                         '공연장 시설 정보',
                                         style: TextStyle(
                                           fontSize: 20,
@@ -219,12 +215,8 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                                           color: Colors.black,
                                         ),
                                       ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                          top: 20,
-                                          bottom: 20,
-                                        ),
-                                        child: FacilityDetailInfoIcons('${facility.mt10id}'),
+                                      SizedBox(
+                                        height: 20,
                                       ),
                                       Divider(),
                                       SizedBox(
@@ -264,7 +256,7 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                                                             color: Color(
                                                                 0xFFC7C7CC))),
                                               ),
-                                              child: Text(
+                                              child: AutoSizeText(
                                                 '음식점',
                                                 style: TextStyle(
                                                   fontSize: 18,
@@ -308,7 +300,7 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                                                             color: Color(
                                                                 0xFFC7C7CC))),
                                               ),
-                                              child: Text(
+                                              child: AutoSizeText(
                                                 '숙소',
                                                 style: TextStyle(
                                                   fontSize: 18,
@@ -338,24 +330,25 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                         ),
                         Transform.translate(
                           offset: Offset(30, 180),
-                          child: (facility.fcltynm == null) ?
-                              Text(
-                                '공연장 이름 없음',
-                                style: TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white,
+                          child: (facility.fcltynm == null)
+                              ? AutoSizeText(
+                                  '공연장 이름 없음',
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white,
+                                  ),
+                                  maxLines: 1,
+                                )
+                              : AutoSizeText(
+                                  '${facility.fcltynm}',
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white,
+                                  ),
+                                  maxLines: 1,
                                 ),
-                              )
-                              :
-                              Text(
-                                '${facility.fcltynm}',
-                                style: TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white,
-                                ),
-                              ),
                         ),
                       ],
                     ),

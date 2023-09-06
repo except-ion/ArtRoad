@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'accommodation_items.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class AccommodationItemsTile extends StatelessWidget {
   AccommodationItemsTile(this._AccommodationItems);
@@ -14,21 +14,22 @@ class AccommodationItemsTile extends StatelessWidget {
     return ListTile(
       title: Row(
         children: [
-          Text(
+          AutoSizeText(
             _AccommodationItems.aName,
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
+            maxLines: 1,
           ),
           SizedBox(width: 5),
-
-          Text(
+          AutoSizeText(
             _AccommodationItems.aType,
             style: TextStyle(
               fontSize: 12,
               color: Color(0xFF939191),
             ),
+            maxLines: 1,
           ),
         ],
       ),
@@ -39,18 +40,18 @@ class AccommodationItemsTile extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Text(
+                  AutoSizeText(
                     _AccommodationItems.aAdress,
                     style: TextStyle(
-                        fontSize: 14
+                      fontSize: 14,
                     ),
+                    maxLines: 1,
                   ),
-
                   SizedBox(width: 5),
-
                   InkWell(
                     onTap: () {
-                      Clipboard.setData(ClipboardData(text: _AccommodationItems.aAdress));
+                      Clipboard.setData(
+                          ClipboardData(text: _AccommodationItems.aAdress));
                       Fluttertoast.showToast(
                         msg: '주소가 복사되었습니다.',
                         toastLength: Toast.LENGTH_SHORT,
@@ -70,39 +71,40 @@ class AccommodationItemsTile extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Text(
-                    '이 장소에서 ',
+                  AutoSizeText(
+                    '공연장으로부터 ',
                     style: TextStyle(
                       fontSize: 12,
                       color: Color(0xFF939191),
                     ),
+                    maxLines: 1,
                   ),
-                  Text(
+                  AutoSizeText(
                     "${_AccommodationItems.aDistance.toString()}m",
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.orange,
                     ),
+                    maxLines: 1,
                   ),
                 ],
               ),
             ],
           ),
-
           Row(
             children: [
-              Text(
+              AutoSizeText(
                 _AccommodationItems.aPhoneNum,
                 style: TextStyle(
-                    fontSize: 14
+                  fontSize: 14,
                 ),
+                maxLines: 1,
               ),
-
               SizedBox(width: 5),
-
               InkWell(
                 onTap: () {
-                  Clipboard.setData(ClipboardData(text: _AccommodationItems.aPhoneNum));
+                  Clipboard.setData(
+                      ClipboardData(text: _AccommodationItems.aPhoneNum));
                   Fluttertoast.showToast(
                     msg: '전화번호가 복사되었습니다.',
                     toastLength: Toast.LENGTH_SHORT,

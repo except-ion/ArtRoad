@@ -1,8 +1,8 @@
 import 'package:artroad/presentation/facility/facilitydetail_restaurant/restaurant_items.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class RestaurantItemsTile extends StatelessWidget {
   RestaurantItemsTile(this._RestaurantItems);
@@ -14,21 +14,22 @@ class RestaurantItemsTile extends StatelessWidget {
     return ListTile(
       title: Row(
         children: [
-          Text(
-              _RestaurantItems.rName,
+          AutoSizeText(
+            _RestaurantItems.rName,
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
+            maxLines: 1,
           ),
           SizedBox(width: 5),
-
-          Text(
-              _RestaurantItems.rType,
+          AutoSizeText(
+            _RestaurantItems.rType,
             style: TextStyle(
               fontSize: 12,
               color: Color(0xFF939191),
             ),
+            maxLines: 1,
           ),
         ],
       ),
@@ -39,18 +40,16 @@ class RestaurantItemsTile extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Text(
+                  AutoSizeText(
                     _RestaurantItems.rAdress,
-                    style: TextStyle(
-                        fontSize: 14
-                    ),
+                    style: TextStyle(fontSize: 14),
+                    maxLines: 1,
                   ),
-
                   SizedBox(width: 5),
-
                   InkWell(
                     onTap: () {
-                      Clipboard.setData(ClipboardData(text: _RestaurantItems.rAdress));
+                      Clipboard.setData(
+                          ClipboardData(text: _RestaurantItems.rAdress));
                       Fluttertoast.showToast(
                         msg: '주소가 복사되었습니다.',
                         toastLength: Toast.LENGTH_SHORT,
@@ -70,39 +69,38 @@ class RestaurantItemsTile extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Text(
+                  AutoSizeText(
                     '이 장소에서 ',
                     style: TextStyle(
                       fontSize: 12,
                       color: Color(0xFF939191),
                     ),
+                    maxLines: 1,
                   ),
-                  Text(
+                  AutoSizeText(
                     "${_RestaurantItems.rDistance.toString()}m",
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.orange,
                     ),
+                    maxLines: 1,
                   ),
                 ],
               ),
             ],
           ),
-
           Row(
             children: [
-              Text(
+              AutoSizeText(
                 _RestaurantItems.rPhoneNum,
-                style: TextStyle(
-                    fontSize: 14
-                ),
+                style: TextStyle(fontSize: 14),
+                maxLines: 1,
               ),
-
               SizedBox(width: 5),
-
               InkWell(
                 onTap: () {
-                  Clipboard.setData(ClipboardData(text: _RestaurantItems.rPhoneNum));
+                  Clipboard.setData(
+                      ClipboardData(text: _RestaurantItems.rPhoneNum));
                   Fluttertoast.showToast(
                     msg: '전화번호가 복사되었습니다.',
                     toastLength: Toast.LENGTH_SHORT,
