@@ -11,9 +11,6 @@ class fCalendarItemsTile extends StatelessWidget {
 
   final fCalendarItems _fCalendarItems;
 
-  String formatDateTime(DateTime dateTime) {
-    return DateFormat('yyyy-MM-dd').format(dateTime);
-  }
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -46,14 +43,14 @@ class fCalendarItemsTile extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    '${_fCalendarItems.prfpdfrom}',
+                    DateFormat('yyyy.MM.dd').format( _fCalendarItems.prfpdfrom),
                     style: const TextStyle(
                       fontSize: 14,
                       color: Color(0xFF939191),
                     ),
                   ),
                   Text(
-                    ' ~ ${_fCalendarItems.prfpdto}',
+                    ' ~ ${DateFormat('yyyy.MM.dd').format(_fCalendarItems.prfpdto)}',
                     style: const TextStyle(
                       fontSize: 14,
                       color: Color(0xFF939191),

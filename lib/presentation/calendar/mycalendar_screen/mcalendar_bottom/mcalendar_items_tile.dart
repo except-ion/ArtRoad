@@ -1,6 +1,7 @@
 import 'package:artroad/presentation/calendar/mycalendar_screen/mcalendar_bottom/mcalendar_show_schedule_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../core/utils/image_constant.dart';
 import '../../../../widgets/custom_launch_url.dart';
@@ -13,11 +14,6 @@ class mCalendarItemsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    String dateString = _mCalendarItems.schdate;
-    dateString = dateString.replaceAll(".", "-"); // 형식을 변경 (예: "2023-03-01")
-    DateTime parsedDate = DateTime.parse(dateString);
-
     return Stack(
       children: [
         Positioned(
@@ -33,7 +29,7 @@ class mCalendarItemsTile extends StatelessWidget {
 
         ListTile(
           onTap: () {
-            showScheduleDialog(context, parsedDate);
+            showScheduleDialog(context, _mCalendarItems.schdate);
           },
           title: Text(
             _mCalendarItems.schname,
@@ -51,7 +47,7 @@ class mCalendarItemsTile extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    _mCalendarItems.schdate.toString(),
+                    DateFormat('yyyy.MM.dd').format( _mCalendarItems.schdate),
                     style: const TextStyle(
                       fontSize: 14,
                       color: Color(0xFF939191),
