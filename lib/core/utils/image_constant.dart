@@ -25,7 +25,7 @@ class ImageConstant {
 
   static String iconKakao = 'assets/images/icon_kakao.png';
 
-  static String imgAnnounce1 = 'assets/images/img_announce_1.jpg';
+  static String imgAnnounceEx = 'assets/images/img_announce_ex.jpg';
 
   static String iconKakaoCh = 'assets/images/icon_kakao_ch.png';
 
