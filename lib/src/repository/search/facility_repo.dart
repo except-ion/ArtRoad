@@ -14,7 +14,7 @@ class FacilityRepository {
     List<Facility> facilities = [];
 
     String baseUrl = 
-      "http://www.kopis.or.kr/openApi/restful/prfplc?service=$apiKey&cpage=1&rows=5&shprfnmfct=$encodedSearchTerm";
+      "http://www.kopis.or.kr/openApi/restful/prfplc?service=$apiKey&cpage=1&rows=500&shprfnmfct=$encodedSearchTerm";
     final response = await http.get(Uri.parse(baseUrl));
 
     if (response.statusCode == 200) {
