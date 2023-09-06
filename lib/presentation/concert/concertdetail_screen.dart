@@ -39,6 +39,14 @@ class _ConcertDetailScreenState extends State<ConcertDetailScreen> {
                 if (concertDetailList.isEmpty) {
                   return const Center(child: CircularProgressIndicator());
                 }
+                int maxLength1 = 15;
+                concertDetailList[0].fcltynm = concertDetailList[0]
+                            .fcltynm
+                            .toString()
+                            .length <=
+                        maxLength1
+                    ? concertDetailList[0].fcltynm
+                    : '${concertDetailList[0].fcltynm.toString().substring(0, maxLength1)}...';
 
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -114,35 +122,53 @@ class _ConcertDetailScreenState extends State<ConcertDetailScreen> {
                                       const SizedBox(height: 20),
                                       const Divider(),
                                       const SizedBox(height: 20),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          const AutoSizeText(
-                                            '상세 정보',
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
+                                      Center(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            const AutoSizeText(
+                                              '상세 정보',
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w500,
+                                              ),
                                             ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 40),
-                                            // syturls넣는곳
-                                            child:
-                                                concertDetailList[0].styurls ==
-                                                        null
-                                                    ? Image.network(
-                                                        '${concertDetailList[0].styurls}',
-                                                        fit: BoxFit.cover,
-                                                      )
-                                                    : const AutoSizeText(
-                                                        '제공된 정보가 없습니다.',
-                                                        maxLines: 1,
-                                                      ),
-                                          )
-                                        ],
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 40, bottom: 90),
+                                              child: (concertDetailList[0]
+                                                          .styurls !=
+                                                      null)
+                                                  ? (concertDetailList[0]
+                                                              .styurls
+                                                          is List<dynamic>)
+                                                      ? Column(
+                                                          children: (concertDetailList[
+                                                                          0]
+                                                                      .styurls
+                                                                  as List<
+                                                                      dynamic>)
+                                                              .whereType<
+                                                                  String>() // 필요한 경우 String만 필터링
+                                                              .map((url) {
+                                                            return Image
+                                                                .network(url);
+                                                          }).toList(),
+                                                        )
+                                                      : Image.network(
+                                                          concertDetailList[0]
+                                                              .styurls)
+                                                  : const AutoSizeText(
+                                                      '제공된 정보가 없습니다.',
+                                                      maxLines: 1,
+                                                    ),
+                                            )
+                                          ],
+                                        ),
                                       )
                                     ],
                                   ),
@@ -153,16 +179,39 @@ class _ConcertDetailScreenState extends State<ConcertDetailScreen> {
                               offset: const Offset(30, 65),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(16),
-                                child: (concertDetailList[0].poster == null)
+                                child: (concertDetailList[0].poster != null)
                                     ? Image.network(
                                         '${concertDetailList[0].poster}',
                                         width: 170,
-                                        fit: BoxFit.cover,
+                                        fit: BoxFit.fill,
                                         errorBuilder:
                                             (context, error, stackTrace) {
                                           print('error: $error');
-                                          return const Text(
-                                              '이미지 로딩 중 오류가 발생했습니다.');
+                                          return Container(
+                                            color: Colors.grey[100],
+                                            width: 170,
+                                            height: 240,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Icon(
+                                                  Icons.no_photography_outlined,
+                                                  size: 50,
+                                                  color: Colors.grey[600],
+                                                ),
+                                                AutoSizeText(
+                                                  'No Image',
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.grey[600],
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                  maxLines: 1,
+                                                ),
+                                              ],
+                                            ),
+                                          );
                                         },
                                       )
                                     : Container(
