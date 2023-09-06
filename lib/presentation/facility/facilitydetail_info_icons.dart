@@ -4,7 +4,12 @@ import 'package:flutter/services.dart';
 import 'dart:convert';
 
 class FacilityDetailInfoIcons extends StatefulWidget {
-  const FacilityDetailInfoIcons({super.key});
+  String facilityId;
+  
+  FacilityDetailInfoIcons(
+    this.facilityId,
+    {super.key}
+    );
 
   @override
   _FacilityDetailInfoIconsState createState() => _FacilityDetailInfoIconsState();
@@ -12,11 +17,11 @@ class FacilityDetailInfoIcons extends StatefulWidget {
 
 class _FacilityDetailInfoIconsState extends State<FacilityDetailInfoIcons> {
   Future<List> readJson() async {
+  print('facilityDetaiInfoId: ${widget.facilityId}}');
     final String response = await rootBundle.loadString('assets/facilitydetail_convinence.json');
     final data = await json.decode(response);
 
-    const desiredFacilityCode = "FC223076";
-    final filteredItems = data.where((item) => item['facilityCode'] == desiredFacilityCode).toList();
+    final filteredItems = data.where((item) => item['facilityCode'] == widget.facilityId).toList();
 
     return filteredItems;
   }

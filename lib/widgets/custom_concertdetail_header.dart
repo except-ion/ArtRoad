@@ -1,3 +1,4 @@
+import 'package:artroad/src/provider/condetail_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:artroad/presentation/services/firebase_firestore_services.dart';
 import 'package:provider/provider.dart';
@@ -5,7 +6,6 @@ import 'package:artroad/src/provider/user_provider.dart';
 
 class CustomConcertDetailHeader extends StatefulWidget {
   final String concertName;
-  final String concertDate;
   final bool hasLiked;
   final bool isDetail;
   final String concertId;
@@ -15,7 +15,6 @@ class CustomConcertDetailHeader extends StatefulWidget {
     super.key, 
     required this.concertName,
     required this.concertId,
-    required this.concertDate,
 
     this.hasLiked = false,
     this.isDetail = false
@@ -27,28 +26,38 @@ class CustomConcertDetailHeader extends StatefulWidget {
 
 class _CustomConcertDetailHeaderState extends State<CustomConcertDetailHeader> {
   final FirebaseStoreService _firebaseStoreService = FirebaseStoreService();
+  late String userId;
   late bool isLiked; 
 
   @override
   void initState() {
     super.initState();
     final userProvider = Provider.of<UserProvider>(context);
-    String? userId = userProvider.firebaseUserId;
+    userId = userProvider.firebaseUserId!;
   }
 
   //좋아요 클릭 유무
-  void toggleLiked(String? userId) {
-    setState(() async {
-      isLiked = !isLiked;
+  void toggleLiked(String? userId) async {
+    final concertDetailProvider = Provider.of<ConcertDetailProvider>(context, listen: false);
+    final concertDetailList = concertDetailProvider.concertDetails;
+    if(concertDetailList.isNotEmpty){
+      final concertDetail = concertDetailList[0];
       await _firebaseStoreService.updateLikeStatus(
-                                        userId!,
-                                        widget.concertId, 
-                                        widget.concertName, 
-                                        widget.concertDate, 
-                                        isLiked
-                                        );
-                                      });
+            userId!,
+            concertDetail.mt10id ?? '',  
+            concertDetail.mt20id ?? '', //공연시설id
+            concertDetail.prfnm ?? '정보없음', //공연명
+            concertDetail.fcltynm ?? '정보없음', //공영ㄴ시설명
+            concertDetail.prfpdfrom ?? '', 
+            concertDetail.prfpdto ?? '',
+            isLiked
+            );
+      setState((){
+      isLiked = !isLiked;
+    });
+    }
   }
+  
 
   Future<bool> getInitialLikeStatus(String userId, String concertId) async {
     return await _firebaseStoreService.getLikedStatus(userId, concertId);
@@ -56,9 +65,8 @@ class _CustomConcertDetailHeaderState extends State<CustomConcertDetailHeader> {
 
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context);
      return FutureBuilder<bool>(
-      future: getInitialLikeStatus(userProvider.firebaseUserId!, widget.concertId),
+      future: getInitialLikeStatus(userId, widget.concertId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CircularProgressIndicator(); 
@@ -128,7 +136,7 @@ class _CustomConcertDetailHeaderState extends State<CustomConcertDetailHeader> {
                                   Icons.favorite,
                                   color: Colors.red,
                                 ),
-                          onPressed: () => toggleLiked(userProvider.firebaseUserId!),
+                          onPressed: () => toggleLiked(userId),
                         ),
                       ),
                     ),

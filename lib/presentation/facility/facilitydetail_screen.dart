@@ -183,12 +183,12 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                                           color: Colors.black,
                                         ),
                                       ),
-                                      const Padding(
-                                        padding: EdgeInsets.only(
+                                      Padding(
+                                        padding: const EdgeInsets.only(
                                           top: 20,
                                           bottom: 20,
                                         ),
-                                        child: FacilityDetailInfoIcons(),
+                                        child: FacilityDetailInfoIcons(widget.facilityID),
                                       ),
                                       const Divider(),
                                       const SizedBox(

@@ -94,10 +94,11 @@ class FirebaseStoreService{
     }
   }
 
-  Future<void> updateLikeStatus(String userId, String concertID, String prfnm, String concertDate, bool isLiked) async {
+  Future<void> updateLikeStatus(String userId, String concertID, String facilityID, String concertName, String facilityName, String startDate, String endDate, bool isLiked) async {
+    //isLiked == true인 경우
     if (!isLiked) {
       // 좋아요를 누른 경우, 데이터를 추가
-      await addLikedStatus(userId, concertID, prfnm, concertDate);
+      await addLikedStatus(userId, concertID, facilityID, concertName, facilityName, startDate, endDate);
     } else {
       // 좋아요를 취소한 경우, 데이터를 삭제
       await removeLikedStatus(userId, concertID);
@@ -105,12 +106,15 @@ class FirebaseStoreService{
   }
 
   //좋아요 누른 경우 추가
-  Future<void> addLikedStatus(String userId, String concertID, String prfnm, String concertDate) async {
+  Future<void> addLikedStatus(String userId, String concertID, String facilityID, String concertName, String facilityName, String startDate, String endDate) async {
     try {
       await _likedConcertsCollection.doc(userId).collection('user_liked_concerts').doc(concertID).set({
         'concertID': concertID,
-        'prfnm': prfnm,
-        'prfpd': concertDate,
+        'facilityID': facilityID,
+        'concertName': concertName,
+        'facilityName': facilityName,
+        'startDate': startDate,
+        'endDate': endDate,
         'timestamp': FieldValue.serverTimestamp(), // 좋아요한 시간 기록
       });
     } catch (e) {

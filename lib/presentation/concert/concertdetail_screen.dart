@@ -155,7 +155,6 @@ class _ConcertDetailScreenState extends State<ConcertDetailScreen> {
             CustomConcertDetailHeader(
               concertName: widget.prfnm,
               concertId: widget.concertID,
-              concertDate: widget.prfpd,
               hasLiked: true,
               isDetail: true,
             ),
