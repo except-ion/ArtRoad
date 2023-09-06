@@ -2,6 +2,7 @@ import 'package:artroad/presentation/calendar/favoritecalendar_screen/favoriteca
 import 'package:artroad/presentation/concert/concertdetail_screen.dart';
 import 'package:artroad/presentation/facility/facilitydetail_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../core/utils/image_constant.dart';
 
@@ -10,6 +11,9 @@ class fCalendarItemsTile extends StatelessWidget {
 
   final fCalendarItems _fCalendarItems;
 
+  String formatDateTime(DateTime dateTime) {
+    return DateFormat('yyyy-MM-dd').format(dateTime);
+  }
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -41,38 +45,20 @@ class fCalendarItemsTile extends StatelessWidget {
 
               Row(
                 children: [
-                  if (_fCalendarItems.prfpdfrom == null)
-                    const Text(
-                      '날짜 없음',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Color(0xFF939191),
-                      ),
+                  Text(
+                    '${_fCalendarItems.prfpdfrom}',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Color(0xFF939191),
                     ),
-                  if (_fCalendarItems.prfpdfrom != null)
-                    Text(
-                      '${_fCalendarItems.prfpdfrom}',
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Color(0xFF939191),
-                      ),
+                  ),
+                  Text(
+                    ' ~ ${_fCalendarItems.prfpdto}',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Color(0xFF939191),
                     ),
-                  if (_fCalendarItems.prfpdto == null)
-                    const Text(
-                      '날짜 없음',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Color(0xFF939191),
-                      ),
-                    ),
-                  if (_fCalendarItems.prfpdto != null)
-                    Text(
-                      ' ~ ${_fCalendarItems.prfpdto}',
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Color(0xFF939191),
-                      ),
-                    ),
+                  ),
                 ],
               ),
 

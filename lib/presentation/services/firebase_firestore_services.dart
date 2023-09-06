@@ -153,29 +153,37 @@ class FirebaseStoreService{
     }
   }
 
-  //favorite Calendar 정보 불러오기
+  //favorite Calendar에 정보 불러오기
   Future<List<fCalendarItems>> getUserLikedConcert(
     String userId,
     DateTime selectedDate
     ) async {
+      print('selectedDate in getUserLIkedConcert: $selectedDate');
+    
     List<fCalendarItems> favorites = [];
-    try {
+      try {
         QuerySnapshot querySnapshot = await _likedConcertsCollection
-            .doc(userId)
-            .collection('user_liked_concerts')
-            .get();
-      for (var doc in querySnapshot.docs) {
+          .doc(userId)
+          .collection('user_liked_concerts')
+          .where('startDate', isLessThanOrEqualTo: selectedDate )
+          .get();
+        
+        for (var doc in querySnapshot.docs) {
           Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-          favorites.add(
-            fCalendarItems(
-              data['concertID'],
-              data['facilityID'],
-              data['cocnertName'],
-              data['facilityName'],
-              (data['startDate'] as Timestamp).toDate(),
-              (data['endDate'] as Timestamp).toDate(),
-            ),
-          );
+          DateTime startDateTime = (data['startDate'] as Timestamp).toDate();
+          DateTime endDateTime = (data['endDate'] as Timestamp).toDate();
+          if (selectedDate.isAfter(startDateTime) && selectedDate.isBefore(endDateTime)) {
+            favorites.add(
+              fCalendarItems(
+                data['concertID'],
+                data['facilityID'],
+                data['concertName'],
+                data['facilityName'],
+                startDateTime,
+                endDateTime,
+              ),
+            );
+          }
         }
       return favorites;
     } catch (e) {
