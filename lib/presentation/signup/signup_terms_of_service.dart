@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class SignupTermsOfService extends StatefulWidget {
-  const SignupTermsOfService({Key? key});
+  final Function(List<bool>) onAgreementsChanged;
+
+  const SignupTermsOfService({Key? key, required this.onAgreementsChanged});
 
   @override
   State<SignupTermsOfService> createState() => _SignupTermsOfServiceState();
@@ -35,6 +38,8 @@ class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
           allAgreementsChecked =
               individualAgreementsChecked.every((isChecked) => isChecked);
         }
+        // 개별 동의 체크박스 상태를 부모 위젯에 알리기
+        widget.onAgreementsChanged(individualAgreementsChecked);
       });
     }
   }
@@ -115,9 +120,9 @@ class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
                     builder: (context) {
                       return AlertDialog(
                         content: SizedBox(
-                          height: 400, // PDF 뷰어의 높이를 조절할 수 있습니다.
+                          height: 400,
                           child: SfPdfViewer.asset(
-                            'assets/docs/서비스이용약관.pdf', // PDF 파일 경로
+                            'assets/docs/서비스 이용약관.pdf',
                           ),
                         ),
                         actions: [
@@ -168,9 +173,11 @@ class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
                     builder: (context) {
                       return AlertDialog(
                         content: SizedBox(
-                          height: 400, // PDF 뷰어의 높이를 조절할 수 있습니다.
-                          child: SfPdfViewer.asset(
-                            'assets/docs/서비스이용약관.pdf', // PDF 파일 경로
+                          height: 400,
+                          child: WebView(
+                            initialUrl:
+                                'https://plip.kr/pcc/148da46f-f4e5-4e54-814a-d6c8b3f8568b/consent/1.html',
+                            javascriptMode: JavascriptMode.unrestricted,
                           ),
                         ),
                         actions: [
