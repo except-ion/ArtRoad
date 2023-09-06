@@ -1,5 +1,6 @@
 import 'package:artroad/presentation/calendar/favoritecalendar_screen/favoritecalendar_bottom/fcalendar_items.dart';
 import 'package:artroad/presentation/concert/concertdetail_screen.dart';
+import 'package:artroad/presentation/facility/facilitydetail_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/utils/image_constant.dart';
@@ -73,6 +74,13 @@ class fCalendarItemsTile extends StatelessWidget {
 
                   InkWell(
                     onTap: () {
+                      String facilityName = _fCalendarItems.fcltynm ?? '';
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const FacilityDetailScreen(),
+                        ),
+                      );
                       print('Move to facility detail page');
                     },
                     child: Text(
