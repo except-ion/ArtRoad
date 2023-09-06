@@ -30,4 +30,8 @@ class ImageConstant {
   static String iconKakaoCh = 'assets/images/icon_kakao_ch.png';
 
   static String iconGmail = 'assets/images/icon_gmail.png';
+
+  static String imgInquiryEx = 'assets/images/img_inquiry_ex.jpg';
+
+  static String imgArtRoad = 'assets/images/Img_about_artroad.jpg';
 }
