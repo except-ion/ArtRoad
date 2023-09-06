@@ -1,7 +1,9 @@
+import 'package:artroad/presentation/calendar/mycalendar_screen/mcalendar_bottom/mcalendar_show_schedule_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/utils/image_constant.dart';
+import '../../../../widgets/custom_launch_url.dart';
 import 'mcalendar_items.dart';
 
 class mCalendarItemsTile extends StatelessWidget {
@@ -10,7 +12,12 @@ class mCalendarItemsTile extends StatelessWidget {
   final mCalendarItems _mCalendarItems;
 
   @override
-  Widget build(BuildContext context) {    
+  Widget build(BuildContext context) {
+
+    String dateString = _mCalendarItems.schdate;
+    dateString = dateString.replaceAll(".", "-"); // 형식을 변경 (예: "2023-03-01")
+    DateTime parsedDate = DateTime.parse(dateString);
+
     return Stack(
       children: [
         Positioned(
@@ -25,6 +32,9 @@ class mCalendarItemsTile extends StatelessWidget {
         const SizedBox(width: 10),
 
         ListTile(
+          onTap: () {
+            showScheduleDialog(context, parsedDate);
+          },
           title: Text(
             _mCalendarItems.schname,
             style: TextStyle(
@@ -73,18 +83,20 @@ class mCalendarItemsTile extends StatelessWidget {
               )
             ],
           ),
-
-          trailing: _mCalendarItems.schlink != null
-              ? InkWell(
-            onTap: () {
-              print("link button clicked");
-            },
-            child: const Icon(
-              Icons.link_rounded,
-              color: Color(0xFF939191),
-              size: 30,
-            ),
-          )
+          trailing: (_mCalendarItems.schlink != null) ?
+              InkWell(
+                  onTap: () {
+                    if(_mCalendarItems.schlink != null) {
+                      CustomLaunchUrl('${_mCalendarItems.schlink}');
+                    }
+                    print("link button clicked");
+                  },
+                  child: const Icon(
+                    Icons.link_rounded,
+                    color: Color(0xFF939191),
+                    size: 30,
+                ),
+              )
               : null,
         ),
       ],

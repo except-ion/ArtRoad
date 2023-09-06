@@ -5,9 +5,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 import '../../widgets/custom_header.dart';
+import '../../widgets/custom_launch_url.dart';
 import 'facilitydetail_accommodation/accommodation_list_view.dart';
 import 'facilitydetail_info_icons.dart';
 import 'facilitydetail_restaurant/restaurant_list_view.dart';
+import '../../src/model/facdetail.dart';
 
 class FacilityDetailScreen extends StatefulWidget {
   String facilityID;
@@ -22,6 +24,24 @@ class FacilityDetailScreen extends StatefulWidget {
 }
 
 class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
+  // FacilityDetail facility = FacilityDetail(
+  //     mt10id: 'FC223076',
+  //     fcltynm: '예술의 전당 오페라 극장',
+  //     telno: '1668-1352',
+  //     relateurl: 'https://www.ksponco.or.kr/olympicpark/',
+  //     adres: '서울 서초구 남부순환로 2406',
+  //     la: '123',
+  //     lo: '123' );
+
+  // FacilityDetail facility = FacilityDetail(
+  //     mt10id: null,
+  //     fcltynm: null,
+  //     telno: null,
+  //     relateurl: null,
+  //     adres: null,
+  //     la: '123',
+  //     lo: '123' );
+
   bool isRestaurantSelected = true;
   bool isAccommodationSelected = false;
 
@@ -80,13 +100,21 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                                         size: 20,
                                       ),
                                       const SizedBox(width: 5),
-                                      Text(
-                                        facilityDetailList[0].fcltynm.toString(),
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          color: Color(0xFF939191),
-                                        ),
-                                      ),
+                                      (facilityDetailList[0].adres == null) ?
+                                          const Text(
+                                            "주소 정보 없음",
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              color: Color(0xFF939191),
+                                            ),
+                                          )
+                                          : Text(
+                                              facilityDetailList[0].fcltynm.toString(),
+                                              style: const TextStyle(
+                                                fontSize: 16,
+                                                color: Color(0xFF939191),
+                                              ),
+                                            ),
                                       const SizedBox(width: 5),
                                       InkWell(
                                         onTap: () {
@@ -106,7 +134,7 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                                           color: Color(0xFF176FF2),
                                           size: 20,
                                         ),
-                                      ),
+                                      )
                                     ],
                                   ),
                                   const SizedBox(height: 7),
@@ -118,52 +146,78 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                                         size: 20,
                                       ),
                                       const SizedBox(width: 5),
-                                      Text(
-                                        facilityDetailList[0].telno.toString(),
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          color: Color(0xFF939191),
-                                        ),
-                                      ),
+                                      (facilityDetailList[0].telno == null) ?
+                                          const Text(
+                                            "전화번호 정보 없음",
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              color: Color(0xFF939191),
+                                            ),
+                                          )
+                                          : Text(
+                                              facilityDetailList[0].telno.toString(),
+                                              style: const TextStyle(
+                                                fontSize: 16,
+                                                color: Color(0xFF939191),
+                                              ),
+                                            ),
                                       const SizedBox(width: 5),
-                                      InkWell(
-                                        onTap: () {
-                                          // 텍스트 복사 로직 구현
-                                          Clipboard.setData(const ClipboardData(text: '1668-1352'));
-                                          Fluttertoast.showToast(
-                                            msg: '전화번호가 복사되었습니다.',
-                                            toastLength: Toast.LENGTH_SHORT,
-                                            backgroundColor: Colors.grey,
-                                            textColor: Colors.white,
-                                            fontSize: 16.0,
-                                          );
-                                          print('phone number copy bt');
-                                        },
+                                        InkWell(
+                                          onTap: () {
+                                            Clipboard.setData(ClipboardData(text: facilityDetailList[0].telno.toString()));
+                                            Fluttertoast.showToast(
+                                              msg: '전화번호가 복사되었습니다.',
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              backgroundColor: Colors.grey,
+                                              textColor: Colors.white,
+                                              fontSize: 16.0,
+                                            );
+                                          },
                                         child: const Icon(
                                           Icons.copy_rounded,
                                           color: Color(0xFF176FF2),
                                           size: 20,
                                         ),
-                                      ),
+                                      )
                                     ],
                                   ),
                                   const SizedBox(height: 7),
-                                  Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.link_rounded,
-                                        color: Color(0xFF939191),
-                                        size: 20,
-                                      ),
-                                      const SizedBox(width: 5),
-                                      Text(
-                                        facilityDetailList[0].relateurl.toString(),
-                                        style: const TextStyle(
-                                          fontSize: 16,
+                                  InkWell(
+                                    onTap: () {
+                                      if(facilityDetailList[0].relateurl != null) {
+                                        CustomLaunchUrl('${facilityDetailList[0].relateurl}');
+                                      }
+                                    },
+                                    child: Row(
+                                      children: [
+                                        const Icon(
+                                          Icons.link_rounded,
                                           color: Color(0xFF939191),
+                                          size: 20,
                                         ),
-                                      ),
-                                    ],
+                                        const SizedBox(width: 5),
+                                        (facilityDetailList[0].relateurl == null) ?
+                                            const Text(
+                                              '사이트 링크 없음',
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                color: Color(0xFF939191),
+                                              ),
+                                            )
+                                            :
+                                            Flexible(
+                                                child: Text(
+                                                  '${facilityDetailList[0].relateurl}',
+                                                  style: const TextStyle(
+                                                    fontSize: 16,
+                                                    color: Color(0xFF939191),
+                                                  ),
+                                                  maxLines: 2, // 텍스트가 최대 2줄로 표시되도록 설정 (원하는 줄 수로 조정 가능)
+                                                  overflow: TextOverflow.ellipsis,
+                                                ),
+                                            ),
+                                      ],
+                                    ),
                                   ),
                                   const SizedBox(
                                     height: 20,
@@ -302,14 +356,23 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                         ),
                         Transform.translate(
                           offset: const Offset(30, 180),
-                          child: Text(
-                            facilityDetailList[0].fcltynm.toString(),
-                            style: const TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.white,
-                            ),
-                          ),
+                          child: (facilityDetailList[0].fcltynm == null) ?
+                              const Text(
+                                '공연장 이름 없음',
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white,
+                                ),
+                              )
+                              : Text(
+                                facilityDetailList[0].fcltynm.toString(),
+                                style: const TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white,
+                                ),
+                               ),
                         ),
                       ],
                     ),
