@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:artroad/presentation/basepage_screen/basepage_screen.dart';
 import 'package:artroad/presentation/signup/signup_screen.dart';
+import 'package:artroad/widgets/check_validate.dart';
 import 'package:artroad/widgets/custom_button_main_color.dart';
 import 'package:flutter/material.dart';
 import 'package:artroad/theme/theme_helper.dart';
@@ -35,6 +36,10 @@ class _LoginScreenState extends State<LoginScreen> {
   int currentImageIndex = 0;
   late Timer timer;
   bool _isCheckRemember = false; //아이디 저장 checkbox
+
+  final FocusNode emailFocus = FocusNode();
+  final FocusNode pwFocus = FocusNode();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -84,160 +89,184 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       Stack(
                         children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                '로그인',
-                                textAlign: TextAlign.end,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 35,
-                                  fontWeight: FontWeight.w500,
+                          Form(
+                            key: _formKey,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  '로그인',
+                                  textAlign: TextAlign.end,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 35,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(height: 46),
-                              CustomTextformfield(
+                                const SizedBox(height: 46),
+                                CustomTextformfield(
                                   name: '이메일',
                                   isPassword: false,
-                                  controller: emailField),
-                              SizedBox(
-                                height: 25,
-                              ),
-                              CustomTextformfield(
+                                  controller: emailField,
+                                  focusNode: emailFocus,
+                                  validator: (value) => CheckValidate()
+                                      .validateEmail(emailFocus, '$value'),
+                                ),
+                                SizedBox(
+                                  height: 25,
+                                ),
+                                CustomTextformfield(
                                   name: '비밀번호',
                                   isPassword: true,
-                                  controller: pwField),
-                              const SizedBox(height: 17),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Checkbox(
-                                        activeColor: Color(0xFF00233D),
-                                        value: _isCheckRemember,
-                                        onChanged: (value) {
-                                          bottomState(() {
-                                            setState(() {
-                                              print('\n\n\n$value');
-                                              _isCheckRemember = value!;
-                                            });
-                                          });
-                                        },
-                                        materialTapTargetSize: //패딩 제거
-                                            MaterialTapTargetSize.shrinkWrap,
-                                      ),
-                                      const Text('아이디 저장'),
-                                    ],
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              LoginForgotPasswordScreen(),
-                                        ),
-                                      );
-                                    },
-                                    style: TextButton.styleFrom(
-                                      textStyle: TextStyle(
-                                        decoration: TextDecoration.underline,
-                                        color: Colors.blue,
-                                      ),
-                                    ),
-                                    child: Text('비밀번호를 잃어버리셨나요?'),
-                                  )
-                                ],
-                              ),
-                              const SizedBox(height: 25),
-                              CustomButtonMainColor(
-                                onPressed: () {
-                                  Navigator.pop(context); // 다이얼로그 닫기
-                                  //로그인 로직 추가
-                                  // 로그인 성공 후 페이지 이동
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => BasepageScreen(),
-                                    ),
-                                  );
-
-                                  print('로그인 성공');
-                                },
-                                text: '로그인',
-                              ),
-                              const SizedBox(height: 25),
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context); // 다이얼로그 닫기
-                                  //로그인 로직 추가
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => BasepageScreen(),
-                                    ), // 홈화면으로 이동
-                                  );
-                                },
-                                style: TextButton.styleFrom(
-                                    textStyle: TextStyle(
-                                        textBaseline: TextBaseline.alphabetic),
-                                    backgroundColor: const Color(0xFFFEE500),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    minimumSize: const Size(350, 50)),
-                                child: Stack(
-                                  clipBehavior: Clip.none,
+                                  controller: pwField,
+                                  focusNode: pwFocus,
+                                  validator: (value) => CheckValidate()
+                                      .validatePassword(pwFocus, '$value'),
+                                ),
+                                const SizedBox(height: 17),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Positioned(
-                                      top: -6,
-                                      left: -100,
-                                      child: Transform.scale(
-                                          scale: 0.6,
-                                          child: Image.asset(
-                                              'assets/images/login_kakao.png')),
+                                    Row(
+                                      children: [
+                                        Checkbox(
+                                          activeColor: Color(0xFF00233D),
+                                          value: _isCheckRemember,
+                                          onChanged: (value) {
+                                            bottomState(() {
+                                              setState(() {
+                                                print('\n\n\n$value');
+                                                _isCheckRemember = value!;
+                                              });
+                                            });
+                                          },
+                                          materialTapTargetSize: //패딩 제거
+                                              MaterialTapTargetSize.shrinkWrap,
+                                        ),
+                                        const Text('아이디 저장'),
+                                      ],
                                     ),
-                                    Text(
-                                      '카카오 로그인',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w400,
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                LoginForgotPasswordScreen(),
+                                          ),
+                                        );
+                                      },
+                                      style: TextButton.styleFrom(
+                                        textStyle: TextStyle(
+                                          decoration: TextDecoration.underline,
+                                          color: Colors.blue,
+                                        ),
                                       ),
-                                    ),
+                                      child: Text('비밀번호를 잃어버리셨나요?'),
+                                    )
                                   ],
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 25,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text('기존 회원이 아니신가요?'),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
+                                const SizedBox(height: 25),
+                                CustomButtonMainColor(
+                                  onPressed: () {
+                                    if (_formKey.currentState!.validate()) {
+                                      // validation 이 성공하면 폼 저장하기
+                                      _formKey.currentState!.save();
+                                      print('로그인 성공');
+                                      Navigator.pop(context); // 다이얼로그 닫기
+                                      //로그인 로직 추가
+                                      // 로그인 성공 후 페이지 이동
+                                      Navigator.of(context).push(
                                         MaterialPageRoute(
-                                          builder: (context) => SignupScreen(),
+                                          builder: (context) =>
+                                              BasepageScreen(),
                                         ),
                                       );
-                                    },
-                                    style: TextButton.styleFrom(
+                                    }
+                                  },
+                                  text: '로그인',
+                                ),
+                                const SizedBox(height: 25),
+                                TextButton(
+                                  onPressed: () {
+                                    if (_formKey.currentState!.validate()) {
+                                      // validation 이 성공하면 폼 저장하기
+                                      _formKey.currentState!.save();
+                                      print('로그인 성공');
+                                      Navigator.pop(context); // 다이얼로그 닫기
+                                      //로그인 로직 추가
+                                      // 로그인 성공 후 페이지 이동
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              BasepageScreen(),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  style: TextButton.styleFrom(
                                       textStyle: TextStyle(
-                                        decoration: TextDecoration.underline,
-                                        color: Colors.blue,
+                                          textBaseline:
+                                              TextBaseline.alphabetic),
+                                      backgroundColor: const Color(0xFFFEE500),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      minimumSize: const Size(350, 50)),
+                                  child: Stack(
+                                    clipBehavior: Clip.none,
+                                    children: [
+                                      Positioned(
+                                        top: -6,
+                                        left: -100,
+                                        child: Transform.scale(
+                                            scale: 0.6,
+                                            child: Image.asset(
+                                                'assets/images/login_kakao.png')),
                                       ),
-                                    ),
-                                    child: Text('회원가입'),
-                                  )
-                                ],
-                              )
-                            ],
+                                      Text(
+                                        '카카오 로그인',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 25,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text('기존 회원이 아니신가요?'),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                SignupScreen(),
+                                          ),
+                                        );
+                                      },
+                                      style: TextButton.styleFrom(
+                                        textStyle: TextStyle(
+                                          decoration: TextDecoration.underline,
+                                          color: Colors.blue,
+                                        ),
+                                      ),
+                                      child: Text('회원가입'),
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
                           )
                         ],
                       ),
