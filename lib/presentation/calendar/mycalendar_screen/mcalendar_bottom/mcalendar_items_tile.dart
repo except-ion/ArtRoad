@@ -1,4 +1,6 @@
 import 'package:artroad/presentation/calendar/mycalendar_screen/mcalendar_bottom/mcalendar_show_schedule_dialog.dart';
+import 'package:artroad/presentation/calendar/mycalendar_screen/mcalendar_bottom/mcalendar_show_selected_dialog.dart';
+import 'package:artroad/presentation/services/firebase_firestore_services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -8,12 +10,19 @@ import '../../../../widgets/custom_launch_url.dart';
 import 'mcalendar_items.dart';
 
 class mCalendarItemsTile extends StatelessWidget {
-  const mCalendarItemsTile(this._mCalendarItems, {super.key});
+  String userId;
+  
+  mCalendarItemsTile(
+    this._mCalendarItems, 
+    this.userId,
+    {super.key}
+  );
 
   final mCalendarItems _mCalendarItems;
 
   @override
   Widget build(BuildContext context) {
+    final FirebaseStoreService firebaseStoreService = FirebaseStoreService();
 
     // String dateString = _mCalendarItems.schdate;
     // dateString = dateString.replaceAll(".", "-"); // 형식을 변경 (예: "2023-03-01")
@@ -33,9 +42,15 @@ class mCalendarItemsTile extends StatelessWidget {
         const SizedBox(width: 10),
 
         ListTile(
-          onTap: () {
+          onTap: () async {
             //tile에서 눌렀을때 뜨는 dialog
-            // showScheduleDialog(context, parsedDate);
+            mCalendarItems? getSchedule = await firebaseStoreService.getUserSelectedSchedule(userId,  _mCalendarItems.scheduleId);
+              if (getSchedule != null) {
+                // Fetch and display existing schedule data
+                showSelectedDialog(context, getSchedule, userId);
+              } else {
+                return;
+              }
           },
           title: Text(
             _mCalendarItems.schname,

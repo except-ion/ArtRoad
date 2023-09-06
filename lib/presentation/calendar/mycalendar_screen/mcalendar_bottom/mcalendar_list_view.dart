@@ -65,7 +65,7 @@ class mCalendarListView extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return Container(
                       margin: const EdgeInsets.only(bottom: 15), // 원하는 여백 값
-                      child: mCalendarItemsTile(mcalendarList[index]),
+                      child: mCalendarItemsTile(mcalendarList[index], userId!),
                     );
                   }
               ),
