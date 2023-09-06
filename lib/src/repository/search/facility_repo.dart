@@ -22,11 +22,15 @@ class FacilityRepository {
       final body = convert.utf8.decode(response.bodyBytes);
       final xml = Xml2Json()..parse(body);
       final json = xml.toParker();
-
+      
       Map<String, dynamic> jsonResult = convert.json.decode(json);
-      final jsonFirst = jsonResult['dbs']['db'];
-       if (jsonFirst != null) {
-        for (var item in jsonFirst) {
+      final jsonFacility = jsonResult['dbs']['db'];
+      
+      //공연시설 상세정보에서 adres가져오기
+      if (jsonFacility != null) {
+        List<Facility> facilities = [];
+
+        for (var item in jsonFacility) {
           String facilityID = item['mt10id'];
           String facilityDetailUrl = 
             "http://www.kopis.or.kr/openApi/restful/prfplc/$facilityID?service=$apiKey";
@@ -37,20 +41,18 @@ class FacilityRepository {
             final xml = Xml2Json()..parse(detailBody);
             final jsonDetail = xml.toParker();
 
-            Map<String, dynamic> jsonResult = convert.json.decode(jsonDetail);
+            Map<String, dynamic> jsonFacilityDetail = convert.json.decode(jsonDetail);
             
-            final jsonFacility = jsonResult['dbs']['db'];
-            print('jsonFacility: $jsonFacility');
+            // 'adres' 값 추출
+            String adres = jsonFacilityDetail['dbs']['db']['adres'];
             // Facility 객체 생성 및 리스트에 추가
-            if (jsonFacility != null) {
-              facilities.add(Facility.fromJson(jsonFacility));
-            } else {
-              print(response);
-            }
-            return facilities;
+            item['adres'] = adres;
+            facilities.add(Facility.fromJson(item));
           }
         }
+        return facilities;
       }
+      
     }
     return null;
   }

@@ -20,6 +20,5 @@ class FacilityProvider extends ChangeNotifier {
     } catch (error) {
       print("Error facility provider: $error");
     }
-    return null;
   }
 }
