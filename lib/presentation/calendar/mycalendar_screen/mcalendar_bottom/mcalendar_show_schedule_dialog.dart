@@ -1,11 +1,15 @@
+import 'package:artroad/presentation/services/firebase_firestore_services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../../core/utils/size_utils.dart';
 
-void showScheduleDialog(BuildContext context, DateTime selectedDay) {
+void showScheduleDialog(BuildContext context, DateTime selectedDay, String? userId) {
   final TextEditingController textEditingController = TextEditingController();
+  final TextEditingController titleField = TextEditingController();
+  final TextEditingController linkField = TextEditingController();
+  final FirebaseStoreService firebaseStoreService = FirebaseStoreService();
 
   BuildContext? mainDialogContext;
   BuildContext? nestedDialogContext;
@@ -63,6 +67,7 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
         Colors.pink,
       ];
       Color selectedColor = colors[4]; // 초기 선택 값
+      int colorValue = selectedColor.value;
 
       print(MediaQuery.of(context).viewInsets.bottom);
       return StatefulBuilder(
@@ -87,6 +92,9 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                             Expanded(
                               child: InkWell(
                                 onTap: () {
+                                  //창 닫기
+                                  titleField.text = '';
+                                  linkField.text = '';
                                   textEditingController.text = ''; // 텍스트 필드 초기화
                                   Navigator.pop(context);
                                 },
@@ -102,7 +110,10 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                             ),
                             Expanded(
                               child: InkWell(
-                                onTap: () {
+                                onTap: () async {
+                                  //일정 추가하기
+                                  bool isSuccess = await firebaseStoreService.addSchedule(userId!, titleField.text, selectedDay, selectedAlarm, colorValue, linkField.text);
+                                  
                                   textEditingController.text = ''; // 텍스트 필드 초기화
                                   Navigator.pop(context);
                                   Fluttertoast.showToast(
@@ -113,6 +124,7 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                                     fontSize: 16.0,
                                   );
                                   // --- 일정 추가 로직 구현 ---
+                                  
 
                                 },
                                 child: const Align(
@@ -154,7 +166,7 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                                     cursorColor: Colors.black,
                                     cursorWidth: 1.5,
                                     showCursor: true,
-                                    controller: textEditingController,
+                                    controller: titleField,
 
                                     style: const TextStyle(
                                       color: Colors.black,
@@ -352,6 +364,7 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                                 cursorColor: Colors.black,
                                 cursorWidth: 1.5,
                                 showCursor: true,
+                                controller: linkField,
 
                                 decoration: const InputDecoration(
                                   hintText: '링크 추가',
@@ -471,6 +484,7 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                                       bottomState(() {
                                         isToggledList = List.generate(isToggledList.length, (i) => i == index ? !isToggledList[i] : false);
                                         selectedColor = colors[index];
+                                        colorValue = selectedColor.value;
                                         print("color option : $selectedColor");
                                       });
                                     },
