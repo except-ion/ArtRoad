@@ -1,4 +1,5 @@
 import 'package:artroad/presentation/calendar/favoritecalendar_screen/favoritecalendar_bottom/fcalendar_items.dart';
+import 'package:artroad/presentation/concert/concertdetail_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/utils/image_constant.dart';
@@ -88,7 +89,20 @@ class fCalendarItemsTile extends StatelessWidget {
           ),
           trailing: InkWell(
             onTap: () {
-              print("Concert info button clicked");
+              String concertID = _fCalendarItems.mt20id ?? '';
+              String prfnm = _fCalendarItems.prfnm ?? '';
+              String prfpd = _fCalendarItems.prfpd ?? '';
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ConcertDetailScreen(
+                    concertID, 
+                    prfnm, 
+                    prfpd
+                  ),
+                ),
+              );
             },
             child: const Icon(
               Icons.keyboard_arrow_right_rounded,
