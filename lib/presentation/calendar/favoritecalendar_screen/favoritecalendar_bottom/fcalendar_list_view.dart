@@ -8,20 +8,16 @@ import 'package:provider/provider.dart';
 import 'fcalendar_items.dart';
 
 class fCalendarListView extends StatelessWidget {
+  final DateTime selectedDay;
   final FirebaseStoreService _firebaseStoreService = FirebaseStoreService();
 
-  fCalendarListView({super.key});
+  fCalendarListView({super.key, required this.selectedDay});
 
-  Future<List<fCalendarItems>> getUserLikedConcert(String? userId) async {
-    final List<fCalendarItems> fcalendarList = await _firebaseStoreService.getUserLikedConcert(userId!);
+  Future<List<fCalendarItems>> getUserLikedConcertsData(String? userId) async {
+    final List<fCalendarItems> fcalendarList = await _firebaseStoreService.getUserLikedConcert(userId!, selectedDay);
     print('fcalendarList: $fcalendarList');
     return fcalendarList;
   }
-  // = [
-  //   fCalendarItems(null, 'Concert Name 1', 'facility Name 1', '2023.01.01', '2023.01.02'),
-  //   fCalendarItems(null, 'Concert Name 2', 'facility Name 2', '2023.02.01', null),
-  //   fCalendarItems(null, 'Concert Name 3', 'facility Name 3', '2023.03.01', '2023.03.02'),
-  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +25,7 @@ class fCalendarListView extends StatelessWidget {
     String? userId = userProvider.firebaseUserId;
 
     return FutureBuilder<List<fCalendarItems>>(
-      future: getUserLikedConcert(userId),
+      future: getUserLikedConcertsData(userId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           // 데이터 로딩 중일 때 표시할 UI

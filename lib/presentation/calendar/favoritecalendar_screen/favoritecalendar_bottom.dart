@@ -14,8 +14,6 @@ class _fTableCalendarBottomState extends State<fTableCalendarBottom> {
 
   @override
   Widget build(BuildContext context) {
-    String selectedDate = '${widget.selectedDay.year}.${widget.selectedDay.month}.${widget.selectedDay.day}';
-    print(selectedDate);
 
     return Column(
       children: [

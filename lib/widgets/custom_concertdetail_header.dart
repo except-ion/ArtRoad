@@ -36,26 +36,39 @@ class _CustomConcertDetailHeaderState extends State<CustomConcertDetailHeader> {
     userId = userProvider.firebaseUserId!;
   }
 
+  DateTime stringToDatetime(String date){
+    List<String> dateParts = date.split('.');
+      int year = int.parse(dateParts[0]);
+      int month = int.parse(dateParts[1]);
+      int day = int.parse(dateParts[2]);
+
+      DateTime datetime = DateTime(year, month, day);
+      print('datetime date: $datetime');
+      return datetime;
+  }
   //좋아요 클릭 유무
   void toggleLiked(String? userId) async {
     final concertDetailProvider = Provider.of<ConcertDetailProvider>(context, listen: false);
     final concertDetailList = concertDetailProvider.concertDetails;
     if(concertDetailList.isNotEmpty){
       final concertDetail = concertDetailList[0];
+      DateTime startDate = stringToDatetime(concertDetail.prfpdfrom!);
+      DateTime endDate = stringToDatetime(concertDetail.prfpdto!);
+      print('toggleLiked startDate: $startDate');
       await _firebaseStoreService.updateLikeStatus(
             userId!,
             concertDetail.mt10id ?? '',  
             concertDetail.mt20id ?? '', //공연시설id
             concertDetail.prfnm ?? '정보없음', //공연명
-            concertDetail.fcltynm ?? '정보없음', //공영ㄴ시설명
-            concertDetail.prfpdfrom ?? '', 
-            concertDetail.prfpdto ?? '',
+            concertDetail.fcltynm ?? '정보없음', //공영시설명
+            startDate,
+            endDate,
             isLiked
             );
-      setState((){
-      isLiked = !isLiked;
-    });
-    }
+        setState((){
+          isLiked = !isLiked;
+      });
+      }
   }
   
 

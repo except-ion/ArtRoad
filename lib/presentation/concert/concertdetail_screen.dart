@@ -8,12 +8,10 @@ import '../facility/facilitydetail_screen.dart';
 class ConcertDetailScreen extends StatefulWidget {
   String concertID;
   String prfnm;
-  String prfpd;
 
   ConcertDetailScreen(
     this.concertID, 
     this.prfnm,
-    this.prfpd,
     {super.key}
     );
 

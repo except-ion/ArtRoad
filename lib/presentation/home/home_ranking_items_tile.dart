@@ -26,13 +26,11 @@ class _RankingTileState extends State<RankingTile> {
   void _onImageTap() {
     final mt20id = widget._Ranking.mt20id;
     final prfnm = widget._Ranking.prfnm;
-    final prfpd = widget._Ranking.prfpd;
-    print('onImageTap: $prfpd');
-    if (mt20id != null && prfnm != null && prfpd != null){
+    if (mt20id != null && prfnm != null){
       Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) {
-                return ConcertDetailScreen(mt20id, prfnm, prfpd);
+                return ConcertDetailScreen(mt20id, prfnm);
               },
             ),
           );

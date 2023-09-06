@@ -41,7 +41,7 @@ class fCalendarItemsTile extends StatelessWidget {
 
               Row(
                 children: [
-                  if (_fCalendarItems.prfpd == null)
+                  if (_fCalendarItems.prfpdfrom == null)
                     const Text(
                       '날짜 없음',
                       style: TextStyle(
@@ -49,9 +49,25 @@ class fCalendarItemsTile extends StatelessWidget {
                         color: Color(0xFF939191),
                       ),
                     ),
-                  if (_fCalendarItems.prfpd != null)
+                  if (_fCalendarItems.prfpdfrom != null)
                     Text(
-                      '${_fCalendarItems.prfpd}',
+                      '${_fCalendarItems.prfpdfrom}',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Color(0xFF939191),
+                      ),
+                    ),
+                  if (_fCalendarItems.prfpdto == null)
+                    const Text(
+                      '날짜 없음',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Color(0xFF939191),
+                      ),
+                    ),
+                  if (_fCalendarItems.prfpdto != null)
+                    Text(
+                      ' ~ ${_fCalendarItems.prfpdto}',
                       style: const TextStyle(
                         fontSize: 14,
                         color: Color(0xFF939191),
@@ -74,11 +90,11 @@ class fCalendarItemsTile extends StatelessWidget {
 
                   InkWell(
                     onTap: () {
-                      String facilityName = _fCalendarItems.fcltynm ?? '';
+                      String facilityID = _fCalendarItems.mt10id ?? '';
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => FacilityDetailScreen('FC001431'),
+                          builder: (context) => FacilityDetailScreen(facilityID),
                         ),
                       );
                       print('Move to facility detail page');
@@ -99,7 +115,6 @@ class fCalendarItemsTile extends StatelessWidget {
             onTap: () {
               String concertID = _fCalendarItems.mt20id ?? '';
               String prfnm = _fCalendarItems.prfnm ?? '';
-              String prfpd = _fCalendarItems.prfpd ?? '';
 
               Navigator.push(
                 context,
@@ -107,7 +122,6 @@ class fCalendarItemsTile extends StatelessWidget {
                   builder: (context) => ConcertDetailScreen(
                     concertID, 
                     prfnm, 
-                    prfpd
                   ),
                 ),
               );

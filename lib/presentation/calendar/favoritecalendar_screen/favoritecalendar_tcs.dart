@@ -7,7 +7,7 @@ import 'package:table_calendar/table_calendar.dart';
 import '../max_num_of_weeks.dart';
 
 typedef OnDaySelected = void Function(
-    DateTime selectedDay, DateTime focusedDay);
+  DateTime selectedDay, DateTime focusedDay);
 
 late final bool Function(DateTime day)? selectedDayPredicate;
 
@@ -15,6 +15,8 @@ late final bool Function(DateTime day)? selectedDayPredicate;
 class fTableCalendarScreen extends StatefulWidget {
   const fTableCalendarScreen({Key? key}) : super(key: key);
 
+  get selectedDay => selectedDay;
+  
   @override
   State<fTableCalendarScreen> createState() => _TableCalendarScreenState();
 }
@@ -136,7 +138,7 @@ class _TableCalendarScreenState extends State<fTableCalendarScreen> {
             ],
           ),
 
-          fCalendarListView(),
+          fCalendarListView(selectedDay: selectedDay),
         ],
       ),
     );

@@ -94,19 +94,22 @@ class FirebaseStoreService{
     }
   }
 
-  Future<void> updateLikeStatus(String userId, String concertID, String facilityID, String concertName, String facilityName, String startDate, String endDate, bool isLiked) async {
+  Future<void> updateLikeStatus(String userId, String concertID, String facilityID, String concertName, String facilityName, DateTime startDate, DateTime endDate, bool isLiked) async {
     //isLiked == true인 경우
-    if (!isLiked) {
+    if (isLiked) {
+      print("updateLikeStatus addLikedStatus");
       // 좋아요를 누른 경우, 데이터를 추가
       await addLikedStatus(userId, concertID, facilityID, concertName, facilityName, startDate, endDate);
     } else {
+      print("updateLikeStatus removeLikedStatus");
       // 좋아요를 취소한 경우, 데이터를 삭제
       await removeLikedStatus(userId, concertID);
     }
   }
 
   //좋아요 누른 경우 추가
-  Future<void> addLikedStatus(String userId, String concertID, String facilityID, String concertName, String facilityName, String startDate, String endDate) async {
+  Future<void> addLikedStatus(String userId, String concertID, String facilityID, String concertName, String facilityName, DateTime startDate, DateTime endDate) async {
+    print("addLikedStatus");
     try {
       await _likedConcertsCollection.doc(userId).collection('user_liked_concerts').doc(concertID).set({
         'concertID': concertID,
@@ -151,7 +154,10 @@ class FirebaseStoreService{
   }
 
   //favorite Calendar 정보 불러오기
-  Future<List<fCalendarItems>> getUserLikedConcert(String userId) async {
+  Future<List<fCalendarItems>> getUserLikedConcert(
+    String userId,
+    DateTime selectedDate
+    ) async {
     List<fCalendarItems> favorites = [];
     try {
         QuerySnapshot querySnapshot = await _likedConcertsCollection
@@ -163,9 +169,11 @@ class FirebaseStoreService{
           favorites.add(
             fCalendarItems(
               data['concertID'],
-              data['prfnm'],
-              "fcltynm",
-              data['prfpd']
+              data['facilityID'],
+              data['cocnertName'],
+              data['facilityName'],
+              (data['startDate'] as Timestamp).toDate(),
+              (data['endDate'] as Timestamp).toDate(),
             ),
           );
         }
