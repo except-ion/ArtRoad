@@ -13,11 +13,7 @@ class ArtRoadInfo extends StatelessWidget {
             name: 'About ArtRoad',
           ),
           CustomImageView(
-            imagePath: ImageConstant.imgAnnounceEx,
-          ),
-          Divider(),
-          Text(
-            '어쩌구 저쩌구......하......피곤띠'
+            imagePath: ImageConstant.imgArtRoad,
           ),
         ],
       ),
