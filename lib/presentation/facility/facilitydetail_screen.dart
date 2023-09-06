@@ -24,24 +24,6 @@ class FacilityDetailScreen extends StatefulWidget {
 }
 
 class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
-  // FacilityDetail facility = FacilityDetail(
-  //     mt10id: 'FC223076',
-  //     fcltynm: '예술의 전당 오페라 극장',
-  //     telno: '1668-1352',
-  //     relateurl: 'https://www.ksponco.or.kr/olympicpark/',
-  //     adres: '서울 서초구 남부순환로 2406',
-  //     la: '123',
-  //     lo: '123' );
-
-  // FacilityDetail facility = FacilityDetail(
-  //     mt10id: null,
-  //     fcltynm: null,
-  //     telno: null,
-  //     relateurl: null,
-  //     adres: null,
-  //     la: '123',
-  //     lo: '123' );
-
   bool isRestaurantSelected = true;
   bool isAccommodationSelected = false;
 
@@ -344,7 +326,7 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                                         ],
                                       ),
                                       if (isRestaurantSelected)
-                                        const RestaurantListView(),
+                                        RestaurantListView(facilityDetailList[0].la, facilityDetailList[0].lo),
                                       if (isAccommodationSelected)
                                         const AccommodationListView(),
                                     ],

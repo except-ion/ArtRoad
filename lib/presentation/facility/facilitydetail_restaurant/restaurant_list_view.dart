@@ -6,7 +6,14 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class RestaurantListView extends StatefulWidget {
-  const RestaurantListView({super.key});
+  String? la;
+  String? lo;
+  
+  RestaurantListView(
+    this.la,
+    this.lo, 
+    {super.key}
+    );
 
   @override
   _RestaurantListViewState createState() => _RestaurantListViewState();
@@ -22,8 +29,8 @@ class _RestaurantListViewState extends State<RestaurantListView> {
   }
 
   Future<void> fetchRestaurantData() async {
-    String lng="127.05902969025047";
-    String lat="37.51207412593136";
+    String lng= widget.lo ?? '';
+    String lat = widget.la ?? '';
 
     final String url = 
       "https://dapi.kakao.com/v2/local/search/category.json?category_group_code=FD6&x=$lng&y=$lat";
