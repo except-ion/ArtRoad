@@ -1,4 +1,3 @@
-// --- 날짜 선택 관련 함수 ---
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -6,7 +5,7 @@ import '../../../core/utils/size_utils.dart';
 import '../../../theme/theme_helper.dart';
 import '../calendar_day_info.dart';
 import '../max_num_of_weeks.dart';
-import 'mcalendar_bottom/mcalendar_dialog.dart';
+import 'mcalendar_bottom/mcalendar_schedule_add.dart';
 import 'mcalendar_bottom/mcalendar_list_view.dart';
 
 typedef OnDaySelected = void Function(
@@ -128,18 +127,22 @@ class _TableCalendarScreenState extends State<mTableCalendarScreen> {
               ),
 
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  if (isFiveWeeks)
-                    Padding(
+                  // if (isFiveWeeks)
+                  //   Padding(
+                  //     padding: getPadding(top: 100, left: 20),
+                  //     child: CalendarDayInfo(selectedDay: selectedDay),
+                  //   ),
+                  // if (!isFiveWeeks)
+                  //   Padding(
+                  //     padding: getPadding(top: 0, left: 20),
+                  //     child: CalendarDayInfo(selectedDay: selectedDay),
+                  //   ),
+                  Padding(
                       padding: getPadding(top: 100, left: 20),
-                      child: CalendarDayInfo(selectedDay: selectedDay),
-                    ),
-                  if (!isFiveWeeks)
-                    Padding(
-                      padding: getPadding(top: 0, left: 20),
-                      child: CalendarDayInfo(selectedDay: selectedDay),
-                    ),
+                    child: CalendarDayInfo(selectedDay: selectedDay),
+                  ),
                 ],
               ),
 
@@ -150,7 +153,7 @@ class _TableCalendarScreenState extends State<mTableCalendarScreen> {
         Positioned(
           top: 360,
           left: 336,
-            child: mCalendarDialog(selectedDay: selectedDay),
+            child: mCalendarScheduleAdd(selectedDay: selectedDay),
         ),
       ],
     );
