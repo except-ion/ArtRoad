@@ -19,12 +19,12 @@ class InquiryItemsTile extends StatelessWidget {
         ),
       ),
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: CustomImageView(
-            imagePath: _InquiryItems.imgPath,
-          ),
-        ),
+        (_InquiryItems.content is String) ?
+        CustomImageView(
+          imagePath: _InquiryItems.content,
+        )
+            :
+        _InquiryItems.content,
       ],
     );
   }

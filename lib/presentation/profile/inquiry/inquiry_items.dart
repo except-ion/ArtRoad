@@ -1,6 +1,6 @@
 class InquiryItems {
   String title;
-  String imgPath;
+  dynamic content;
 
-  InquiryItems(this.title, this.imgPath);
+  InquiryItems(this.title, {this.content});
 }
