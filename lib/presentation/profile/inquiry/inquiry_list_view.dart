@@ -14,11 +14,11 @@ class InquiryListView extends StatefulWidget {
 
 class _InquiryListView extends State<InquiryListView> {
   final List<InquiryItems> inquiryList = [
-    InquiryItems("Inquiry Test 1", ImageConstant.imgAnnounce1),
-    InquiryItems("Inquiry Test 2", ImageConstant.imgAnnounce1),
-    InquiryItems("Inquiry Test 3", ImageConstant.imgAnnounce1),
-    InquiryItems("Inquiry Test 4", ImageConstant.imgAnnounce1),
-    InquiryItems("Inquiry Test 5", ImageConstant.imgAnnounce1),
+    InquiryItems("Inquiry Test 1", ImageConstant.imgAnnounceEx),
+    InquiryItems("Inquiry Test 2", ImageConstant.imgAnnounceEx),
+    InquiryItems("Inquiry Test 3", ImageConstant.imgAnnounceEx),
+    InquiryItems("Inquiry Test 4", ImageConstant.imgAnnounceEx),
+    InquiryItems("Inquiry Test 5", ImageConstant.imgAnnounceEx),
   ];
 
   // 고객센터 Dialog
