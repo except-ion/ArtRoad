@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../widgets/check_validate.dart';
 import 'package:artroad/presentation/services/firebase_auth_services.dart';
@@ -84,7 +85,13 @@ class _SignupScreenState extends State<SignupScreen> {
         signUpWithFirebase(
             nameField.text, emailField.text, pwField.text, pwcheckField.text);
       } else {
-        print('개별동의 체크박스를 모두 선택해야 합니다.');
+        Fluttertoast.showToast(
+            msg: "모든 약관에 동의해야 합니다.",
+            toastLength: Toast.LENGTH_SHORT,
+            timeInSecForIosWeb: 1,
+            backgroundColor: const Color(0x5F5E5E5E),
+            textColor: Colors.white,
+            fontSize: 16.0);
       }
     }
   }
