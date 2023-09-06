@@ -47,10 +47,12 @@ class _CustomHeaderState extends State<CustomHeader> {
                   child: Transform.scale(
                     scale: 1.5,
                     child: IconButton(
-                      icon: Icon(
-                        Icons.arrow_back_rounded,
-                        color:
-                            widget.isDetail ? Colors.white : Color(0xFF00233D),
+                      icon: FittedBox( // 아이콘에 FittedBox 적용
+                        fit: BoxFit.contain,
+                        child: Icon(
+                          Icons.arrow_back_rounded,
+                          color: widget.isDetail ? Colors.white : Color(0xFF00233D),
+                        ),
                       ),
                       onPressed: () {
                         Navigator.pop(context);
@@ -63,13 +65,16 @@ class _CustomHeaderState extends State<CustomHeader> {
                     top: 14,
                     child: Align(
                       alignment: Alignment.topCenter,
-                      child: Text(
-                        widget.name!,
-                        style: TextStyle(
-                          color: widget.isDetail ? Colors.white : Colors.black,
-                          fontSize: 21,
+                      child: FittedBox( // 텍스트에 FittedBox 적용
+                        fit: BoxFit.fitHeight,
+                        child: Text(
+                          widget.name!,
+                          style: TextStyle(
+                            color: widget.isDetail ? Colors.white : Colors.black,
+                            fontSize: 21,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
                       ),
                     ),
                   ),
@@ -80,19 +85,20 @@ class _CustomHeaderState extends State<CustomHeader> {
                     child: Transform.scale(
                       scale: 1.5,
                       child: IconButton(
-                        icon: isLiked
-                            ? Icon(
-                                //좋아요 클릭 전
-                                Icons.favorite_border,
-                                color: widget.isDetail
-                                    ? Colors.white
-                                    : Color(0xFF00233D),
-                              )
-                            : Icon(
-                                //좋아요 클릭 후
-                                Icons.favorite,
-                                color: Colors.red,
-                              ),
+                        icon: FittedBox( // 아이콘에 FittedBox 적용
+                          fit: BoxFit.contain,
+                          child: isLiked
+                              ? Icon(
+                                  //좋아요 클릭 전
+                                  Icons.favorite_border,
+                                  color: widget.isDetail ? Colors.white : Color(0xFF00233D),
+                                )
+                              : Icon(
+                                  //좋아요 클릭 후
+                                  Icons.favorite,
+                                  color: Colors.red,
+                                ),
+                        ),
                         onPressed: toggleLiked,
                       ),
                     ),

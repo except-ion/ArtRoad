@@ -17,6 +17,9 @@ dependencies:
   webview_flutter: ^3.0.0
   syncfusion_flutter_pdfviewer: ^20.4.52
   url_launcher: ^6.0.0
+  flutter_screenutil: ^5.9.0
+  auto_size_text_field: ^2.2.1
+  auto_size_text: ^3.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
