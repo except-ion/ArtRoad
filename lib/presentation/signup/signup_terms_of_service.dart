@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class SignupTermsOfService extends StatefulWidget {
   const SignupTermsOfService({Key? key});
@@ -9,7 +10,7 @@ class SignupTermsOfService extends StatefulWidget {
 
 class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
   bool allAgreementsChecked = false;
-  List<bool> individualAgreementsChecked = [false, false, false, false];
+  List<bool> individualAgreementsChecked = [false, false, false];
 
   //모두 동의
   void toggleAllAgreements(bool? value) {
@@ -100,7 +101,7 @@ class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
                   Text(
-                    '(필수) 이용약관 동의',
+                    '서비스 이용약관',
                     style: TextStyle(
                       fontSize: 16,
                     ),
@@ -109,13 +110,28 @@ class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
               ),
               TextButton(
                 onPressed: () {
-                  // Add your action here
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        content: SizedBox(
+                          height: 400, // PDF 뷰어의 높이를 조절할 수 있습니다.
+                          child: SfPdfViewer.asset(
+                            'assets/docs/서비스이용약관.pdf', // PDF 파일 경로
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text('닫기'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
                 },
-                style: TextButton.styleFrom(
-                  textStyle: TextStyle(
-                      decoration: TextDecoration.underline,
-                      decorationThickness: 4),
-                ),
                 child: Text(
                   '자세히',
                   textAlign: TextAlign.end,
@@ -138,7 +154,7 @@ class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
                   Text(
-                    '(필수) 이용약관 동의',
+                    '개인정보 수집 및 이용',
                     style: TextStyle(
                       fontSize: 16,
                     ),
@@ -147,35 +163,34 @@ class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
               ),
               TextButton(
                 onPressed: () {
-                  // Add your action here
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        content: SizedBox(
+                          height: 400, // PDF 뷰어의 높이를 조절할 수 있습니다.
+                          child: SfPdfViewer.asset(
+                            'assets/docs/서비스이용약관.pdf', // PDF 파일 경로
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text('닫기'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
                 },
-                style: TextButton.styleFrom(
-                  textStyle: TextStyle(
-                      decoration: TextDecoration.underline,
-                      decorationThickness: 4),
-                ),
                 child: Text(
                   '자세히',
                   textAlign: TextAlign.end,
                   style: TextStyle(
                     color: Color(0xFF00233D),
                   ),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Checkbox(
-                value: individualAgreementsChecked[3],
-                onChanged: (value) => toggleIndividualAgreement(3, value),
-                activeColor: Color(0xFF00233D),
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ),
-              Text(
-                '(선택) 광고성 정보 수신 동의',
-                style: TextStyle(
-                  fontSize: 16,
                 ),
               ),
             ],
