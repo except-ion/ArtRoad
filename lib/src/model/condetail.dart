@@ -34,7 +34,7 @@ class ConcertDetail {
       prfage: json["prfage"] as String?,
       genrenm: json["genrenm"] as String?,
       fcltynm: json["fcltynm"] as String?,
-      styurls: (json["styurls"] as Map<String, dynamic>)  ['styurl'] as String?,
+      styurls: (json["styurls"] as Map<String, dynamic>)  ['styurl'] as String,
     );
   }
 }

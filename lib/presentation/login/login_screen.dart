@@ -34,6 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   //firebase login
   void signInWithFirebase(String email, String pw) async {
+    print('email: $email, pw:$pw');
     final user = await _firebaseAuthService.signInWithFirebase(email, pw);
     if (user != null) {
       final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -140,8 +141,8 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     timer = Timer.periodic(const Duration(seconds: 5), _changeBackground);
-    emailField.text = "dyj09087@gmail.com";
-    pwField.text = "r3OeR0UDal";
+    emailField.text = "judyzero11@gmail.com";
+    pwField.text = "Qwerqwer1!";
   }
 
   @override
@@ -287,10 +288,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                   onPressed: () {
                                     if (_formKey.currentState!.validate()) {
                                       // validation 이 성공하면 폼 저장하기
+                                      signInWithFirebase(emailField.text, pwField.text);
                                       _formKey.currentState!.save();
                                       print('로그인 성공');
                                       Navigator.pop(context); // 다이얼로그 닫기
                                       //로그인 로직 추가
+
                                       // 로그인 성공 후 페이지 이동
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
@@ -305,13 +308,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 const SizedBox(height: 25),
                                 TextButton(
                                   onPressed: () {
+
                                     if (_formKey.currentState!.validate()) {
                                       // validation 이 성공하면 폼 저장하기
+                                      signInWithFirebase(emailField.text, pwField.text);
                                       _formKey.currentState!.save();
                                       print('로그인 성공');
                                       Navigator.pop(context); // 다이얼로그 닫기
-                                      //로그인 로직 추가
-                                      // 로그인 성공 후 페이지 이동
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                           builder: (context) =>
