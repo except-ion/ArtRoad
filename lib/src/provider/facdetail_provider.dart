@@ -9,8 +9,8 @@ class FacilityDetailProvider extends ChangeNotifier {
   List<FacilityDetail> get facilityDetails => _facilityDetails;
 
   // 데이터 로드
-  loadFacilityDetails() async {
-    List<FacilityDetail>? listFacilityDetails = await _facilityDetailRepository.loadFacilityDetails();
+  loadFacilityDetails(String facilityID) async {
+    List<FacilityDetail>? listFacilityDetails = await _facilityDetailRepository.loadFacilityDetails(facilityID);
     _facilityDetails = listFacilityDetails!;
     notifyListeners();
   }

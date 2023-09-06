@@ -92,7 +92,12 @@ class _ConcertDetailScreenState extends State<ConcertDetailScreen> {
                                         type: '공연장',
                                         content: '${concertDetailList[0].fcltynm}',
                                         onPressed: () {
-                                          // 눌렀을 때 처리할 내용 작성
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => FacilityDetailScreen(concertDetailList[0].mt10id ?? ''),
+                                            ),
+                                          );
                                         },
                                       ),
                                       const SizedBox(height: 20),

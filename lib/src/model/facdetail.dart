@@ -20,7 +20,7 @@ class FacilityDetail {
   factory FacilityDetail.fromJson(Map<String, dynamic> json) {
     return FacilityDetail(
       mt10id: json["mt10id"] as String,
-      fcltynm: json["fcltynm"] as String,
+      fcltynm: json["fcltynm"] as String ?? '',
       telno: json["telno"] as String,
       relateurl: json["relateurl"] as String,
       adres: json["adres"] as String,

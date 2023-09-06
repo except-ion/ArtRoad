@@ -1,6 +1,8 @@
+import 'package:artroad/src/provider/facdetail_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 import '../../widgets/custom_header.dart';
 import 'facilitydetail_accommodation/accommodation_list_view.dart';
@@ -8,7 +10,12 @@ import 'facilitydetail_info_icons.dart';
 import 'facilitydetail_restaurant/restaurant_list_view.dart';
 
 class FacilityDetailScreen extends StatefulWidget {
-  const FacilityDetailScreen({Key? key}) : super(key: key);
+  String facilityID;
+
+  FacilityDetailScreen(
+    this.facilityID, 
+    {Key? key}
+    ) : super(key: key);
 
   @override
   _FacilityDetailScreenState createState() => _FacilityDetailScreenState();
@@ -19,6 +26,13 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
   bool isAccommodationSelected = false;
 
   @override
+  void initState() {
+    super.initState();
+    final facilityDetailProvider = Provider.of<FacilityDetailProvider>(context, listen: false);
+    facilityDetailProvider.loadFacilityDetails(widget.facilityID);
+  }
+  
+  @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
@@ -27,7 +41,16 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
         backgroundColor: const Color(0xFF00233D),
         body: Stack(
           children: [
-            Column(
+            Consumer<FacilityDetailProvider>(
+              builder: (context, facilityDetailProvider, child) {
+                final facilityDetailList = facilityDetailProvider.facilityDetails;
+
+                if (facilityDetailList.isEmpty) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+            
+            
+            return Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Expanded(
@@ -57,9 +80,9 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                                         size: 20,
                                       ),
                                       const SizedBox(width: 5),
-                                      const Text(
-                                        '서울 서초구 남부순환로 2406',
-                                        style: TextStyle(
+                                      Text(
+                                        facilityDetailList[0].fcltynm.toString(),
+                                        style: const TextStyle(
                                           fontSize: 16,
                                           color: Color(0xFF939191),
                                         ),
@@ -68,7 +91,7 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                                       InkWell(
                                         onTap: () {
                                           // 텍스트 복사 로직 구현
-                                          Clipboard.setData(const ClipboardData(text: '서울 서초구 남부순환로 2406'));
+                                          Clipboard.setData(const ClipboardData(text: '공연장 이름 복사'));
                                           Fluttertoast.showToast(
                                             msg: '주소가 복사되었습니다.',
                                             toastLength: Toast.LENGTH_SHORT,
@@ -95,9 +118,9 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                                         size: 20,
                                       ),
                                       const SizedBox(width: 5),
-                                      const Text(
-                                        '1668-1352',
-                                        style: TextStyle(
+                                      Text(
+                                        facilityDetailList[0].telno.toString(),
+                                        style: const TextStyle(
                                           fontSize: 16,
                                           color: Color(0xFF939191),
                                         ),
@@ -125,17 +148,17 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                                     ],
                                   ),
                                   const SizedBox(height: 7),
-                                  const Row(
+                                  Row(
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Icons.link_rounded,
                                         color: Color(0xFF939191),
                                         size: 20,
                                       ),
-                                      SizedBox(width: 5),
+                                      const SizedBox(width: 5),
                                       Text(
-                                        '사이트 링크 없음',
-                                        style: TextStyle(
+                                        facilityDetailList[0].relateurl.toString(),
+                                        style: const TextStyle(
                                           fontSize: 16,
                                           color: Color(0xFF939191),
                                         ),
@@ -279,9 +302,9 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                         ),
                         Transform.translate(
                           offset: const Offset(30, 180),
-                          child: const Text(
-                            '예술의 전당 오페라 극장',
-                            style: TextStyle(
+                          child: Text(
+                            facilityDetailList[0].fcltynm.toString(),
+                            style: const TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.w700,
                               color: Colors.white,
@@ -293,6 +316,8 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                   ),
                 ),
               ],
+            );
+              },
             ),
             const CustomHeader(
               isDetail: true,

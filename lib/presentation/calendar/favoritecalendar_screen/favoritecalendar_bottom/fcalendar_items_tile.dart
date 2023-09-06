@@ -78,7 +78,7 @@ class fCalendarItemsTile extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const FacilityDetailScreen(),
+                          builder: (context) => FacilityDetailScreen('FC001431'),
                         ),
                       );
                       print('Move to facility detail page');

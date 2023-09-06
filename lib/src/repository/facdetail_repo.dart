@@ -6,11 +6,10 @@ import 'package:xml2json/xml2json.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class FacilityDetailRepository {
-  Future<List<FacilityDetail>?> loadFacilityDetails() async {
+  Future<List<FacilityDetail>?> loadFacilityDetails(String facilityID) async {
 
     await dotenv.load();
     String apiKey = dotenv.env['API_KEY']!;
-    String facilityID = "FC001247";
     String baseUrl = 
       "http://www.kopis.or.kr/openApi/restful/prfplc/$facilityID?service=$apiKey";
     final response = await http.get(Uri.parse(baseUrl));
