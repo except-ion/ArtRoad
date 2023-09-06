@@ -1,3 +1,4 @@
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:artroad/core/app_export.dart';
 import 'package:artroad/widgets/custom_header.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,7 +11,6 @@ class MyInfo extends StatefulWidget {
 }
 
 class _MyInfo extends State<MyInfo> {
-  bool _socialLogin = false; // 소셜 로그인 정보
   bool condition1 = false; // 약관 동의
   bool condition2 = false; // 이메일 일치
 
@@ -285,6 +285,20 @@ class _MyInfo extends State<MyInfo> {
     );
   }
 
+  void openNotificationSettings() {
+    final intent = AndroidIntent(
+      action: 'android.settings.APP_NOTIFICATION_SETTINGS',
+    );
+    intent.launch();
+  }
+
+  void openLocationSourceSettings() {
+    final intent = AndroidIntent(
+      action: 'android.settings.LOCATION_SOURCE_SETTINGS',
+    );
+    intent.launch();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -299,7 +313,7 @@ class _MyInfo extends State<MyInfo> {
               children: [
                 Container(
                   color: Colors.white,
-                  height: 286,
+                  height: 225,
                   child: Padding(
                     padding: getPadding(left: 20, right: 20),
                     child: Column(
@@ -340,21 +354,21 @@ class _MyInfo extends State<MyInfo> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "소셜로그인 연동",
+                                "알림 권한 설정",
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              CupertinoSwitch(
-                                value: _socialLogin,
-                                activeColor: Colors.green,
-                                onChanged: (bool? value) {
-                                  setState(() {
-                                    //--- 소셜 로그인 연동 부분 ---
-                                    _socialLogin = value ?? false;
-                                  });
+                              InkWell(
+                                onTap: () {
+                                  openNotificationSettings();
                                 },
+                                child: Icon(
+                                  Icons.keyboard_arrow_right_rounded,
+                                  color: Color(0xFF939191),
+                                  size: 30,
+                                ),
                               ),
                             ],
                           ),
@@ -362,53 +376,27 @@ class _MyInfo extends State<MyInfo> {
                         Divider(),
                         Container(
                           height: 41,
-                          child: InkWell(
-                            onTap: () {
-                              //--- 알림 권한 요청 구현부 ---
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "알림 권한 설정",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "위치 권한 설정",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
                                 ),
-                                Icon(
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  openLocationSourceSettings();
+                                },
+                                child: Icon(
                                   Icons.keyboard_arrow_right_rounded,
                                   color: Color(0xFF939191),
                                   size: 30,
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Divider(),
-                        Container(
-                          height: 41,
-                          child: InkWell(
-                            onTap: () {
-                              //--- 위치 권한 요청 구현부 ---
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "위치 권한 설정",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                Icon(
-                                  Icons.keyboard_arrow_right_rounded,
-                                  color: Color(0xFF939191),
-                                  size: 30,
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
