@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
 import '../../src/model/ranking.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class RankingTile extends StatefulWidget {
   RankingTile(this._Ranking);
@@ -12,7 +12,7 @@ class RankingTile extends StatefulWidget {
 }
 
 class _RankingTileState extends State<RankingTile> {
-  bool _imageLoading = false; //network로 수정할 때 true로 바꾸기
+  bool _imageLoading = false; // network로 수정할 때 true로 바꾸기
 
   void _updateImageLoading(bool isLoading) {
     if (_imageLoading != isLoading) {
@@ -54,13 +54,14 @@ class _RankingTileState extends State<RankingTile> {
                           size: 38,
                           color: Colors.grey[600],
                         ),
-                        Text(
+                        AutoSizeText(
                           'No Image',
                           style: TextStyle(
                             fontSize: 15,
                             color: Colors.grey[600],
                             fontWeight: FontWeight.bold,
                           ),
+                          maxLines: 1,
                         ),
                       ],
                     ),
