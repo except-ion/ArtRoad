@@ -1,8 +1,6 @@
 import 'package:artroad/src/model/concert.dart';
 import 'package:flutter/material.dart';
 
-import '../../src/model/condetail.dart';
-
 class SearchItemsTile extends StatefulWidget {
   const SearchItemsTile(this.item, {super.key});
 

@@ -39,7 +39,6 @@ class ConcertRepository {
       // 필요한 데이터 찾기
       Map<String, dynamic> jsonResult = convert.json.decode(json);
       final jsonConcert = jsonResult['dbs']['db'];
-      print('jsonConcert: $jsonConcert');
       // 필요한 데이터 그룹이 있다면
       if (jsonConcert != null) {
         List<dynamic> items = jsonConcert as List;

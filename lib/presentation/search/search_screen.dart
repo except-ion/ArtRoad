@@ -1,11 +1,10 @@
 import 'package:artroad/src/model/concert.dart';
+import 'package:artroad/src/model/facility.dart';
 import 'package:artroad/src/provider/search/concert_provider.dart';
-import 'package:artroad/src/provider/user_provider.dart';
+import 'package:artroad/src/provider/search/facility_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import '../../src/model/condetail.dart';
-import '../../src/model/facdetail.dart';
 import '../../theme/theme_helper.dart';
 import 'search_items_tile.dart';
 
@@ -21,7 +20,7 @@ class _SearchScreenState extends State<SearchScreen> {
   String selectedCategory = '공연';
 
   List<Concert> filteredPrfItems = []; //검색결과 리스트 - 공연
-  List<FacilityDetail> filteredFcltItems = []; //검색결과 리스트 - 공연장
+  List<Facility> filteredFcltItems = []; //검색결과 리스트 - 공연장
 
   void filterItems(String query) {
     // 검색 필터링
@@ -44,17 +43,16 @@ class _SearchScreenState extends State<SearchScreen> {
           setState(() {
             filteredPrfItems = concerts;
             _buildSearchResults();
-            print('setState filteredPrfItems: $filteredPrfItems');
           });
-          // concertList
-          //     .where((item) =>
-          //         item.prfnm!.toLowerCase().contains(query.toLowerCase()))
-          //     .toList();
+
         } else if (selectedCategory == '공연장') {
-          // filteredFcltItems = facilityList
-          //     .where((item) =>
-          //         item.fcltynm!.toLowerCase().contains(query.toLowerCase()))
-          //     .toList();
+          final facilityProvider = Provider.of<FacilityProvider>(context, listen: false);
+          final facilities = await facilityProvider.loadFacilities(searchTerm);
+          setState(() {
+            filteredFcltItems = facilities;
+            _buildSearchResults();
+            print('setState filteredFcltItems: $filteredFcltItems');
+          });
         }
       }
     });
@@ -149,12 +147,10 @@ class _SearchScreenState extends State<SearchScreen> {
     if (selectedCategory == '공연' &&
         filteredPrfItems.isEmpty &&
         searchController.text.isNotEmpty) {
-          print('concert result no');
       return const Center(child: Text('검색결과가 없습니다.'));
     } else if (selectedCategory == '공연장' &&
         filteredFcltItems.isEmpty &&
         searchController.text.isNotEmpty) {
-        print('facility result no');
       return const Center(child: Text('검색결과가 없습니다.'));
     }
 
