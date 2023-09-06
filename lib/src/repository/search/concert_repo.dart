@@ -10,20 +10,21 @@ import 'package:intl/intl.dart';
 class ConcertRepository {
 
   Future<List<Concert>?> loadConcerts(String searchTerm) async {
-  await dotenv.load();
-  String apiKey = dotenv.env['API_KEY']!;
+    await dotenv.load();
+    String apiKey = dotenv.env['API_KEY']!;
+    String encodedSearchTerm = Uri.encodeQueryComponent(searchTerm);
+    DateTime now = DateTime.now();
+    DateTime sixMonthsAgo = now.subtract(const Duration(days: 6 * 30));
+    
+    String formattedDate = DateFormat('yyyyMMdd').format(now);
+    String formattedSixMonthsAgo = DateFormat('yyyyMMdd').format(sixMonthsAgo);
 
-  DateTime now = DateTime.now();
-  DateTime sixMonthsAgo = now.subtract(const Duration(days: 6 * 30));
-  
-  String formattedDate = DateFormat('yyyyMMdd').format(now);
-  String formattedSixMonthsAgo = DateFormat('yyyyMMdd').format(sixMonthsAgo);
+    var startDate = formattedSixMonthsAgo;
+    var endDate = formattedDate;
 
-  var startDate = formattedSixMonthsAgo;
-  var endDate = formattedDate;
-
+    List<Concert> concerts = [];
     String baseUrl =
-        "http://www.kopis.or.kr/openApi/restful/pblprfr?service=$apiKey&stdate=$startDate&eddate=$endDate&rows=500&cpage=1&shprfnm=$searchTerm";
+        "http://www.kopis.or.kr/openApi/restful/pblprfr?service=$apiKey&stdate=$startDate&eddate=$endDate&rows=500&cpage=1&shprfnm=$encodedSearchTerm";
     final response = await http.get(Uri.parse(baseUrl));
 
     // 정상적으로 데이터를 불러왔다면
@@ -38,13 +39,16 @@ class ConcertRepository {
       // 필요한 데이터 찾기
       Map<String, dynamic> jsonResult = convert.json.decode(json);
       final jsonConcert = jsonResult['dbs']['db'];
+      print('jsonConcert: $jsonConcert');
       // 필요한 데이터 그룹이 있다면
       if (jsonConcert != null) {
-        // map을 통해 Ev형태로 item을  => Ev.fromJson으로 전달
-        return jsonConcert.map<Concert>((item) => Concert.fromJson(item)).toList();
+        List<dynamic> items = jsonConcert as List;
+        int itemCount = items.length ;
+          concerts.addAll(items.sublist(0, itemCount).map<Concert>((item) => Concert.fromJson(item)));
+      } else {
+        print(response);
       }
-    } else{
-      print(response);
+      return concerts;
     }
     return null;
   }

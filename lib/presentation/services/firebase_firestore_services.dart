@@ -158,7 +158,6 @@ class FirebaseStoreService{
     String userId,
     DateTime selectedDate
     ) async {
-      print('selectedDate in getUserLIkedConcert: $selectedDate');
     
     List<fCalendarItems> favorites = [];
       try {
