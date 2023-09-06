@@ -95,7 +95,7 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay, String? user
                                   //창 닫기
                                   titleField.text = '';
                                   linkField.text = '';
-                                  textEditingController.text = ''; // 텍스트 필드 초기화
+                                  // textEditingController.text = ''; // 텍스트 필드 초기화
                                   Navigator.pop(context);
                                 },
                                 child: const Align(
@@ -113,19 +113,27 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay, String? user
                                 onTap: () async {
                                   //일정 추가하기
                                   bool isSuccess = await firebaseStoreService.addSchedule(userId!, titleField.text, selectedDay, selectedAlarm, colorValue, linkField.text);
-                                  
-                                  textEditingController.text = ''; // 텍스트 필드 초기화
-                                  Navigator.pop(context);
-                                  Fluttertoast.showToast(
-                                    msg: '일정이 추가되었습니다.',
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    backgroundColor: Colors.grey,
-                                    textColor: Colors.white,
-                                    fontSize: 16.0,
-                                  );
-                                  // --- 일정 추가 로직 구현 ---
-                                  
-
+                                  if(isSuccess){
+                                    titleField.text = '';
+                                    linkField.text = '';
+                                    textEditingController.text = '';
+                                    Navigator.pop(context);
+                                    Fluttertoast.showToast(
+                                      msg: '일정이 추가되었습니다.',
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      backgroundColor: Colors.grey,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0,
+                                    );
+                                  } else {
+                                    Fluttertoast.showToast(
+                                      msg: '일정 추가 실패',
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      backgroundColor: Colors.grey,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0,
+                                    );
+                                  }
                                 },
                                 child: const Align(
                                   alignment: Alignment.topRight,
