@@ -12,9 +12,9 @@ class Facility {
 
   factory Facility.fromJson(Map<String, dynamic> json) {
     return Facility(
-      mt10id: json["mt10id"] as String,
-      fcltynm: json["fcltynm"] as String,
-      adres: json["adres"] as String,
+      mt10id: json["mt10id"] as String? ?? '',
+      fcltynm: json["fcltynm"] as String? ?? '',
+      adres: json["adres"] as String? ?? '',
     );
   }
 }

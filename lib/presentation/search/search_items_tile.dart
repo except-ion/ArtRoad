@@ -1,3 +1,5 @@
+import 'package:artroad/presentation/concert/concertdetail_screen.dart';
+import 'package:artroad/presentation/facility/facilitydetail_screen.dart';
 import 'package:artroad/src/model/concert.dart';
 import 'package:flutter/material.dart';
 
@@ -24,9 +26,22 @@ class _SearchItemsTileState extends State<SearchItemsTile> {
 
   @override
   Widget build(BuildContext context) {
-    print('serach items tile');
     return Padding(
       padding: const EdgeInsets.all(8.0),
+      child: InkWell(
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) {
+                if(widget.item is Concert){
+                  return ConcertDetailScreen(widget.item.mt20id, widget.item.prfnm);
+                } else {
+                  return FacilityDetailScreen(widget.item.mt10id ?? '');
+                }
+              },
+            ),
+          );
+        },
       child: Container(
         width: 364,
         height: 80,
@@ -132,6 +147,7 @@ class _SearchItemsTileState extends State<SearchItemsTile> {
           ),
         ),
       ),
+    )
     );
   }
 }
