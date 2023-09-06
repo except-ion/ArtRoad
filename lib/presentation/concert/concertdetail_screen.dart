@@ -1,6 +1,7 @@
 import 'package:artroad/widgets/custom_detail_text.dart';
 import 'package:artroad/widgets/custom_header.dart';
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 import '../../src/model/condetail.dart';
 import '../facility/facilitydetail_screen.dart';
@@ -24,6 +25,7 @@ class _ConcertDetailScreenState extends State<ConcertDetailScreen> {
       genrenm: '뮤지컬',
       fcltynm: '예술의 전당 오페라 극장',
       styurls: 'assets/images/concert_example.jpg');
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -49,9 +51,10 @@ class _ConcertDetailScreenState extends State<ConcertDetailScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
+                                  AutoSizeText(
                                     concert.prfnm ?? '제공된 정보가 없습니다.',
                                     style: TextStyle(fontSize: 30),
+                                    maxLines: 2,
                                   ),
                                   SizedBox(
                                     height: 30,
@@ -102,20 +105,25 @@ class _ConcertDetailScreenState extends State<ConcertDetailScreen> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
-                                        Text(
+                                        AutoSizeText(
                                           '상세 정보',
                                           style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 16,
                                             fontWeight: FontWeight.w500,
                                           ),
+                                          maxLines: 1,
                                         ),
                                         Padding(
-                                          padding: EdgeInsets.only(top: 40,bottom: 40),
+                                          padding: EdgeInsets.only(
+                                              top: 40, bottom: 40),
                                           child: concert.styurls == null
                                               ? Image.asset(
                                                   '${concert.styurls}')
-                                              : Text('제공된 정보가 없습니다.'),
+                                              : AutoSizeText(
+                                                  '제공된 정보가 없습니다.',
+                                                  maxLines: 1,
+                                                ),
                                         )
                                       ],
                                     ),
@@ -147,13 +155,14 @@ class _ConcertDetailScreenState extends State<ConcertDetailScreen> {
                                           size: 50,
                                           color: Colors.grey[600],
                                         ),
-                                        Text(
+                                        AutoSizeText(
                                           'No Image',
                                           style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.grey[600],
                                             fontWeight: FontWeight.bold,
                                           ),
+                                          maxLines: 1,
                                         ),
                                       ],
                                     ),

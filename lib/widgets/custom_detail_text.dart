@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class CustomDetailText extends StatelessWidget {
   final String type;
@@ -21,12 +22,15 @@ class CustomDetailText extends StatelessWidget {
         child: Stack(
           clipBehavior: Clip.none,
           children: [
-            Text(
-              type,
-              style: TextStyle(
-                color: Color(0xFF939191),
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                type,
+                style: TextStyle(
+                  color: Color(0xFF939191),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
             Positioned(
@@ -35,14 +39,18 @@ class CustomDetailText extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '$content',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: AutoSizeText(
+                      '$content',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      overflow: TextOverflow.clip, // 텍스트 넘침 처리
+                      maxLines: 1, // 최대 줄 수
                     ),
-                    overflow: TextOverflow.clip, // 텍스트 넘침 처리
                   ),
                   if (onPressed != null)
                     InkWell(
@@ -52,12 +60,15 @@ class CustomDetailText extends StatelessWidget {
                           SizedBox(
                             width: 7,
                           ),
-                          const Text(
-                            '더보기',
-                            style: TextStyle(
-                              color: Color(0xFF176EF2),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              '더보기',
+                              style: TextStyle(
+                                color: Color(0xFF176EF2),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
                           Icon(
