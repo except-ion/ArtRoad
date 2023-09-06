@@ -5,28 +5,31 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../../../../core/utils/size_utils.dart';
 
 void showScheduleDialog(BuildContext context, DateTime selectedDay) {
-  final TextEditingController _textEditingController = TextEditingController();
+  final TextEditingController textEditingController = TextEditingController();
 
-  BuildContext? _mainDialogContext;
-  BuildContext? _nestedDialogContext;
+  BuildContext? mainDialogContext;
+  BuildContext? nestedDialogContext;
 
   void _closeAllDialogs() {
-    if (_nestedDialogContext != null) {
-      Navigator.pop(_nestedDialogContext!); // 중첩 다이얼로그 닫기
-      _nestedDialogContext = null;
+    if (nestedDialogContext != null) {
+      Navigator.pop(nestedDialogContext!); // 중첩 다이얼로그 닫기
+      nestedDialogContext = null;
     }
 
-    if (_mainDialogContext != null) {
-      Navigator.pop(_mainDialogContext!); // 메인 다이얼로그 닫기
-      _mainDialogContext = null;
+    if (mainDialogContext != null) {
+      Navigator.pop(mainDialogContext!); // 메인 다이얼로그 닫기
+      mainDialogContext = null;
     }
   }
 
   String _getDayOfWeek(DateTime date) {
     final List<String> daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
 
-    if (date.weekday == 7 ) return daysOfWeek[0]; // 일요일의 경우 0 인덱스를 사용
-    else return daysOfWeek[date.weekday];
+    if (date.weekday == 7 ) {
+      return daysOfWeek[0]; // 일요일의 경우 0 인덱스를 사용
+    } else {
+      return daysOfWeek[date.weekday];
+    }
   }
 
   showModalBottomSheet<void>(
@@ -55,7 +58,7 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
         Colors.orange,
         Colors.yellow,
         Colors.green,
-        Color(0xFF176FF2),
+        const Color(0xFF176FF2),
         Colors.purple,
         Colors.pink,
       ];
@@ -64,7 +67,7 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
       print(MediaQuery.of(context).viewInsets.bottom);
       return StatefulBuilder(
         builder: (BuildContext context, StateSetter bottomState) {
-          _mainDialogContext = context; // 메인 다이얼로그의 BuildContext 저장
+          mainDialogContext = context; // 메인 다이얼로그의 BuildContext 저장
           return SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.only(
@@ -84,10 +87,10 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                             Expanded(
                               child: InkWell(
                                 onTap: () {
-                                  _textEditingController.text = ''; // 텍스트 필드 초기화
+                                  textEditingController.text = ''; // 텍스트 필드 초기화
                                   Navigator.pop(context);
                                 },
-                                child: Align(
+                                child: const Align(
                                   alignment: Alignment.topLeft,
                                   child: Icon(
                                     Icons.close_rounded,
@@ -100,7 +103,7 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                             Expanded(
                               child: InkWell(
                                 onTap: () {
-                                  _textEditingController.text = ''; // 텍스트 필드 초기화
+                                  textEditingController.text = ''; // 텍스트 필드 초기화
                                   Navigator.pop(context);
                                   Fluttertoast.showToast(
                                     msg: '일정이 추가되었습니다.',
@@ -112,7 +115,7 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                                   // --- 일정 추가 로직 구현 ---
 
                                 },
-                                child: Align(
+                                child: const Align(
                                   alignment: Alignment.topRight,
                                   child: Icon(
                                     Icons.check_rounded,
@@ -124,7 +127,7 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                             ),
                           ],
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
 
                         Align(
                           alignment: Alignment.topLeft,
@@ -132,7 +135,7 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                             padding: getPadding(left: 10),
                             child: Text(
                               '${selectedDay.month}월 ${selectedDay.day}일 (${_getDayOfWeek(selectedDay)})',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 15,
                               ),
@@ -151,7 +154,7 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                                     cursorColor: Colors.black,
                                     cursorWidth: 1.5,
                                     showCursor: true,
-                                    controller: _textEditingController,
+                                    controller: textEditingController,
 
                                     style: const TextStyle(
                                       color: Colors.black,
@@ -173,21 +176,21 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                                   showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
-                                      _nestedDialogContext = context;
+                                      nestedDialogContext = context;
                                       return Dialog(
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(30.0),
                                         ),
                                         child: Container(
-                                          constraints: BoxConstraints(
+                                          constraints: const BoxConstraints(
                                             maxWidth: 300, // 최대 너비 조절
                                           ),
-                                          padding: EdgeInsets.all(20),
+                                          padding: const EdgeInsets.all(20),
                                           child: Column(
                                             mainAxisSize: MainAxisSize.min,
                                             crossAxisAlignment: CrossAxisAlignment.center,
                                             children: [
-                                              Row(
+                                              const Row(
                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                 children: [
                                                   Stack(
@@ -222,9 +225,9 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                                                 ],
                                               ),
 
-                                              SizedBox(height: 10),
+                                              const SizedBox(height: 10),
 
-                                              Text(
+                                              const Text(
                                                 '등록한 일정을 삭제하시겠어요?',
                                                 style: TextStyle(
                                                   fontSize: 16,
@@ -232,7 +235,7 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                                                 ),
                                               ),
 
-                                              SizedBox(height: 20),
+                                              const SizedBox(height: 20),
 
                                               Row(
                                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -244,19 +247,19 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                                                       },
                                                       child: Container(
                                                         decoration: BoxDecoration(
-                                                          color: Color(0xFFC7C7CC), // 배경색
+                                                          color: const Color(0xFFC7C7CC), // 배경색
                                                           borderRadius: BorderRadius.circular(30),
                                                           boxShadow: [
                                                             BoxShadow(
                                                               color: Colors.black.withOpacity(0.2), // 그림자 색상
                                                               spreadRadius: 1, // 그림자 확산 범위
                                                               blurRadius: 2, // 그림자 흐림 정도
-                                                              offset: Offset(0, 3), // 그림자 위치 (x, y)
+                                                              offset: const Offset(0, 3), // 그림자 위치 (x, y)
                                                             ),
                                                           ],
                                                         ),
-                                                        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                                                        child: Text(
+                                                        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                                                        child: const Text(
                                                           '취소',
                                                           style: TextStyle(
                                                             color: Colors.white,
@@ -267,7 +270,7 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                                                       )
                                                   ),
 
-                                                  SizedBox(width: 10),
+                                                  const SizedBox(width: 10),
 
                                                   InkWell(
                                                       onTap: () {
@@ -284,19 +287,19 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                                                       },
                                                       child: Container(
                                                         decoration: BoxDecoration(
-                                                          color: Color(0xFF176FF2), // 배경색
+                                                          color: const Color(0xFF176FF2), // 배경색
                                                           borderRadius: BorderRadius.circular(30),
                                                           boxShadow: [
                                                             BoxShadow(
                                                               color: Colors.black.withOpacity(0.2), // 그림자 색상
                                                               spreadRadius: 1, // 그림자 확산 범위
                                                               blurRadius: 2, // 그림자 흐림 정도
-                                                              offset: Offset(0, 3), // 그림자 위치 (x, y)
+                                                              offset: const Offset(0, 3), // 그림자 위치 (x, y)
                                                             ),
                                                           ],
                                                         ),
-                                                        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                                                        child: Text(
+                                                        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                                                        child: const Text(
                                                           '확인',
                                                           style: TextStyle(
                                                             color: Colors.white,
@@ -315,7 +318,7 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                                     },
                                   );
                                 },
-                                child: Align(
+                                child: const Align(
                                   alignment: Alignment.topRight,
                                   child: Icon(
                                     Icons.delete_rounded,
@@ -330,27 +333,27 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                         Container(
                           height: 1.5,
                           width: 370,
-                          color: Color(0xFFC7C7CC),
+                          color: const Color(0xFFC7C7CC),
                         ),
 
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
 
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.link_rounded,
                               color: Colors.black,
                               size: 25,
                             ),
-                            SizedBox(width: 7),
+                            const SizedBox(width: 7),
                             Expanded(
                               child: TextFormField(
                                 cursorColor: Colors.black,
                                 cursorWidth: 1.5,
                                 showCursor: true,
 
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   hintText: '링크 추가',
                                   hintStyle: TextStyle(
                                     color: Colors.black,
@@ -364,11 +367,11 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                           ],
                         ),
 
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
 
                         Column(
                           children: [
-                            Row(
+                            const Row(
                               children: [
                                 Icon(
                                   Icons.alarm_rounded,
@@ -387,7 +390,7 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                               ],
                             ),
 
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
 
                             Align(
                               alignment: Alignment.topLeft,
@@ -396,7 +399,7 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                                 width: 161,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10), // 모서리 둥글기 설정
-                                  border: Border.all(color: Color(0xFF176FF2), width: 1.5), // 테두리 설정
+                                  border: Border.all(color: const Color(0xFF176FF2), width: 1.5), // 테두리 설정
                                 ),
                                 child: Padding(
                                   padding: getPadding(left: 8),
@@ -405,7 +408,7 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                                     onChanged: (String? newValue) {
                                       bottomState(() {
                                         selectedAlarm = newValue!;
-                                        print("alarm option : " + aToggledList.toString());
+                                        print("alarm option : $aToggledList");
 
                                         // 선택된 값에 따라 aToggledList 업데이트
                                         for (int i = 0; i < alarm.length; i++) {
@@ -413,8 +416,8 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                                         }
                                       });
                                     },
-                                    underline: SizedBox(), // 밑줄 제거
-                                    icon: Padding(
+                                    underline: const SizedBox(), // 밑줄 제거
+                                    icon: const Padding(
                                       padding: EdgeInsets.only(left: 25), // 아이콘 왼쪽 패딩 설정
                                       child: Icon(Icons.arrow_drop_down),
                                     ), // 드롭다운 아이콘
@@ -423,7 +426,7 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                                         value: value,
                                         child: Text(
                                           value,
-                                          style: TextStyle(fontSize: 14), // 아이템 글씨 크기 설정
+                                          style: const TextStyle(fontSize: 14), // 아이템 글씨 크기 설정
                                         ),
                                       );
                                     }).toList(),
@@ -434,11 +437,11 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                           ],
                         ),
 
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
 
                         Column(
                           children: [
-                            Row(
+                            const Row(
                               children: [
                                 Icon(
                                   Icons.invert_colors_on_rounded,
@@ -457,7 +460,7 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                               ],
                             ),
 
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
 
                             Row(
                               children: List.generate(
@@ -468,10 +471,10 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                                       bottomState(() {
                                         isToggledList = List.generate(isToggledList.length, (i) => i == index ? !isToggledList[i] : false);
                                         selectedColor = colors[index];
-                                        print("color option : " + selectedColor.toString());
+                                        print("color option : $selectedColor");
                                       });
                                     },
-                                    child: Container(
+                                    child: SizedBox(
                                       width: 25,
                                       height: 25,
                                       child: Icon(
@@ -486,7 +489,7 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
                                 return Row(
                                   children: [
                                     widget,
-                                    SizedBox(width: 10), // 버튼 간 간격 조절
+                                    const SizedBox(width: 10), // 버튼 간 간격 조절
                                   ],
                                 );
                               }).toList(),
@@ -505,4 +508,3 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay) {
     },
   );
 }
-

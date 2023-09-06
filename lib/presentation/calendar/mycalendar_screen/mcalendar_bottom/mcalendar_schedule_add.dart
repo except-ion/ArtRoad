@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class mCalendarScheduleAdd extends StatefulWidget {
   final DateTime selectedDay; // 선택된 날짜를 인자로 받도록 수정
 
-  mCalendarScheduleAdd({required this.selectedDay});
+  const mCalendarScheduleAdd({super.key, required this.selectedDay});
 
   get alarm => alarm;
 
@@ -24,7 +24,7 @@ class _mCalendarScheduleAdd extends State<mCalendarScheduleAdd> {
           onTap: () {
             showScheduleDialog(context, widget.selectedDay);
           },
-          child: Stack(
+          child: const Stack(
             children: [
               Icon(
                 Icons.circle,
