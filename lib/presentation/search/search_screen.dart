@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../src/model/condetail.dart';
@@ -73,7 +74,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     stops: [0.0, 1.0],
                   ).createShader(bounds);
                 },
-                child: Text(
+                child: AutoSizeText(
                   "ArtRoad",
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
@@ -110,24 +111,27 @@ class _SearchScreenState extends State<SearchScreen> {
                   border: InputBorder.none,
                   prefixIcon: Padding(
                     padding: const EdgeInsets.only(left: 15),
-                    child: DropdownButton<String>(
-                      value: selectedCategory,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedCategory = newValue!;
-                          filteredPrfItems.clear(); // 카테고리 변경시 비우기
-                          filteredFcltItems.clear(); // 카테고리 변경시 비우기
-                        });
-                      },
-                      items: <String>['공연', '공연장'].map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: TextStyle(fontSize: 13),
-                          ),
-                        );
-                      }).toList(),
+                    child: FittedBox(
+                      child: DropdownButton<String>(
+                        value: selectedCategory,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedCategory = newValue!;
+                            filteredPrfItems.clear(); // 카테고리 변경시 비우기
+                            filteredFcltItems.clear(); // 카테고리 변경시 비우기
+                          });
+                        },
+                        items: <String>['공연', '공연장'].map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: AutoSizeText(
+                              value,
+                              style: TextStyle(fontSize: 13),
+                              minFontSize: 13,
+                            ),
+                          );
+                        }).toList(),
+                      ),
                     ),
                   ),
                 ),
@@ -135,7 +139,7 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
           ),
           Expanded(
-            child: _buildSearchResults(),
+            child: FittedBox(child: _buildSearchResults()),
           ),
         ],
       ),
