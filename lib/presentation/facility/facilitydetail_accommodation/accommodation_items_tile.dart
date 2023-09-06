@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'accommodation_items.dart';
 
 class AccommodationItemsTile extends StatelessWidget {
@@ -62,17 +63,18 @@ class AccommodationItemsTile extends StatelessWidget {
               ),
               Row(
                 children: [
-                  const Icon(
-                    Icons.star_rounded,
-                    color: Colors.yellow,
-                    size: 16,
+                  const Text(
+                    '공연장으로부터 ',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Color(0xFF939191),
+                    ),
                   ),
-                  const SizedBox(width: 2),
                   Text(
-                    //별점 못받아오면 어카농?
-                    _AccommodationItems.distance.toString(),
+                    "${_AccommodationItems.phone.toString()}m",
                     style: const TextStyle(
                       fontSize: 12,
+                      color: Colors.orange,
                     ),
                   ),
                 ],
@@ -83,7 +85,7 @@ class AccommodationItemsTile extends StatelessWidget {
           Row(
             children: [
               Text(
-                _AccommodationItems.phone,
+                _AccommodationItems.distance,
                 style: const TextStyle(
                     fontSize: 14
                 ),
@@ -93,7 +95,14 @@ class AccommodationItemsTile extends StatelessWidget {
 
               InkWell(
                 onTap: () {
-                  Clipboard.setData(ClipboardData(text: _AccommodationItems.phone));
+                  Clipboard.setData(ClipboardData(text: _AccommodationItems.distance));
+                  Fluttertoast.showToast(
+                    msg: '전화번호가 복사되었습니다.',
+                    toastLength: Toast.LENGTH_SHORT,
+                    backgroundColor: Colors.grey,
+                    textColor: Colors.white,
+                    fontSize: 16.0,
+                  );
                   print('phone number copy bt');
                 },
                 child: const Icon(

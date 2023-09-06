@@ -328,7 +328,7 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                                       if (isRestaurantSelected)
                                         RestaurantListView(facilityDetailList[0].la, facilityDetailList[0].lo),
                                       if (isAccommodationSelected)
-                                        const AccommodationListView(),
+                                        AccommodationListView(facilityDetailList[0].la, facilityDetailList[0].lo),
                                     ],
                                   )
                                 ],

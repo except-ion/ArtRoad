@@ -71,7 +71,7 @@ class RestaurantItemsTile extends StatelessWidget {
               Row(
                 children: [
                   const Text(
-                    '이 장소에서 ',
+                    '공연장으로부터 ',
                     style: TextStyle(
                       fontSize: 12,
                       color: Color(0xFF939191),
