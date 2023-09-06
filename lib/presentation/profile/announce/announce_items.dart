@@ -1,6 +1,6 @@
 class AnnounceItems {
   String title;
-  String imgPath;
+  dynamic content;
 
-  AnnounceItems(this.title, this.imgPath);
+  AnnounceItems(this.title, {this.content});
 }

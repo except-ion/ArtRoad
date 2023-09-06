@@ -18,12 +18,12 @@ class AnnounceItemsTile extends StatelessWidget {
         ),
       ),
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: CustomImageView(
-            imagePath: _AnnounceItems.imgPath,
-          ),
-        ),
+        (_AnnounceItems.content is String) ?
+        CustomImageView(
+          imagePath: _AnnounceItems.content,
+        )
+            :
+        _AnnounceItems.content,
       ],
     );
   }
