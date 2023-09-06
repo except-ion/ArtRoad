@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'accommodation_items.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class AccommodationItemsTile extends StatelessWidget {
   const AccommodationItemsTile(this._AccommodationItems, {super.key});
@@ -14,21 +14,22 @@ class AccommodationItemsTile extends StatelessWidget {
     return ListTile(
       title: Row(
         children: [
-          Text(
+          AutoSizeText(
             _AccommodationItems.place_name,
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
+            maxLines: 1,
           ),
           const SizedBox(width: 5),
-
-          Text(
+          AutoSizeText(
             _AccommodationItems.category_name,
             style: const TextStyle(
               fontSize: 12,
               color: Color(0xFF939191),
             ),
+            maxLines: 1,
           ),
         ],
       ),
@@ -39,18 +40,16 @@ class AccommodationItemsTile extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Text(
+                  AutoSizeText(
                     _AccommodationItems.road_address_name,
-                    style: const TextStyle(
-                        fontSize: 14
-                    ),
+                    style: const TextStyle(fontSize: 14),
+                    maxLines: 1,
                   ),
-
                   const SizedBox(width: 5),
-
                   InkWell(
                     onTap: () {
-                      Clipboard.setData(ClipboardData(text: _AccommodationItems.road_address_name));
+                      Clipboard.setData(ClipboardData(
+                          text: _AccommodationItems.road_address_name));
                       print('adress copy bt');
                     },
                     child: const Icon(
@@ -63,39 +62,38 @@ class AccommodationItemsTile extends StatelessWidget {
               ),
               Row(
                 children: [
-                  const Text(
+                  const AutoSizeText(
                     '공연장으로부터 ',
                     style: TextStyle(
                       fontSize: 12,
                       color: Color(0xFF939191),
                     ),
+                    maxLines: 1,
                   ),
-                  Text(
+                  AutoSizeText(
                     "${_AccommodationItems.phone.toString()}m",
                     style: const TextStyle(
                       fontSize: 12,
                       color: Colors.orange,
                     ),
+                    maxLines: 1,
                   ),
                 ],
               ),
             ],
           ),
-
           Row(
             children: [
-              Text(
+              AutoSizeText(
                 _AccommodationItems.distance,
-                style: const TextStyle(
-                    fontSize: 14
-                ),
+                style: const TextStyle(fontSize: 14),
+                maxLines: 1,
               ),
-
               const SizedBox(width: 5),
-
               InkWell(
                 onTap: () {
-                  Clipboard.setData(ClipboardData(text: _AccommodationItems.distance));
+                  Clipboard.setData(
+                      ClipboardData(text: _AccommodationItems.distance));
                   Fluttertoast.showToast(
                     msg: '전화번호가 복사되었습니다.',
                     toastLength: Toast.LENGTH_SHORT,

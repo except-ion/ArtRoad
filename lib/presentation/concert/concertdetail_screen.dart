@@ -4,27 +4,24 @@ import 'package:artroad/widgets/custom_concertdetail_header.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../facility/facilitydetail_screen.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class ConcertDetailScreen extends StatefulWidget {
   String concertID;
   String prfnm;
 
-  ConcertDetailScreen(
-    this.concertID, 
-    this.prfnm,
-    {super.key}
-    );
+  ConcertDetailScreen(this.concertID, this.prfnm, {super.key});
 
   @override
   State<ConcertDetailScreen> createState() => _ConcertDetailScreenState();
 }
 
 class _ConcertDetailScreenState extends State<ConcertDetailScreen> {
-
- @override
+  @override
   void initState() {
     super.initState();
-    final concertDetailProvider = Provider.of<ConcertDetailProvider>(context, listen: false);
+    final concertDetailProvider =
+        Provider.of<ConcertDetailProvider>(context, listen: false);
     concertDetailProvider.loadConcertDetails(widget.concertID);
   }
 
@@ -63,7 +60,8 @@ class _ConcertDetailScreenState extends State<ConcertDetailScreen> {
                                     bottom: 30,
                                   ),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         concertDetailList[0].prfnm.toString(),
@@ -72,28 +70,43 @@ class _ConcertDetailScreenState extends State<ConcertDetailScreen> {
                                       const SizedBox(height: 30),
                                       CustomDetailText(
                                         type: '공연기간',
-                                        content: '${concertDetailList[0].prfpdfrom} ~ ${concertDetailList[0].prfpdto}',
+                                        content: (concertDetailList[0]
+                                                        .prfpdfrom ==
+                                                    null &&
+                                                concertDetailList[0].prfpdto ==
+                                                    null)
+                                            ? '제공된 정보가 없습니다.'
+                                            : '${concertDetailList[0].prfpdfrom ?? '정보 없음'} ~ ${concertDetailList[0].prfpdto ?? '정보 없음'}',
                                       ),
                                       CustomDetailText(
                                         type: '공연시간',
-                                        content: '${concertDetailList[0].prfruntime}',
+                                        content:
+                                            concertDetailList[0].prfruntime ??
+                                                '제공된 정보가 없습니다.',
                                       ),
                                       CustomDetailText(
                                         type: '관람연령',
-                                        content: '${concertDetailList[0].prfage}',
+                                        content: concertDetailList[0].prfage ??
+                                            '제공된 정보가 없습니다.',
                                       ),
                                       CustomDetailText(
                                         type: '장르',
-                                        content: '${concertDetailList[0].genrenm}',
+                                        content: concertDetailList[0].genrenm ??
+                                            '제공된 정보가 없습니다.',
                                       ),
                                       CustomDetailText(
                                         type: '공연장',
-                                        content: '${concertDetailList[0].fcltynm}',
+                                        content: concertDetailList[0].fcltynm ??
+                                            '제공된 정보가 없습니다.',
                                         onPressed: () {
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (context) => FacilityDetailScreen(concertDetailList[0].mt10id ?? ''),
+                                              builder: (context) =>
+                                                  FacilityDetailScreen(
+                                                      concertDetailList[0]
+                                                              .mt10id ??
+                                                          ''),
                                             ),
                                           );
                                         },
@@ -102,9 +115,10 @@ class _ConcertDetailScreenState extends State<ConcertDetailScreen> {
                                       const Divider(),
                                       const SizedBox(height: 20),
                                       Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
-                                          const Text(
+                                          const AutoSizeText(
                                             '상세 정보',
                                             style: TextStyle(
                                               color: Colors.black,
@@ -113,12 +127,20 @@ class _ConcertDetailScreenState extends State<ConcertDetailScreen> {
                                             ),
                                           ),
                                           Padding(
-                                            padding: const EdgeInsets.only(top: 40),
+                                            padding:
+                                                const EdgeInsets.only(top: 40),
                                             // syturls넣는곳
-                                            child: Image.network(
-                                              '${concertDetailList[0].styurls}',
-                                              fit: BoxFit.cover,
-                                              ),
+                                            child:
+                                                concertDetailList[0].styurls ==
+                                                        null
+                                                    ? Image.network(
+                                                        '${concertDetailList[0].styurls}',
+                                                        fit: BoxFit.cover,
+                                                      )
+                                                    : const AutoSizeText(
+                                                        '제공된 정보가 없습니다.',
+                                                        maxLines: 1,
+                                                      ),
                                           )
                                         ],
                                       )
@@ -131,15 +153,43 @@ class _ConcertDetailScreenState extends State<ConcertDetailScreen> {
                               offset: const Offset(30, 65),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(16),
-                                child: Image.network(
-                                  '${concertDetailList[0].poster}',
-                                  width: 170,
-                                  fit: BoxFit.cover,
-                                   errorBuilder: (context, error, stackTrace) {
-                                    print('error: $error');
-                                    return const Text('이미지 로딩 중 오류가 발생했습니다.');
-                                  },
-                                ),
+                                child: (concertDetailList[0].poster == null)
+                                    ? Image.network(
+                                        '${concertDetailList[0].poster}',
+                                        width: 170,
+                                        fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          print('error: $error');
+                                          return const Text(
+                                              '이미지 로딩 중 오류가 발생했습니다.');
+                                        },
+                                      )
+                                    : Container(
+                                        color: Colors.grey[100],
+                                        width: 170,
+                                        height: 240,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.no_photography_outlined,
+                                              size: 50,
+                                              color: Colors.grey[600],
+                                            ),
+                                            AutoSizeText(
+                                              'No Image',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.grey[600],
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                              maxLines: 1,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                               ),
                             ),
                           ],

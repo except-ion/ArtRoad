@@ -5,6 +5,7 @@ import 'package:artroad/widgets/custom_textformfield.dart';
 import 'package:artroad/widgets/custom_button_main_color.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/check_validate.dart';
@@ -88,7 +89,6 @@ class _SignupScreenState extends State<SignupScreen> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -111,10 +111,11 @@ class _SignupScreenState extends State<SignupScreen> {
                           ),
                           child: Column(
                             children: [
-                              const Text(
+                              const AutoSizeText(
                                 '회원가입',
                                 style: TextStyle(
                                     fontSize: 50, fontWeight: FontWeight.w500),
+                                maxFontSize: 50,
                               ),
                               const SizedBox(
                                 height: 50,

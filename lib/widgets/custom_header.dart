@@ -7,7 +7,10 @@ class CustomHeader extends StatefulWidget {
   final bool isDetail;
 
   const CustomHeader(
-      {Key? key, this.name = '', this.hasLiked = false, this.isDetail = false});
+      {super.key,
+      this.name = '',
+      this.hasLiked = false,
+      this.isDetail = false});
 
   @override
   _CustomHeaderState createState() => _CustomHeaderState();
@@ -32,7 +35,7 @@ class _CustomHeaderState extends State<CustomHeader> {
   @override
   Widget build(BuildContext context) {
     print(widget.isDetail);
-    return Container(
+    return SizedBox(
       height: 70,
       child: Stack(
         children: [
@@ -40,7 +43,8 @@ class _CustomHeaderState extends State<CustomHeader> {
               ? Image.asset('assets/images/header_dark.png')
               : Image.asset('assets/images/header_light.png'),
           Padding(
-            padding: EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 5),
+            padding:
+                const EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 5),
             child: Stack(
               children: [
                 Align(
@@ -61,7 +65,7 @@ class _CustomHeaderState extends State<CustomHeader> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 8,bottom: 8),
+                      padding: const EdgeInsets.only(top: 8, bottom: 8),
                       child: Transform.scale(
                         alignment: Alignment.center,
                         scale: 1.5,
@@ -70,7 +74,7 @@ class _CustomHeaderState extends State<CustomHeader> {
                             Icons.arrow_back_rounded,
                             color: widget.isDetail
                                 ? Colors.white
-                                : Color(0xFF00233D),
+                                : const Color(0xFF00233D),
                           ),
                           onPressed: () {
                             Navigator.pop(context);
@@ -91,9 +95,9 @@ class _CustomHeaderState extends State<CustomHeader> {
                                     Icons.favorite_border,
                                     color: widget.isDetail
                                         ? Colors.white
-                                        : Color(0xFF00233D),
+                                        : const Color(0xFF00233D),
                                   )
-                                : Icon(
+                                : const Icon(
                                     //좋아요 클릭 후
                                     Icons.favorite,
                                     color: Colors.red,

@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import '../../theme/theme_helper.dart';
 import 'search_items_tile.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -38,15 +39,16 @@ class _SearchScreenState extends State<SearchScreen> {
         filteredFcltItems.clear();
         String searchTerm = query.toLowerCase();
         if (selectedCategory == '공연') {
-          final concertProvider = Provider.of<ConcertProvider>(context, listen: false);
+          final concertProvider =
+              Provider.of<ConcertProvider>(context, listen: false);
           final concerts = await concertProvider.loadConcerts(searchTerm);
           setState(() {
             filteredPrfItems = concerts;
             _buildSearchResults();
           });
-
         } else if (selectedCategory == '공연장') {
-          final facilityProvider = Provider.of<FacilityProvider>(context, listen: false);
+          final facilityProvider =
+              Provider.of<FacilityProvider>(context, listen: false);
           final facilities = await facilityProvider.loadFacilities(searchTerm);
           setState(() {
             filteredFcltItems = facilities;
@@ -76,7 +78,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     stops: [0.0, 1.0],
                   ).createShader(bounds);
                 },
-                child: Text(
+                child: AutoSizeText(
                   "ArtRoad",
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
@@ -98,21 +100,22 @@ class _SearchScreenState extends State<SearchScreen> {
                   borderRadius: BorderRadius.circular(32),
                 ),
               ),
-                child: TextField(
-                  controller: searchController,
-                  onEditingComplete: () => filterItems(searchController.text),
-                  decoration: InputDecoration(
-                    hintText: '공연 및 공연장을 검색하세요',
-                    hintStyle: const TextStyle(fontSize: 14),
-                    suffixIcon: GestureDetector(
-                      onTap: () => filterItems(searchController.text),
-                      child: const Icon(Icons.search),
-                    ),
-                    filled: true,
-                    fillColor: Colors.transparent,
-                    border: InputBorder.none,
-                    prefixIcon: Padding(
-                      padding: const EdgeInsets.only(left: 15),
+              child: TextField(
+                controller: searchController,
+                onEditingComplete: () => filterItems(searchController.text),
+                decoration: InputDecoration(
+                  hintText: '공연 및 공연장을 검색하세요',
+                  hintStyle: const TextStyle(fontSize: 14),
+                  suffixIcon: GestureDetector(
+                    onTap: () => filterItems(searchController.text),
+                    child: const Icon(Icons.search),
+                  ),
+                  filled: true,
+                  fillColor: Colors.transparent,
+                  border: InputBorder.none,
+                  prefixIcon: Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: FittedBox(
                       child: DropdownButton<String>(
                         value: selectedCategory,
                         onChanged: (String? newValue) {
@@ -137,8 +140,11 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
               ),
             ),
-            Expanded(child: _buildSearchResults())
-          ],
+          ),
+          Expanded(
+            child: _buildSearchResults(),
+          ),
+        ],
       ),
     );
   }
@@ -156,28 +162,28 @@ class _SearchScreenState extends State<SearchScreen> {
 
     return Scaffold(
       body: Column(
-      children: [
-        Expanded(
-          child: ListView.builder(
-            itemCount: selectedCategory == '공연'
-                ? filteredPrfItems.length
-                : filteredFcltItems.length,
-            itemBuilder: (context, index) {
-              if (selectedCategory == '공연') {
-                return ListTile(
-                  title: SearchItemsTile(filteredPrfItems[index]),
-                );
-              } else if (selectedCategory == '공연장') {
-                return ListTile(
-                  title: SearchItemsTile(filteredFcltItems[index]),
-                );
-              }
-              return Container();
-            },
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: selectedCategory == '공연'
+                  ? filteredPrfItems.length
+                  : filteredFcltItems.length,
+              itemBuilder: (context, index) {
+                if (selectedCategory == '공연') {
+                  return ListTile(
+                    title: SearchItemsTile(filteredPrfItems[index]),
+                  );
+                } else if (selectedCategory == '공연장') {
+                  return ListTile(
+                    title: SearchItemsTile(filteredFcltItems[index]),
+                  );
+                }
+                return Container();
+              },
+            ),
           ),
-        ),
-      ],
-    ),
+        ],
+      ),
     );
   }
 }

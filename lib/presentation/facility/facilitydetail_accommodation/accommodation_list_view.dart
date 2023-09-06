@@ -7,12 +7,8 @@ import 'package:http/http.dart' as http;
 class AccommodationListView extends StatefulWidget {
   String? la;
   String? lo;
-  
-  AccommodationListView(
-      this.la,
-      this.lo,
-      {super.key}
-    );
+
+  AccommodationListView(this.la, this.lo, {super.key});
 
   @override
   _AccommodationListViewState createState() => _AccommodationListViewState();
@@ -28,9 +24,9 @@ class _AccommodationListViewState extends State<AccommodationListView> {
 
   Future<void> fetchAccommodationData() async {
     String lng = widget.lo ?? '';
-    String lat= widget.la ?? '';
-    final String url = 
-      "https://dapi.kakao.com/v2/local/search/category.json?category_group_code=AD5&x=$lng&y=$lat";
+    String lat = widget.la ?? '';
+    final String url =
+        "https://dapi.kakao.com/v2/local/search/category.json?category_group_code=AD5&x=$lng&y=$lat";
 
     final response = await http.get(
       Uri.parse(url),
@@ -63,7 +59,7 @@ class _AccommodationListViewState extends State<AccommodationListView> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize :MainAxisSize.min,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Flexible(
           child: ListView.separated(

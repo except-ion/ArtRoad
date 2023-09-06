@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:artroad/presentation/signup/signup_screen.dart';
 import 'package:artroad/widgets/check_validate.dart';
 import 'package:artroad/widgets/custom_button_main_color.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:artroad/theme/theme_helper.dart';
 import 'dart:async';
@@ -207,7 +208,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 35,
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 const SizedBox(height: 46),
@@ -231,54 +232,66 @@ class _LoginScreenState extends State<LoginScreen> {
                                       .validatePassword(pwFocus, '$value'),
                                 ),
                                 const SizedBox(height: 17),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Checkbox(
-                                          activeColor: const Color(0xFF00233D),
-                                          value: _isCheckRemember,
-                                          onChanged: (value) {
-                                            bottomState(() {
-                                              setState(() {
-                                                _isCheckRemember = value!;
+                                FittedBox(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Checkbox(
+                                            activeColor:
+                                                const Color(0xFF00233D),
+                                            value: _isCheckRemember,
+                                            onChanged: (value) {
+                                              bottomState(() {
+                                                setState(() {
+                                                  _isCheckRemember = value!;
+                                                });
                                               });
-                                            });
-                                          },
-                                          materialTapTargetSize: //패딩 제거
-                                              MaterialTapTargetSize.shrinkWrap,
-                                        ),
-                                        const Text('아이디 저장'),
-                                      ],
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const LoginForgotPasswordScreen(),
+                                            },
+                                            materialTapTargetSize: //패딩 제거
+                                                MaterialTapTargetSize
+                                                    .shrinkWrap,
                                           ),
-                                        );
-                                      },
-                                      style: TextButton.styleFrom(
-                                        textStyle: const TextStyle(
-                                          decoration: TextDecoration.underline,
-                                          color: Colors.blue,
-                                        ),
+                                          const FittedBox(
+                                            child: AutoSizeText('아이디 저장',
+                                                maxFontSize: 16),
+                                          ),
+                                        ],
                                       ),
-                                      child: const Text('비밀번호를 잃어버리셨나요?'),
-                                    )
-                                  ],
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const LoginForgotPasswordScreen(),
+                                            ),
+                                          );
+                                        },
+                                        child: const FittedBox(
+                                          child: AutoSizeText(
+                                            '비밀번호를 잃어버리셨나요?',
+                                            maxFontSize: 16,
+                                            style: TextStyle(
+                                              decoration:
+                                                  TextDecoration.underline,
+                                              color: Colors.blue,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                                 const SizedBox(height: 25),
                                 CustomButtonMainColor(
                                   onPressed: () {
                                     if (_formKey.currentState!.validate()) {
                                       // validation 이 성공하면 폼 저장하기
-                                      signInWithFirebase(emailField.text, pwField.text);
+                                      signInWithFirebase(
+                                          emailField.text, pwField.text);
                                       _formKey.currentState!.save();
                                       Navigator.pop(context); // 다이얼로그 닫기
                                       //로그인 로직 추가
@@ -293,55 +306,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                     }
                                   },
                                   text: '로그인',
-                                ),
-                                const SizedBox(height: 25),
-                                TextButton(
-                                  onPressed: () {
-
-                                    if (_formKey.currentState!.validate()) {
-                                      // validation 이 성공하면 폼 저장하기
-                                      signInWithFirebase(emailField.text, pwField.text);
-                                      _formKey.currentState!.save();
-                                      Navigator.pop(context); // 다이얼로그 닫기
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              BasepageScreen(),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                  style: TextButton.styleFrom(
-                                      textStyle: const TextStyle(
-                                          textBaseline:
-                                              TextBaseline.alphabetic),
-                                      backgroundColor: const Color(0xFFFEE500),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      minimumSize: const Size(350, 50)),
-                                  child: Stack(
-                                    clipBehavior: Clip.none,
-                                    children: [
-                                      Positioned(
-                                        top: -6,
-                                        left: -100,
-                                        child: Transform.scale(
-                                            scale: 0.6,
-                                            child: Image.asset(
-                                                'assets/images/login_kakao.png')),
-                                      ),
-                                      const Text(
-                                        '카카오 로그인',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
                                 ),
                                 const SizedBox(
                                   height: 25,
@@ -405,7 +369,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     flex: 3,
                     child: Align(
                       alignment: Alignment.center,
-                      child: Text(
+                      child: AutoSizeText(
                         "ArtRoad",
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
@@ -415,6 +379,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             color: Colors
                                 .white // 텍스트 색상 설정 (그라데이션에 의해 가려지므로 원하는 색상 사용 가능)
                             ),
+                        maxFontSize: 80,
                       ),
                     ),
                   ),
