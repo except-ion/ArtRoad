@@ -3,13 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-
 import '../../widgets/custom_header.dart';
 import '../../widgets/custom_launch_url.dart';
 import 'facilitydetail_accommodation/accommodation_list_view.dart';
-import 'facilitydetail_info_icons.dart';
 import 'facilitydetail_restaurant/restaurant_list_view.dart';
-import '../../src/model/facdetail.dart';
 
 class FacilityDetailScreen extends StatefulWidget {
   String facilityID;
@@ -211,25 +208,6 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const Text(
-                                        '공연장 시설 정보',
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                          top: 20,
-                                          bottom: 20,
-                                        ),
-                                        child: FacilityDetailInfoIcons(widget.facilityID),
-                                      ),
-                                      const Divider(),
-                                      const SizedBox(
-                                        height: 20,
-                                      ),
                                       Row(
                                         mainAxisSize: MainAxisSize.min,
                                         mainAxisAlignment:
