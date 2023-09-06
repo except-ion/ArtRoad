@@ -11,6 +11,29 @@ final CollectionReference _schedulesCollection = _firestore.collection('schedule
 final CollectionReference _likedConcertsCollection = _firestore.collection('likedConcert');
 
 class FirebaseStoreService{
+  //사용자 정보 가져오기
+  Future<List<String>> getUserInfo(String userId) async {
+     try {
+    DocumentSnapshot userDocument = await FirebaseFirestore.instance
+        .collection('user')
+        .doc(userId)
+        .get();
+
+    if (userDocument.exists) {
+      Map<String, dynamic> userData = userDocument.data() as Map<String, dynamic>;
+      String userName = userData['userName'];
+      String userEmail = userData['email'];
+
+      return [userName, userEmail];
+    } else {
+      return ['User not found', ''];
+    }
+  } catch (error) {
+    print('Error fetching user data: $error');
+    return ['Error', ''];
+    }
+  }
+
   //일정 추가
   Future<bool> addSchedule(String? userId, String title, DateTime date, String alarm, int color, String link) async {
     if (userId != null) {

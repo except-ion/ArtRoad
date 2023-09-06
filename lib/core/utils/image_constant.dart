@@ -20,4 +20,18 @@ class ImageConstant {
   static String imageLocation = 'assets/images/img_location.png';
 
   static String imageVerticalLine = 'assets/images/img_vertical_line.png';
+
+  static String imgAppLogo = 'assets/images/img_applogo.png';
+
+  static String iconKakao = 'assets/images/icon_kakao.png';
+
+  static String imgAnnounceEx = 'assets/images/img_announce_ex.jpg';
+
+  static String iconKakaoCh = 'assets/images/icon_kakao_ch.png';
+
+  static String iconGmail = 'assets/images/icon_gmail.png';
+
+  static String imgInquiryEx = 'assets/images/img_inquiry_ex.jpg';
+
+  static String imgArtRoad = 'assets/images/Img_about_artroad.jpg';
 }
