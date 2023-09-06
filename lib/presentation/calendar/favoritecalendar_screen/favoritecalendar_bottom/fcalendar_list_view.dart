@@ -41,7 +41,21 @@ class fCalendarListView extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Flexible(
-                  child: ListView.builder(
+                  child:  fcalendarList.isEmpty ?
+                    const Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(top: 10, left: 20),
+                          child: Text(
+                            '예정된 일정이 없습니다.',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Color(0xFF939191),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ) : ListView.builder(
                     shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       padding: const EdgeInsets.all(20),
