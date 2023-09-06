@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class SignupTermsOfService extends StatefulWidget {
-  const SignupTermsOfService({Key? key});
+  final Function(List<bool>) onAgreementsChanged;
+
+  const SignupTermsOfService({super.key, required this.onAgreementsChanged});
 
   @override
   State<SignupTermsOfService> createState() => _SignupTermsOfServiceState();
@@ -9,7 +13,7 @@ class SignupTermsOfService extends StatefulWidget {
 
 class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
   bool allAgreementsChecked = false;
-  List<bool> individualAgreementsChecked = [false, false, false, false];
+  List<bool> individualAgreementsChecked = [false, false, false];
 
   //모두 동의
   void toggleAllAgreements(bool? value) {
@@ -34,6 +38,8 @@ class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
           allAgreementsChecked =
               individualAgreementsChecked.every((isChecked) => isChecked);
         }
+        // 개별 동의 체크박스 상태를 부모 위젯에 알리기
+        widget.onAgreementsChanged(individualAgreementsChecked);
       });
     }
   }
@@ -45,10 +51,10 @@ class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
           width: 1.4,
-          color: Color(0xFF00233D),
+          color: const Color(0xFF00233D),
         ),
       ),
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -57,10 +63,10 @@ class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
               Checkbox(
                 value: allAgreementsChecked,
                 onChanged: toggleAllAgreements,
-                activeColor: Color(0xFF00233D),
+                activeColor: const Color(0xFF00233D),
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
-              Text(
+              const Text(
                 '모두 동의합니다.',
                 style: TextStyle(
                   fontSize: 16,
@@ -68,7 +74,7 @@ class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
               ),
             ],
           ),
-          Divider(
+          const Divider(
             color: Color(0xFF00233D),
             thickness: 1,
           ),
@@ -77,10 +83,10 @@ class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
               Checkbox(
                 value: individualAgreementsChecked[0],
                 onChanged: (value) => toggleIndividualAgreement(0, value),
-                activeColor: Color(0xFF00233D),
+                activeColor: const Color(0xFF00233D),
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
-              Text(
+              const Text(
                 '만 14세 이상입니다.',
                 style: TextStyle(
                   fontSize: 16,
@@ -96,11 +102,11 @@ class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
                   Checkbox(
                     value: individualAgreementsChecked[1],
                     onChanged: (value) => toggleIndividualAgreement(1, value),
-                    activeColor: Color(0xFF00233D),
+                    activeColor: const Color(0xFF00233D),
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
-                  Text(
-                    '(필수) 이용약관 동의',
+                  const Text(
+                    '서비스 이용약관',
                     style: TextStyle(
                       fontSize: 16,
                     ),
@@ -109,14 +115,29 @@ class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
               ),
               TextButton(
                 onPressed: () {
-                  // Add your action here
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        content: SizedBox(
+                          height: 400,
+                          child: SfPdfViewer.asset(
+                            'assets/docs/서비스 이용약관.pdf',
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('닫기'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
                 },
-                style: TextButton.styleFrom(
-                  textStyle: TextStyle(
-                      decoration: TextDecoration.underline,
-                      decorationThickness: 4),
-                ),
-                child: Text(
+                child: const Text(
                   '자세히',
                   textAlign: TextAlign.end,
                   style: TextStyle(
@@ -134,11 +155,11 @@ class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
                   Checkbox(
                     value: individualAgreementsChecked[2],
                     onChanged: (value) => toggleIndividualAgreement(2, value),
-                    activeColor: Color(0xFF00233D),
+                    activeColor: const Color(0xFF00233D),
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
-                  Text(
-                    '(필수) 이용약관 동의',
+                  const Text(
+                    '개인정보 수집 및 이용',
                     style: TextStyle(
                       fontSize: 16,
                     ),
@@ -147,35 +168,36 @@ class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
               ),
               TextButton(
                 onPressed: () {
-                  // Add your action here
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        content: const SizedBox(
+                          height: 400,
+                          child: WebView(
+                            initialUrl:
+                                'https://plip.kr/pcc/148da46f-f4e5-4e54-814a-d6c8b3f8568b/consent/1.html',
+                            javascriptMode: JavascriptMode.unrestricted,
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('닫기'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
                 },
-                style: TextButton.styleFrom(
-                  textStyle: TextStyle(
-                      decoration: TextDecoration.underline,
-                      decorationThickness: 4),
-                ),
-                child: Text(
+                child: const Text(
                   '자세히',
                   textAlign: TextAlign.end,
                   style: TextStyle(
                     color: Color(0xFF00233D),
                   ),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Checkbox(
-                value: individualAgreementsChecked[3],
-                onChanged: (value) => toggleIndividualAgreement(3, value),
-                activeColor: Color(0xFF00233D),
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ),
-              Text(
-                '(선택) 광고성 정보 수신 동의',
-                style: TextStyle(
-                  fontSize: 16,
                 ),
               ),
             ],

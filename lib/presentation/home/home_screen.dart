@@ -70,17 +70,19 @@ class _HomeScreenState extends State<HomeScreen> {
    @override
   void initState() {
     super.initState();
-    final rankingProvider = Provider.of<RankingProvider>(context);
-    rankingProvider.loadTop10Rankings();
-    rankingProvider.loadPlayRankings();
-    rankingProvider.loadMusicalRankings();
-    rankingProvider.loadClassicRankings();
-    rankingProvider.loadKoreanRankings();
-    rankingProvider.loadPopularRankings();
-    rankingProvider.loadDanceRankings();
-    rankingProvider.loadCircusRankings();
-    rankingProvider.loadComplexRankings();
-    rankingProvider.loadKidRankings();
+    Future.delayed(Duration.zero, () {
+      final rankingProvider = Provider.of<RankingProvider>(context);
+      rankingProvider.loadTop10Rankings();
+      rankingProvider.loadPlayRankings();
+      rankingProvider.loadMusicalRankings();
+      rankingProvider.loadClassicRankings();
+      rankingProvider.loadKoreanRankings();
+      rankingProvider.loadPopularRankings();
+      rankingProvider.loadDanceRankings();
+      rankingProvider.loadCircusRankings();
+      rankingProvider.loadComplexRankings();
+      rankingProvider.loadKidRankings();
+  });
   }
 
   @override

@@ -10,8 +10,8 @@ import 'package:artroad/src/provider/facdetail_provider.dart';
 import 'package:artroad/src/provider/ranking_provider.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:artroad/src/provider/search/facility_provider.dart';
+import 'package:kakao_flutter_sdk_share/kakao_flutter_sdk_share.dart';
 import 'package:provider/provider.dart';
-import 'package:kakao_flutter_sdk/kakao_flutter_sdk_user.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {

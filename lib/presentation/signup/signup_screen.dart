@@ -59,6 +59,8 @@ class _SignupScreenState extends State<SignupScreen> {
   final FocusNode pwcheckFocus = FocusNode();
 
   final _formKey = GlobalKey<FormState>();
+
+  List<bool> individualAgreementsChecked = [false, false, false];
   @override
   void initState() {
     super.initState();
@@ -68,6 +70,24 @@ class _SignupScreenState extends State<SignupScreen> {
     pwField.text = "r3OeR0UDal";
     pwcheckField.text = "r3OeR0UDal";
   }
+
+  // 회원가입 버튼을 눌렀을 때 호출될 함수
+  void signUpButtonPressed() async {
+    if (_formKey.currentState!.validate()) {
+      // validation 이 성공하면 폼 저장하기
+      _formKey.currentState!.save();
+
+      // 개별 동의가 모두 선택되었는지 확인
+      if (individualAgreementsChecked.every((isChecked) => isChecked)) {
+        print('모든 개별동의 체크박스가 선택됨');
+        signUpWithFirebase(
+            nameField.text, emailField.text, pwField.text, pwcheckField.text);
+      } else {
+        print('개별동의 체크박스를 모두 선택해야 합니다.');
+      }
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -144,25 +164,20 @@ class _SignupScreenState extends State<SignupScreen> {
                               const SizedBox(
                                 height: 25,
                               ),
-                              const SignupTermsOfService(), //약관동의
+                              SignupTermsOfService(
+                                //약관동의
+                                onAgreementsChanged:
+                                    (List<bool> newAgreements) {
+                                  setState(() {
+                                    individualAgreementsChecked = newAgreements;
+                                  });
+                                },
+                              ),
                               const SizedBox(
                                 height: 25,
                               ),
                               CustomButtonMainColor(
-                                onPressed: () async {
-                                  if (_formKey.currentState!.validate()) {
-                                    // validation 이 성공하면 폼 저장하기
-                                    _formKey.currentState!.save();
-                                    print('성공');
-                                    // If the form is valid, display a SnackBar. In the real world,
-                                    // you'd often call a server or save the information in a database.
-                                    signUpWithFirebase(
-                                        nameField.text,
-                                        emailField.text,
-                                        pwField.text,
-                                        pwcheckField.text);
-                                  }
-                                },
+                                onPressed: signUpButtonPressed,
                                 text: '회원가입',
                               ),
                             ],
