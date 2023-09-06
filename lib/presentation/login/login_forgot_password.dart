@@ -1,4 +1,3 @@
-import 'package:artroad/presentation/login/login_screen.dart';
 import 'package:artroad/widgets/check_validate.dart';
 import 'package:artroad/widgets/custom_header.dart';
 import 'package:artroad/widgets/custom_textformfield.dart';

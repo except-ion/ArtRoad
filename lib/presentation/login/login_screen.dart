@@ -4,6 +4,7 @@ import 'package:artroad/presentation/basepage_screen/basepage_screen.dart';
 import 'package:artroad/presentation/signup/signup_screen.dart';
 import 'package:artroad/widgets/check_validate.dart';
 import 'package:artroad/widgets/custom_button_main_color.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:artroad/theme/theme_helper.dart';
 import 'dart:async';
@@ -125,48 +126,58 @@ class _LoginScreenState extends State<LoginScreen> {
                                       .validatePassword(pwFocus, '$value'),
                                 ),
                                 const SizedBox(height: 17),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Checkbox(
-                                          activeColor: Color(0xFF00233D),
-                                          value: _isCheckRemember,
-                                          onChanged: (value) {
-                                            bottomState(() {
-                                              setState(() {
-                                                print('\n\n\n$value');
-                                                _isCheckRemember = value!;
+                                FittedBox(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Checkbox(
+                                            activeColor: Color(0xFF00233D),
+                                            value: _isCheckRemember,
+                                            onChanged: (value) {
+                                              bottomState(() {
+                                                setState(() {
+                                                  print('\n\n\n$value');
+                                                  _isCheckRemember = value!;
+                                                });
                                               });
-                                            });
-                                          },
-                                          materialTapTargetSize: //패딩 제거
-                                              MaterialTapTargetSize.shrinkWrap,
-                                        ),
-                                        const Text('아이디 저장'),
-                                      ],
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                LoginForgotPasswordScreen(),
+                                            },
+                                            materialTapTargetSize: //패딩 제거
+                                                MaterialTapTargetSize
+                                                    .shrinkWrap,
                                           ),
-                                        );
-                                      },
-                                      style: TextButton.styleFrom(
-                                        textStyle: TextStyle(
-                                          decoration: TextDecoration.underline,
-                                          color: Colors.blue,
-                                        ),
+                                          FittedBox(
+                                            child: const AutoSizeText('아이디 저장',
+                                                maxFontSize: 16),
+                                          ),
+                                        ],
                                       ),
-                                      child: Text('비밀번호를 잃어버리셨나요?'),
-                                    )
-                                  ],
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LoginForgotPasswordScreen(),
+                                            ),
+                                          );
+                                        },
+                                        child: FittedBox(
+                                          child: AutoSizeText(
+                                            '비밀번호를 잃어버리셨나요?',
+                                            maxFontSize: 16,
+                                            style: TextStyle(
+                                              decoration:
+                                                  TextDecoration.underline,
+                                              color: Colors.blue,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                                 const SizedBox(height: 25),
                                 CustomButtonMainColor(
@@ -188,7 +199,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   },
                                   text: '로그인',
                                 ),
-                                const SizedBox(height: 25),
                                 const SizedBox(
                                   height: 25,
                                 ),
@@ -251,7 +261,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     flex: 3,
                     child: Align(
                       alignment: Alignment.center,
-                      child: Text(
+                      child: AutoSizeText(
                         "ArtRoad",
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
@@ -261,6 +271,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             color: Colors
                                 .white // 텍스트 색상 설정 (그라데이션에 의해 가려지므로 원하는 색상 사용 가능)
                             ),
+                        maxFontSize: 80,
                       ),
                     ),
                   ),
