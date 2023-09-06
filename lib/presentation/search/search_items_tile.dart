@@ -27,6 +27,25 @@ class _SearchItemsTileState extends State<SearchItemsTile> {
 
   @override
   Widget build(BuildContext context) {
+    ///텍스트 길이 줄이는 함수
+    int maxLength1 = 20;
+    int maxLength2 = 30;
+    if (widget.item is Concert) {
+      widget.item.prfnm = widget.item.prfnm.length <= maxLength1
+          ? widget.item.prfnm
+          : '${widget.item.prfnm.substring(0, maxLength1)}...';
+      widget.item.fcltynm = widget.item.fcltynm.length <= maxLength2
+          ? widget.item.fcltynm
+          : '${widget.item.fcltynm.substring(0, maxLength2)}...';
+    } else {
+      widget.item.fcltynm = widget.item.fcltynm.length <= maxLength1
+          ? widget.item.fcltynm
+          : '${widget.item.fcltynm.substring(0, maxLength1)}...';
+      widget.item.adres = widget.item.adres.length <= maxLength2
+          ? widget.item.adres
+          : '${widget.item.adres.substring(0, maxLength2)}...';
+    }
+
     return Padding(
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
@@ -47,6 +66,7 @@ class _SearchItemsTileState extends State<SearchItemsTile> {
           child: Container(
             width: 364,
             height: 80,
+            clipBehavior: Clip.hardEdge,
             decoration: ShapeDecoration(
               color: Colors.white,
               shape: RoundedRectangleBorder(
@@ -77,8 +97,30 @@ class _SearchItemsTileState extends State<SearchItemsTile> {
                               ? Image.network('${widget.item.poster}',
                                   errorBuilder: (context, error, stackTrace) {
                                   _updateImageLoading(false);
-                                  return const Text('이미지 로드 실패');
-                                }, height: 70, fit: BoxFit.fitHeight)
+                                  return Container(
+                                      color: Colors.grey[100],
+                                      height: 70,
+                                      width: 48,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.no_photography_outlined,
+                                            size: 24,
+                                            color: Colors.grey[600],
+                                          ),
+                                          Text(
+                                            'No Image',
+                                            style: TextStyle(
+                                              fontSize: 7,
+                                              color: Colors.grey[600],
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ));
+                                }, height: 70, width: 48, fit: BoxFit.fill)
                               : Container(
                                   color: Colors.grey[100],
                                   height: 70,
@@ -121,7 +163,9 @@ class _SearchItemsTileState extends State<SearchItemsTile> {
                             fontWeight: FontWeight.w700,
                             height: 1.20,
                           ),
-                          maxLines: 1,
+                          maxLines: 2,
+                          overflow: TextOverflow
+                              .ellipsis, // 글자가 너무 길 경우 생략 부호 (...) 표시
                         ),
                       ), //공연장 이름
                       Row(
