@@ -189,55 +189,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   text: '로그인',
                                 ),
                                 const SizedBox(height: 25),
-                                TextButton(
-                                  onPressed: () {
-                                    if (_formKey.currentState!.validate()) {
-                                      // validation 이 성공하면 폼 저장하기
-                                      _formKey.currentState!.save();
-                                      print('로그인 성공');
-                                      Navigator.pop(context); // 다이얼로그 닫기
-                                      //로그인 로직 추가
-                                      // 로그인 성공 후 페이지 이동
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              BasepageScreen(),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                  style: TextButton.styleFrom(
-                                      textStyle: TextStyle(
-                                          textBaseline:
-                                              TextBaseline.alphabetic),
-                                      backgroundColor: const Color(0xFFFEE500),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      minimumSize: const Size(350, 50)),
-                                  child: Stack(
-                                    clipBehavior: Clip.none,
-                                    children: [
-                                      Positioned(
-                                        top: -6,
-                                        left: -100,
-                                        child: Transform.scale(
-                                            scale: 0.6,
-                                            child: Image.asset(
-                                                'assets/images/login_kakao.png')),
-                                      ),
-                                      Text(
-                                        '카카오 로그인',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
                                 const SizedBox(
                                   height: 25,
                                 ),
