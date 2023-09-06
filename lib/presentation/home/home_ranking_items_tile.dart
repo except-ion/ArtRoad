@@ -55,7 +55,7 @@ class _RankingTileState extends State<RankingTile> {
                       'http://www.kopis.or.kr/${widget._Ranking.poster}',
                       width: 200,
                       height: 270,
-                      fit: BoxFit.fitWidth,
+                      fit: BoxFit.fill,
                       errorBuilder: (context, error, stackTrace) {
                         _updateImageLoading(false);
                         return Container(

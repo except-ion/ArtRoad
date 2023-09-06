@@ -72,7 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
-      final rankingProvider = Provider.of<RankingProvider>(context);
+      final rankingProvider = Provider.of<RankingProvider>(context, listen: false);
+
       rankingProvider.loadTop10Rankings();
       rankingProvider.loadPlayRankings();
       rankingProvider.loadMusicalRankings();
