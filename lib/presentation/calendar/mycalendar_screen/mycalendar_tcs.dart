@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../../core/utils/size_utils.dart';
@@ -49,33 +48,27 @@ class _TableCalendarScreenState extends State<mTableCalendarScreen> {
                   firstDay: DateTime.utc(2023, 1, 1),
                   lastDay: DateTime.utc(2023, 12, 31),
                   focusedDay: focusedDay,
-
                   locale: 'ko-KR',
                   daysOfWeekHeight: 20,
-
                   rowHeight: 42,
-
-
                   onDaySelected: (DateTime selectedDay, DateTime focusedDay) {
                     // 선택된 날짜의 상태를 갱신합니다.
-                    setState((){
+                    setState(() {
                       this.selectedDay = selectedDay;
                       this.focusedDay = focusedDay;
                     });
                   },
-
                   calendarBuilders: CalendarBuilders(
                     outsideBuilder: (context, day, focusedDay) {
-                      isFiveWeeks = MaxNumOfWeeks().calculateMaxWeeksInMonth(focusedDay);
-                      return null;// 변경된 값 출력
+                      isFiveWeeks =
+                          MaxNumOfWeeks().calculateMaxWeeksInMonth(focusedDay);
+                      return null; // 변경된 값 출력
                     },
                   ),
-
                   selectedDayPredicate: (DateTime day) {
                     // selectedDay 와 동일한 날짜의 모양을 바꿔줍니다.
                     return isSameDay(selectedDay, day);
                   },
-
                   headerStyle: const HeaderStyle(
                     titleCentered: true,
                     formatButtonVisible: false,
@@ -92,7 +85,6 @@ class _TableCalendarScreenState extends State<mTableCalendarScreen> {
                       size: 30.0,
                     ),
                   ),
-
                   calendarStyle: const CalendarStyle(
                     canMarkersOverflow: false,
                     markersAutoAligned: true,
@@ -112,7 +104,8 @@ class _TableCalendarScreenState extends State<mTableCalendarScreen> {
                     todayDecoration: BoxDecoration(
                       color: Colors.transparent,
                       shape: BoxShape.circle,
-                      border: Border.fromBorderSide(BorderSide(color: Color(0XFF176FF2), width: 1.5)),
+                      border: Border.fromBorderSide(
+                          BorderSide(color: Color(0XFF176FF2), width: 1.5)),
                     ),
                     selectedTextStyle: TextStyle(
                       color: Colors.white,
@@ -125,36 +118,35 @@ class _TableCalendarScreenState extends State<mTableCalendarScreen> {
                   ),
                 ),
               ),
-
-              Row(
-                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // if (isFiveWeeks)
-                  //   Padding(
-                  //     padding: getPadding(top: 100, left: 20),
-                  //     child: CalendarDayInfo(selectedDay: selectedDay),
-                  //   ),
-                  // if (!isFiveWeeks)
-                  //   Padding(
-                  //     padding: getPadding(top: 0, left: 20),
-                  //     child: CalendarDayInfo(selectedDay: selectedDay),
-                  //   ),
-                  Padding(
-                      padding: getPadding(top: 100, left: 20),
-                    child: CalendarDayInfo(selectedDay: selectedDay),
-                  ),
-                ],
+              Padding(
+                padding: getPadding(top:80, left: 20, right: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // if (isFiveWeeks)
+                    //   Padding(
+                    //     padding: getPadding(top: 100, left: 20),
+                    //     child: CalendarDayInfo(selectedDay: selectedDay),
+                    //   ),
+                    // if (!isFiveWeeks)
+                    //   Padding(
+                    //     padding: getPadding(top: 0, left: 20),
+                    //     child: CalendarDayInfo(selectedDay: selectedDay),
+                    //   ),
+                    CalendarDayInfo(selectedDay: selectedDay),
+                    mCalendarScheduleAdd(selectedDay: selectedDay),
+                  ],
+                ),
               ),
-
               mCalendarListView(selectedDay: selectedDay),
             ],
           ),
         ),
-        Positioned(
-          top: 360,
-          left: 336,
-            child: mCalendarScheduleAdd(selectedDay: selectedDay),
-        ),
+        // Positioned(
+        //   bottom: 50, // 화면 아래로 이동
+        //   right: 10, // 화면 오른쪽으로 이동
+        //     child: mCalendarScheduleAdd(selectedDay: selectedDay),
+        // ),
       ],
     );
   }
