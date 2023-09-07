@@ -61,8 +61,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final FocusNode pwcheckFocus = FocusNode();
 
   final _formKey = GlobalKey<FormState>();
-
-  List<bool> individualAgreementsChecked = [false, false, false];
+  bool allAgreementsChecked = false;
   @override
   void initState() {
     super.initState();
@@ -80,7 +79,7 @@ class _SignupScreenState extends State<SignupScreen> {
       _formKey.currentState!.save();
 
       // 개별 동의가 모두 선택되었는지 확인
-      if (individualAgreementsChecked.every((isChecked) => isChecked)) {
+      if (allAgreementsChecked) {
         print('모든 개별동의 체크박스가 선택됨');
         signUpWithFirebase(
             nameField.text, emailField.text, pwField.text, pwcheckField.text);
@@ -174,10 +173,9 @@ class _SignupScreenState extends State<SignupScreen> {
                               ),
                               SignupTermsOfService(
                                 //약관동의
-                                onAgreementsChanged:
-                                    (List<bool> newAgreements) {
+                                onAgreementsChanged: (bool newAgreements) {
                                   setState(() {
-                                    individualAgreementsChecked = newAgreements;
+                                    allAgreementsChecked = newAgreements;
                                   });
                                 },
                               ),

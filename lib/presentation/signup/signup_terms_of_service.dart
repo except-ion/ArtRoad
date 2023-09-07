@@ -4,7 +4,7 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 class SignupTermsOfService extends StatefulWidget {
-  final Function(List<bool>) onAgreementsChanged;
+  final Function(bool) onAgreementsChanged;
 
   const SignupTermsOfService({super.key, required this.onAgreementsChanged});
 
@@ -24,6 +24,7 @@ class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
         for (int i = 0; i < individualAgreementsChecked.length; i++) {
           individualAgreementsChecked[i] = value;
         }
+        widget.onAgreementsChanged(allAgreementsChecked);
       });
     }
   }
@@ -39,8 +40,6 @@ class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
           allAgreementsChecked =
               individualAgreementsChecked.every((isChecked) => isChecked);
         }
-        // 개별 동의 체크박스 상태를 부모 위젯에 알리기
-        widget.onAgreementsChanged(individualAgreementsChecked);
       });
     }
   }
