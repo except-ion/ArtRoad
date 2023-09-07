@@ -1,9 +1,12 @@
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:artroad/core/app_export.dart';
+import 'package:artroad/presentation/services/firebase_firestore_services.dart';
+import 'package:artroad/src/provider/user_provider.dart';
 import 'package:artroad/widgets/custom_header.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 class MyInfo extends StatefulWidget {
   const MyInfo({super.key});
@@ -303,6 +306,17 @@ class _MyInfo extends State<MyInfo> {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+    String userId = userProvider.firebaseUserId!;
+    final FirebaseStoreService firebaseStoreService = FirebaseStoreService();
+    Future<List<String>> userInfoListFuture = firebaseStoreService.getUserInfo(userId);
+    
+    return FutureBuilder<List<String>>(
+      future: userInfoListFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData) {
+            List<String> userInfoList = snapshot.data!;
     return Column(
       children: [
         const CustomHeader(
@@ -320,13 +334,14 @@ class _MyInfo extends State<MyInfo> {
                     padding: getPadding(left: 20, right: 20),
                     child: Column(
                       children: [
-                        const SizedBox(
+                        SizedBox(
                           height: 41,
                           child: Row(
                             children: [
                               Text(
-                                "이름",
-                                style: TextStyle(
+                                //이름
+                                userInfoList[0],
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -335,13 +350,14 @@ class _MyInfo extends State<MyInfo> {
                           ),
                         ),
                         const Divider(),
-                        const SizedBox(
+                         SizedBox(
                           height: 41,
                           child: Row(
                             children: [
                               Text(
-                                "이메일",
-                                style: TextStyle(
+                                //이메일
+                                userInfoList[1],
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -426,6 +442,15 @@ class _MyInfo extends State<MyInfo> {
         ),
       ],
     );
+  } else if (snapshot.hasError) {
+            throw Exception('Widget cannot be null');
+          }
+        }
+  return (
+    const Center(
+      child: SizedBox( width: 30, height: 30, child: CircularProgressIndicator()))
+    );
+  },
+    );
   }
-
 }
