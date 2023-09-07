@@ -1,82 +1,61 @@
+import 'package:artroad/presentation/services/firebase_firestore_services.dart';
+import 'package:artroad/src/model/profile_concert.dart';
+import 'package:artroad/src/provider/user_provider.dart';
 import 'package:artroad/widgets/custom_header.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../../../src/model/condetail.dart';
+import 'package:provider/provider.dart';
 import 'favorite_items_tile.dart';
 
 class FavoriteScreen extends StatefulWidget {
+  const FavoriteScreen({super.key});
+
   @override
   _FavoriteScreenState createState() => _FavoriteScreenState();
 }
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
-  final List<ConcertDetail> concertList = [
-    ConcertDetail(
-        mt20id: 'PF132236',
-        prfnm: '멤',
-        poster: null,
-        prfpdfrom: '2023.07.12',
-        prfpdto: '2023.09.03',
-        prfruntime: '165분',
-        prfage: '14세 이상 관람가',
-        genrenm: '뮤지컬',
-        fcltynm: null,
-        styurls: 'assets/images/concert_example.jpg'),
-    ConcertDetail(
-        mt20id: 'PF132236',
-        prfnm: '멤피스 1',
-        poster: 'assets/images/poster_example5.jpeg',
-        prfpdfrom: '2023.07.12',
-        prfpdto: '2023.09.03',
-        prfruntime: '165분',
-        prfage: '14세 이상 관람가',
-        genrenm: '뮤지컬',
-        fcltynm: '예술의 전당 오페라 극장',
-        styurls: 'assets/images/concert_example.jpg'),
-    ConcertDetail(
-        mt20id: 'PF132236',
-        prfnm: '멤피스 2',
-        poster: 'assets/images/poster_example5.jpeg',
-        prfpdfrom: '2023.07.12',
-        prfpdto: '2023.09.03',
-        prfruntime: '165분',
-        prfage: '14세 이상 관람가',
-        genrenm: '뮤지컬',
-        fcltynm: '예술의 전당 오페라 극장',
-        styurls: 'assets/images/concert_example.jpg'),
-    ConcertDetail(
-        mt20id: 'PF132236',
-        prfnm: '멤피스 3',
-        poster: 'assets/images/poster_example5.jpeg',
-        prfpdfrom: '2023.07.12',
-        prfpdto: '2023.09.03',
-        prfruntime: '165분',
-        prfage: '14세 이상 관람가',
-        genrenm: '뮤지컬',
-        fcltynm: '예술의 전당 오페라 극장',
-        styurls: 'assets/images/concert_example.jpg'),
-
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          CustomHeader(
-            name: '관심공연 목록',
-          ),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: concertList.length,
-            itemBuilder: (context, index) {
-              return FavoriteItemsTile(concertList[index]);
-            },
-          )
-        ],
-      ),
-    );
+    final userProvider = Provider.of<UserProvider>(context);
+    String userId = userProvider.firebaseUserId!;
+    
+    final FirebaseStoreService firebaseStoreService = FirebaseStoreService();
+    Future<List<ProfileConcert>> likedConcertListFuture = firebaseStoreService.getUserMypageConcert(userId);
+
+     return FutureBuilder<List<ProfileConcert>>(
+      future: likedConcertListFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData) {
+            List<ProfileConcert> likedConcertList = snapshot.data!;
+
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  const CustomHeader(
+                    name: '관심공연 목록',
+                  ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                        itemCount: likedConcertList.length,
+                        itemBuilder: (context, index) {
+                          return FavoriteItemsTile(likedConcertList[index]);
+                      },
+                    )
+                  ],
+                ),
+              );
+          } else {
+            throw Exception('Widget cannot be null');
+          }
+        } else {
+          return (
+            const Center(
+              child: SizedBox( width: 30, height: 30, child: CircularProgressIndicator()))
+          );
+          }
+      }
+     );
   }
 }

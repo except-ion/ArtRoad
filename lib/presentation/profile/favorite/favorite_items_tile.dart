@@ -1,11 +1,12 @@
+import 'package:artroad/src/model/profile_concert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../src/model/condetail.dart';
 
 class FavoriteItemsTile extends StatefulWidget {
-  FavoriteItemsTile(this._ConcertDetail);
+  const FavoriteItemsTile(this._profileConcert, {super.key});
 
-  final ConcertDetail _ConcertDetail;
+  final ProfileConcert _profileConcert;
 
   @override
   State<FavoriteItemsTile> createState() => _FavoriteItemsTileState();
@@ -38,7 +39,7 @@ class _FavoriteItemsTileState extends State<FavoriteItemsTile> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
             ),
-            shadows: [
+            shadows: const [
               BoxShadow(
                 color: Color(0x19000000),
                 blurRadius: 5,
@@ -56,12 +57,12 @@ class _FavoriteItemsTileState extends State<FavoriteItemsTile> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(6),
                   child: _imageLoading
-                      ? CircularProgressIndicator()
-                      : (widget._ConcertDetail.poster != null)
-                      ? Image.asset('${widget._ConcertDetail.poster}',
+                      ? const CircularProgressIndicator()
+                      : (widget._profileConcert.poster != null)
+                      ? Image.network('${widget._profileConcert.poster}',
                       errorBuilder: (context, error, stackTrace) {
                         _updateImageLoading(false);
-                        return Text('이미지 로드 실패');
+                        return const Text('이미지 로드 실패');
                       }, height: 70, fit: BoxFit.fitHeight)
                       : Container(
                       color: Colors.grey[100],
@@ -91,13 +92,13 @@ class _FavoriteItemsTileState extends State<FavoriteItemsTile> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(
+                      padding: const EdgeInsets.only(
                         left: 15,
                         bottom: 5,
                       ),
                       child: Text(
-                        '${widget._ConcertDetail.prfnm}',
-                        style: TextStyle(
+                        '${widget._profileConcert.prfnm}',
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 15,
                           fontWeight: FontWeight.w700,
@@ -107,11 +108,11 @@ class _FavoriteItemsTileState extends State<FavoriteItemsTile> {
                     ), //공연장 이름
                     Row(
                       children: [
-                        SizedBox(width: 10),
-                        Icon(Icons.location_on_sharp),
+                        const SizedBox(width: 10),
+                        const Icon(Icons.location_on_sharp),
                         Text(
-                          widget._ConcertDetail.fcltynm ?? '제공되지 않은 정보입니다.', // 공연의 공연장
-                          style: TextStyle(
+                          widget._profileConcert.fcltynm ?? '제공되지 않은 정보입니다.', // 공연의 공연장
+                          style: const TextStyle(
                             color: Color(0xFF828282),
                             fontSize: 12,
                             fontWeight: FontWeight.w600,

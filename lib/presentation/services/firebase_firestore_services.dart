@@ -1,7 +1,9 @@
 import 'dart:ui';
 
-import 'package:artroad/presentation/calendar/favoritecalendar_screen/favoritecalendar_bottom/fcalendar_items.dart';
+import 'package:artroad/src/model/fcalendar_items.dart';
 import 'package:artroad/presentation/calendar/mycalendar_screen/mcalendar_bottom/mcalendar_items.dart';
+import 'package:artroad/src/model/concert.dart';
+import 'package:artroad/src/model/profile_concert.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
@@ -117,12 +119,12 @@ class FirebaseStoreService{
     }
   }
 
-  Future<void> updateLikeStatus(String userId, String concertID, String facilityID, String concertName, String facilityName, DateTime startDate, DateTime endDate, bool isLiked) async {
+  Future<void> updateLikeStatus(String userId, String concertID, String facilityID, String concertName, String facilityName, String poster, DateTime startDate, DateTime endDate, bool isLiked) async {
     //isLiked == true인 경우
     if (isLiked) {
       print("updateLikeStatus addLikedStatus");
       // 좋아요를 누른 경우, 데이터를 추가
-      await addLikedStatus(userId, concertID, facilityID, concertName, facilityName, startDate, endDate);
+      await addLikedStatus(userId, concertID, facilityID, concertName, facilityName, poster, startDate, endDate);
     } else {
       print("updateLikeStatus removeLikedStatus");
       // 좋아요를 취소한 경우, 데이터를 삭제
@@ -131,7 +133,7 @@ class FirebaseStoreService{
   }
 
   //좋아요 누른 경우 추가
-  Future<void> addLikedStatus(String userId, String concertID, String facilityID, String concertName, String facilityName, DateTime startDate, DateTime endDate) async {
+  Future<void> addLikedStatus(String userId, String concertID, String facilityID, String concertName, String facilityName, String poster, DateTime startDate, DateTime endDate) async {
     print("addLikedStatus");
     try {
       await _likedConcertsCollection.doc(userId).collection('user_liked_concerts').doc(concertID).set({
@@ -139,6 +141,7 @@ class FirebaseStoreService{
         'facilityID': facilityID,
         'concertName': concertName,
         'facilityName': facilityName,
+        'poster': poster,
         'startDate': startDate,
         'endDate': endDate,
         'timestamp': FieldValue.serverTimestamp(), // 좋아요한 시간 기록
@@ -214,5 +217,33 @@ class FirebaseStoreService{
     }
   }
 
+  //
+  Future<List<ProfileConcert>> getUserMypageConcert(
+    String userId,
+    ) async {
+        List<ProfileConcert> mypage = [];
+          try {
+            QuerySnapshot querySnapshot = await _likedConcertsCollection
+              .doc(userId)
+              .collection('user_liked_concerts')
+              .get();
+            
+            for (var doc in querySnapshot.docs) {
+              Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+              mypage.add(
+                ProfileConcert(
+                  data['concertID'],
+                  data['facilityName'],
+                  data['concertName'],
+                  data['poster']
+                ),
+              );
+            }
+            return mypage;
+          } catch (e) {
+            print('좋아요 누른 공연 가져오기 실패: $e');
+            return [];
+            } 
+    }
 }
 

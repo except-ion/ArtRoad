@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'fcalendar_items.dart';
+import '../../../../src/model/fcalendar_items.dart';
 
 class fCalendarListView extends StatelessWidget {
   final DateTime selectedDay;

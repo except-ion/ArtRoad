@@ -61,6 +61,7 @@ class _CustomConcertDetailHeaderState extends State<CustomConcertDetailHeader> {
             concertDetail.mt20id ?? '', //공연시설id
             concertDetail.prfnm ?? '정보없음', //공연명
             concertDetail.fcltynm ?? '정보없음', //공영시설명
+            concertDetail.poster ?? '',
             startDate,
             endDate,
             isLiked

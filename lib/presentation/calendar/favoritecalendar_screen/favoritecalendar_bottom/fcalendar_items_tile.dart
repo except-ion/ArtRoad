@@ -1,4 +1,4 @@
-import 'package:artroad/presentation/calendar/favoritecalendar_screen/favoritecalendar_bottom/fcalendar_items.dart';
+import 'package:artroad/src/model/fcalendar_items.dart';
 import 'package:artroad/presentation/concert/concertdetail_screen.dart';
 import 'package:artroad/presentation/facility/facilitydetail_screen.dart';
 import 'package:flutter/material.dart';
