@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class CustomButtonMainColor extends StatelessWidget {
@@ -21,10 +22,10 @@ class CustomButtonMainColor extends StatelessWidget {
         ),
         minimumSize: const Size(350, 50),
       ),
-      child: Text(
+      child: AutoSizeText(
         text,
         textAlign: TextAlign.center,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.white,
           fontSize: 18,
           fontWeight: FontWeight.w400,

@@ -1,6 +1,7 @@
 import 'package:artroad/presentation/concert/concertdetail_screen.dart';
 import 'package:artroad/src/model/ranking.dart';
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class RankingTile extends StatefulWidget {
   const RankingTile(this._Ranking, {super.key});
@@ -26,15 +27,15 @@ class _RankingTileState extends State<RankingTile> {
   void _onImageTap() {
     final mt20id = widget._Ranking.mt20id;
     final prfnm = widget._Ranking.prfnm;
-    if (mt20id != null && prfnm != null){
+    if (mt20id != null && prfnm != null) {
       Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) {
-                return ConcertDetailScreen(mt20id, prfnm);
-              },
-            ),
-          );
-    } else{
+        MaterialPageRoute(
+          builder: (context) {
+            return ConcertDetailScreen(mt20id, prfnm);
+          },
+        ),
+      );
+    } else {
       print('ranking is null');
     }
   }
@@ -42,48 +43,47 @@ class _RankingTileState extends State<RankingTile> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-    onTap: _onImageTap,
-    child: Container(
-      height: 270,
-      alignment: Alignment.center,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
-        child: _imageLoading
-            ? const CircularProgressIndicator()
-            :  Image.network(
-                  'http://www.kopis.or.kr/${widget._Ranking.poster}',
-                  width: 200,
-                  height: 270,
-                  fit: BoxFit.fitWidth,
-                  errorBuilder: (context, error, stackTrace) {
-                    _updateImageLoading(false);
-                    return Container(
-                      color: Colors.grey[100],
-                      height: 270,
+        onTap: _onImageTap,
+        child: Container(
+          height: 270,
+          alignment: Alignment.center,
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: _imageLoading
+                  ? const CircularProgressIndicator()
+                  : Image.network(
+                      'http://www.kopis.or.kr/${widget._Ranking.poster}',
                       width: 200,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.no_photography_outlined,
-                            size: 38,
-                            color: Colors.grey[600],
+                      height: 270,
+                      fit: BoxFit.fill,
+                      errorBuilder: (context, error, stackTrace) {
+                        _updateImageLoading(false);
+                        return Container(
+                          color: Colors.grey[100],
+                          height: 270,
+                          width: 200,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.no_photography_outlined,
+                                size: 38,
+                                color: Colors.grey[600],
+                              ),
+                              AutoSizeText(
+                                'No Image',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.grey[600],
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                maxLines: 1,
+                              ),
+                            ],
                           ),
-                          Text(
-                            'No Image',
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.grey[600],
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                )
-      ),
-    )
-    );
+                        );
+                      },
+                    )),
+        ));
   }
 }

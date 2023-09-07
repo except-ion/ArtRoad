@@ -7,11 +7,6 @@ class AccommodationItems {
   String phone;
   String distance;
 
-  AccommodationItems(
-    this.place_name, 
-    this.category_name,
-    this.road_address_name, 
-    this.phone, 
-    this.distance
-  );
+  AccommodationItems(this.place_name, this.category_name,
+      this.road_address_name, this.phone, this.distance);
 }

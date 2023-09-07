@@ -53,69 +53,74 @@ class _LoginForgotPasswordScreenState extends State<LoginForgotPasswordScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const CustomHeader(
-                name: '비밀번호 찾기',
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              const Text(
-                '가입한 이메일 주소를 입력해주세요.\n비밀번호 재설정 메일을 보내드립니다.',
-                style: TextStyle(fontSize: 16),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 40, right: 40, bottom: 30),
-                child: Column(
-                  children: [
-                    CustomTextformfield(
-                      name: '이메일',
-                      isPassword: false,
-                      controller: emailField,
-                      focusNode: emailFocus,
-                      validator: (value) =>
-                          CheckValidate().validateEmail(emailFocus, '$value'),
+        body: Stack(
+          children: [
+            Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 100,
+                  ),
+                  const Text(
+                    '가입한 이메일 주소를 입력해주세요.\n비밀번호 재설정 메일을 보내드립니다.',
+                    style: TextStyle(fontSize: 16),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 40, right: 40, bottom: 30),
+                    child: Column(
+                      children: [
+                        CustomTextformfield(
+                          name: '이메일',
+                          isPassword: false,
+                          controller: emailField,
+                          focusNode: emailFocus,
+                          validator: (value) => CheckValidate()
+                              .validateEmail(emailFocus, '$value'),
+                        ),
+                        const SizedBox(
+                          height: 25,
+                        ),
+                        CustomButtonMainColor(
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              // validation 이 성공하면 폼 저장하기
+                              _formKey.currentState!.save();
+                              bool isSuccess =
+                                  await resetPassword(email: emailField.text);
+                              if (isSuccess) {
+                                Fluttertoast.showToast(
+                                  msg: '메일을 보냈습니다.',
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  backgroundColor: Colors.grey,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0,
+                                );
+                                Navigator.pop(context);
+                                print('메일 발신 성공');
+                              } else {
+                                print('메일 발신 실패');
+                              }
+                            }
+                          },
+                          text: '비밀번호 재설정하기',
+                        ),
+                      ],
                     ),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    CustomButtonMainColor(
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          // validation 이 성공하면 폼 저장하기
-                          _formKey.currentState!.save();
-                          bool isSuccess =
-                              await resetPassword(email: emailField.text);
-                          if (isSuccess) {
-                            Fluttertoast.showToast(
-                              msg: '메일을 보냈습니다.',
-                              toastLength: Toast.LENGTH_SHORT,
-                              backgroundColor: Colors.grey,
-                              textColor: Colors.white,
-                              fontSize: 16.0,
-                            );
-                            Navigator.pop(context);
-                            print('메일 발신 성공');
-                          } else {
-                            print('메일 발신 실패');
-                          }
-                        }
-                      },
-                      text: '비밀번호 재설정하기',
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
+                  )
+                ],
+              ),
+            ),
+            const CustomHeader(
+              name: '비밀번호 찾기',
+            ),
+          ],
         ),
       ),
     );

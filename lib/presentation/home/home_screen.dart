@@ -41,37 +41,39 @@ class _HomeScreenState extends State<HomeScreen> {
     '아동',
   ];
 
-  List<Ranking> getSelectedCategoryRankings(int index, RankingProvider provider) {
-  switch (index) {
-    case 0:
-      return provider.playRankings;
-    case 1:
-      return provider.musicalRankings;
-    case 2:
-      return provider.classicRankings;
-    case 3:
-      return provider.koreanRankings;
-    case 4:
-      return provider.popularRankings;
-    case 5:
-      return provider.danceRankings;
-    case 6:
-      return provider.circusRankings;
-    case 7:
-      return provider.complexRankings;
-    case 8:
-      return provider.kidRankings;
+  List<Ranking> getSelectedCategoryRankings(
+      int index, RankingProvider provider) {
+    switch (index) {
+      case 0:
+        return provider.playRankings;
+      case 1:
+        return provider.musicalRankings;
+      case 2:
+        return provider.classicRankings;
+      case 3:
+        return provider.koreanRankings;
+      case 4:
+        return provider.popularRankings;
+      case 5:
+        return provider.danceRankings;
+      case 6:
+        return provider.circusRankings;
+      case 7:
+        return provider.complexRankings;
+      case 8:
+        return provider.kidRankings;
 
-    default:
-      return [];
+      default:
+        return [];
     }
   }
 
-   @override
+  @override
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
-      final rankingProvider = Provider.of<RankingProvider>(context);
+      final rankingProvider = Provider.of<RankingProvider>(context, listen: false);
+
       rankingProvider.loadTop10Rankings();
       rankingProvider.loadPlayRankings();
       rankingProvider.loadMusicalRankings();
@@ -82,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
       rankingProvider.loadCircusRankings();
       rankingProvider.loadComplexRankings();
       rankingProvider.loadKidRankings();
-  });
+    });
   }
 
   @override
@@ -153,9 +155,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           //index별로 다른 list 보내도록 설정
           HomeRankingGridView(
-            selectedCategoryIndex: _selectedCategoryIndex,
-            rankingList: getSelectedCategoryRankings(_selectedCategoryIndex, rankingProvider)
-            )
+              selectedCategoryIndex: _selectedCategoryIndex,
+              rankingList: getSelectedCategoryRankings(
+                  _selectedCategoryIndex, rankingProvider))
         ]),
       ),
     );

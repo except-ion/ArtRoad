@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class CustomDetailText extends StatelessWidget {
   final String type;
@@ -6,7 +7,7 @@ class CustomDetailText extends StatelessWidget {
   final VoidCallback? onPressed; // 더보기 클릭시 이동 함수
 
   const CustomDetailText({
-    Key? key,
+    super.key,
     required this.type,
     this.content,
     this.onPressed,
@@ -15,18 +16,21 @@ class CustomDetailText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 10),
-      child: Container(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: SizedBox(
         width: double.infinity,
         child: Stack(
           clipBehavior: Clip.none,
           children: [
-            Text(
-              type,
-              style: TextStyle(
-                color: Color(0xFF939191),
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                type,
+                style: const TextStyle(
+                  color: Color(0xFF939191),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
             Positioned(
@@ -35,29 +39,36 @@ class CustomDetailText extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '$content',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: AutoSizeText(
+                      '$content',
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      overflow: TextOverflow.clip, // 텍스트 넘침 처리
+                      maxLines: 1, // 최대 줄 수
                     ),
-                    overflow: TextOverflow.clip, // 텍스트 넘침 처리
                   ),
                   if (onPressed != null)
                     InkWell(
                       onTap: onPressed,
-                      child: Row(
+                      child: const Row(
                         children: [
                           SizedBox(
                             width: 7,
                           ),
-                          const Text(
-                            '더보기',
-                            style: TextStyle(
-                              color: Color(0xFF176EF2),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              '더보기',
+                              style: TextStyle(
+                                color: Color(0xFF176EF2),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
                           Icon(

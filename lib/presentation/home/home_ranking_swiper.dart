@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:artroad/presentation/home/home_ranking_items_tile.dart';
 import 'package:card_swiper/card_swiper.dart';
@@ -25,8 +26,9 @@ class HomeRankingSwiper extends StatelessWidget {
             ),
             Transform.translate(
               offset: const Offset(10, 175),
-              child: Text(
+              child: AutoSizeText(
                 '${rankingList[index].rnum}',
+                maxFontSize: 110,
                 style: const TextStyle(
                     color: Colors.white,
                     fontSize: 110,

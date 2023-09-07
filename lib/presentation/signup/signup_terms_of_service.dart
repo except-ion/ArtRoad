@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class SignupTermsOfService extends StatefulWidget {
-  final Function(List<bool>) onAgreementsChanged;
+  final Function(bool) onAgreementsChanged;
 
   const SignupTermsOfService({super.key, required this.onAgreementsChanged});
 
@@ -23,6 +24,7 @@ class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
         for (int i = 0; i < individualAgreementsChecked.length; i++) {
           individualAgreementsChecked[i] = value;
         }
+        widget.onAgreementsChanged(allAgreementsChecked);
       });
     }
   }
@@ -38,8 +40,6 @@ class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
           allAgreementsChecked =
               individualAgreementsChecked.every((isChecked) => isChecked);
         }
-        // 개별 동의 체크박스 상태를 부모 위젯에 알리기
-        widget.onAgreementsChanged(individualAgreementsChecked);
       });
     }
   }
@@ -66,10 +66,14 @@ class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
                 activeColor: const Color(0xFF00233D),
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
-              const Text(
-                '모두 동의합니다.',
-                style: TextStyle(
-                  fontSize: 16,
+              const FittedBox(
+                fit: BoxFit.scaleDown,
+                child: AutoSizeText(
+                  '모두 동의합니다.',
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                  maxLines: 1,
                 ),
               ),
             ],
@@ -86,10 +90,14 @@ class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
                 activeColor: const Color(0xFF00233D),
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
-              const Text(
-                '만 14세 이상입니다.',
-                style: TextStyle(
-                  fontSize: 16,
+              const FittedBox(
+                fit: BoxFit.scaleDown,
+                child: AutoSizeText(
+                  '만 14세 이상입니다.',
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                  maxLines: 1,
                 ),
               ),
             ],
@@ -105,10 +113,14 @@ class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
                     activeColor: const Color(0xFF00233D),
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
-                  const Text(
-                    '서비스 이용약관',
-                    style: TextStyle(
-                      fontSize: 16,
+                  const FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: AutoSizeText(
+                      '서비스 이용약관',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                      maxLines: 1,
                     ),
                   ),
                 ],
@@ -122,7 +134,7 @@ class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
                         content: SizedBox(
                           height: 400,
                           child: SfPdfViewer.asset(
-                            'assets/docs/서비스 이용약관.pdf',
+                            'assets/docs/서비스이용약관.pdf',
                           ),
                         ),
                         actions: [
@@ -137,11 +149,15 @@ class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
                     },
                   );
                 },
-                child: const Text(
-                  '자세히',
-                  textAlign: TextAlign.end,
-                  style: TextStyle(
-                    color: Color(0xFF00233D),
+                child: const FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: AutoSizeText(
+                    '자세히',
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                      color: Color(0xFF00233D),
+                    ),
+                    maxLines: 1,
                   ),
                 ),
               ),
@@ -158,10 +174,14 @@ class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
                     activeColor: const Color(0xFF00233D),
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
-                  const Text(
-                    '개인정보 수집 및 이용',
-                    style: TextStyle(
-                      fontSize: 16,
+                  const FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: AutoSizeText(
+                      '개인정보 수집 및 이용',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                      maxLines: 1,
                     ),
                   ),
                 ],
@@ -192,11 +212,15 @@ class _SignupTermsOfServiceState extends State<SignupTermsOfService> {
                     },
                   );
                 },
-                child: const Text(
-                  '자세히',
-                  textAlign: TextAlign.end,
-                  style: TextStyle(
-                    color: Color(0xFF00233D),
+                child: const FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: AutoSizeText(
+                    '자세히',
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                      color: Color(0xFF00233D),
+                    ),
+                    maxLines: 1,
                   ),
                 ),
               ),

@@ -2,16 +2,15 @@ import 'package:artroad/src/model/ranking.dart';
 import 'package:flutter/material.dart';
 import 'package:artroad/presentation/home/home_ranking_items_tile.dart';
 
-
 class HomeRankingGridView extends StatelessWidget {
   final int selectedCategoryIndex; // 선택된 칩의 인덱스를 받을 변수
   final List<Ranking> rankingList;
 
   const HomeRankingGridView({
-    Key? key, 
+    Key? key,
     required this.selectedCategoryIndex,
     required this.rankingList,
-    }) : super(key: key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

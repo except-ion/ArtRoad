@@ -25,7 +25,7 @@ class BasepageScreen extends StatelessWidget {
                 onGenerateRoute: (routeSetting) => PageRouteBuilder(
                     pageBuilder: (ctx, ani, ani1) =>
                         getCurrentPage(routeSetting.name!),
-                    transitionDuration: Duration(seconds: 0))),
+                    transitionDuration: const Duration(seconds: 0))),
             bottomNavigationBar:
                 CustomBottomBar(onChanged: (BottomBarEnum type) {
               Navigator.pushNamed(
@@ -53,13 +53,13 @@ class BasepageScreen extends StatelessWidget {
   Widget getCurrentPage(String currentRoute) {
     switch (currentRoute) {
       case AppRoutes.favoritecalendarScreen:
-        return FavoritecalendarScreen();
+        return const FavoritecalendarScreen();
       case AppRoutes.homeScreen:
-        return HomeScreen();
+        return const HomeScreen();
       case AppRoutes.profileScreen:
-        return ProfileScreen();
+        return const ProfileScreen();
       case AppRoutes.searchScreen:
-        return SearchScreen();
+        return const SearchScreen();
       default:
         return DefaultWidget();
     }

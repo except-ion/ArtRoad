@@ -9,48 +9,57 @@ class CustomConcertDetailHeader extends StatefulWidget {
   final bool hasLiked;
   final bool isDetail;
   final String concertId;
-  
 
-  const CustomConcertDetailHeader({
-    super.key, 
-    required this.concertName,
-    required this.concertId,
+  const CustomConcertDetailHeader(
+      {super.key,
+      required this.concertName,
+      required this.concertId,
+      this.hasLiked = false,
+      this.isDetail = false});
 
-    this.hasLiked = false,
-    this.isDetail = false
-  });
-  
   @override
-  _CustomConcertDetailHeaderState createState() => _CustomConcertDetailHeaderState();
+  _CustomConcertDetailHeaderState createState() =>
+      _CustomConcertDetailHeaderState();
 }
 
 class _CustomConcertDetailHeaderState extends State<CustomConcertDetailHeader> {
   final FirebaseStoreService _firebaseStoreService = FirebaseStoreService();
   late String userId;
-  late bool isLiked; 
+  late bool isLiked;
 
   @override
   void initState() {
     super.initState();
-    final userProvider = Provider.of<UserProvider>(context);
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
     userId = userProvider.firebaseUserId!;
+    // 초기 좋아요 상태를 가져오는 메서드 호출
+    getInitialLikeStatus(userId, widget.concertId);
   }
 
-  DateTime stringToDatetime(String date){
+  // 좋아요 상태를 가져오는 비동기 메서드
+  Future<bool> getInitialLikeStatus(String userId, String concertId) async {
+    final liked = await _firebaseStoreService.getLikedStatus(userId, concertId);
+    return liked;
+  }
+
+  DateTime stringToDatetime(String date) {
     List<String> dateParts = date.split('.');
-      int year = int.parse(dateParts[0]);
-      int month = int.parse(dateParts[1]);
-      int day = int.parse(dateParts[2]);
+    int year = int.parse(dateParts[0]);
+    int month = int.parse(dateParts[1]);
+    int day = int.parse(dateParts[2]);
 
-      DateTime datetime = DateTime(year, month, day);
-      print('datetime date: $datetime');
-      return datetime;
+    DateTime datetime = DateTime(year, month, day);
+    print('datetime date: $datetime');
+    return datetime;
   }
+
   //좋아요 클릭 유무
   void toggleLiked(String? userId) async {
-    final concertDetailProvider = Provider.of<ConcertDetailProvider>(context, listen: false);
+    final concertDetailProvider =
+        Provider.of<ConcertDetailProvider>(context, listen: false);
     final concertDetailList = concertDetailProvider.concertDetails;
-    if(concertDetailList.isNotEmpty){
+
+    if (concertDetailList.isNotEmpty) {
       final concertDetail = concertDetailList[0];
       DateTime startDate = stringToDatetime(concertDetail.prfpdfrom!);
       DateTime endDate = stringToDatetime(concertDetail.prfpdto!);
@@ -70,97 +79,91 @@ class _CustomConcertDetailHeaderState extends State<CustomConcertDetailHeader> {
           isLiked = !isLiked;
       });
       }
-  }
-  
 
-  Future<bool> getInitialLikeStatus(String userId, String concertId) async {
-    return await _firebaseStoreService.getLikedStatus(userId, concertId);
-  }
+      // // 좋아요 상태 업데이트 
+      // await _firebaseStoreService.updateLikeStatus(
+      //   userId!,
+      //   concertDetail.mt10id ?? '',
+      //   concertDetail.mt20id ?? '',
+      //   concertDetail.prfnm ?? '정보없음',
+      //   concertDetail.fcltynm ?? '정보없음',
+      //   startDate,
+      //   endDate,
+      //   !isLiked, // 현재 상태의 반대로 업데이트
+      // );
+      // setState(() {
+      //   isLiked = !isLiked;
+      //   print(isLiked);
+      //   print(getInitialLikeStatus(userId, widget.concertId));
+      // });
+    }
 
   @override
   Widget build(BuildContext context) {
-     return FutureBuilder<bool>(
-      future: getInitialLikeStatus(userId, widget.concertId),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator(); 
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else {
-          isLiked = snapshot.data ?? true; 
-        }
-      return Container(
-        child: Stack(
-          children: [
-            widget.isDetail
-                ? Image.asset('assets/images/header_dark.png')
-                : Image.asset('assets/images/header_light.png'),
-            Padding(
-              padding: const EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 5),
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Transform.scale(
-                      scale: 1.5,
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.arrow_back_rounded,
-                          color:
-                              widget.isDetail ? Colors.white : const Color(0xFF00233D),
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 14,
-                    child: Align(
-                      alignment: Alignment.topCenter,
-                      child: Text(
-                        widget.concertName,
-                        style: TextStyle(
-                          color: widget.isDetail ? Colors.white : Colors.black,
-                          fontSize: 21,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                  if (widget.hasLiked)
-                    Positioned(
-                      right: 0,
-                      top: 0,
-                      child: Transform.scale(
+    return FutureBuilder<bool>(
+        future: getInitialLikeStatus(userId, widget.concertId),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            isLiked = snapshot.data ?? true;
+          }
+          return Container(
+            child: Stack(
+              children: [
+                widget.isDetail
+                    ? Image.asset('assets/images/header_dark.png')
+                    : Image.asset('assets/images/header_light.png'),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 10, left: 15, right: 15, bottom: 5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Transform.scale(
+                        alignment: Alignment.center,
                         scale: 1.5,
                         child: IconButton(
-                          icon: isLiked
-                              ? Icon(
-                                  //좋아요 클릭 전
-                                  Icons.favorite_border,
-                                  color: widget.isDetail
-                                      ? Colors.white
-                                      : const Color(0xFF00233D),
-                                )
-                              : const Icon(
-                                  //좋아요 클릭 후
-                                  Icons.favorite,
-                                  color: Colors.red,
-                                ),
-                          onPressed: () => toggleLiked(userId),
+                          icon: Icon(
+                            Icons.arrow_back_rounded,
+                            color: widget.isDetail
+                                ? Colors.white
+                                : const Color(0xFF00233D),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                         ),
                       ),
-                    ),
-                ],
-              ),
+                      if (widget.hasLiked)
+                        Transform.scale(
+                          scale: 1.5,
+                          child: IconButton(
+                            icon: isLiked == true
+                                ? Icon(
+                                    //좋아요 클릭 전
+                                    Icons.favorite_border,
+                                    color: widget.isDetail
+                                        ? Colors.white
+                                        : const Color(0xFF00233D),
+                                  )
+                                : const Icon(
+                                    //좋아요 클릭 후
+                                    Icons.favorite,
+                                    color: Colors.red,
+                                  ),
+                            onPressed: () => toggleLiked(userId),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      );
-    }
-    ); 
+          );
+        });
   }
 }

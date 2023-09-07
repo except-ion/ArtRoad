@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'restaurant_items.dart';
 import 'restaurant_items_tile.dart';
@@ -8,12 +7,8 @@ import 'package:http/http.dart' as http;
 class RestaurantListView extends StatefulWidget {
   String? la;
   String? lo;
-  
-  RestaurantListView(
-    this.la,
-    this.lo, 
-    {super.key}
-    );
+
+  RestaurantListView(this.la, this.lo, {super.key});
 
   @override
   _RestaurantListViewState createState() => _RestaurantListViewState();
@@ -29,11 +24,11 @@ class _RestaurantListViewState extends State<RestaurantListView> {
   }
 
   Future<void> fetchRestaurantData() async {
-    String lng= widget.lo ?? '';
+    String lng = widget.lo ?? '';
     String lat = widget.la ?? '';
 
-    final String url = 
-      "https://dapi.kakao.com/v2/local/search/category.json?category_group_code=FD6&x=$lng&y=$lat";
+    final String url =
+        "https://dapi.kakao.com/v2/local/search/category.json?category_group_code=FD6&x=$lng&y=$lat";
 
     final response = await http.get(
       Uri.parse(url),
@@ -49,8 +44,8 @@ class _RestaurantListViewState extends State<RestaurantListView> {
           item['place_name'] ?? "Unknown",
           item['category_name'] ?? "Unknown",
           item['road_address_name'] ?? "Unknown",
-          item['distance'] ?? "Unknown",
           item['phone'] ?? "Unknown",
+          item['distance'] ?? "Unknown",
         ));
       }
 

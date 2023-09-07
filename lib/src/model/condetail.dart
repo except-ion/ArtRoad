@@ -9,21 +9,20 @@ class ConcertDetail {
   String? prfage; //공연 관람 연령
   String? genrenm; //공연 장르
   String? fcltynm; // 공연시설명
-  String? styurls; //소개이미지 목록
+  dynamic styurls; //소개이미지 목록
 
-  ConcertDetail({
-    this.mt20id,
-    this.mt10id,
-    this.prfnm,
-    this.poster, 
-    this.prfpdfrom, 
-    this.prfpdto,
-    this.prfruntime, 
-    this.prfage,
-    this.genrenm, 
-    this.fcltynm, 
-    this.styurls
-  });
+  ConcertDetail(
+      {this.mt20id,
+      this.mt10id,
+      this.prfnm,
+      this.poster,
+      this.prfpdfrom,
+      this.prfpdto,
+      this.prfruntime,
+      this.prfage,
+      this.genrenm,
+      this.fcltynm,
+      this.styurls});
 
   factory ConcertDetail.fromJson(Map<String, dynamic> json) {
     return ConcertDetail(
@@ -37,7 +36,8 @@ class ConcertDetail {
       prfage: json["prfage"] as String?,
       genrenm: json["genrenm"] as String?,
       fcltynm: json["fcltynm"] as String?,
-      styurls: (json["styurls"] as Map<String, dynamic>)  ['styurl'] as String,
+      styurls:
+          (json["styurls"] as Map<String, dynamic>)['styurl'] as dynamic,
     );
   }
 }
