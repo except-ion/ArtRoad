@@ -43,8 +43,8 @@ class _AccommodationListViewState extends State<AccommodationListView> {
           item['place_name'] ?? "Unknown",
           item['category_name'] ?? "Unknown",
           item['road_address_name'] ?? "Unknown",
-          item['distance'] ?? "Unknown",
           item['phone'] ?? "Unknown",
+          item['distance'] ?? "Unknown",
         ));
       }
 

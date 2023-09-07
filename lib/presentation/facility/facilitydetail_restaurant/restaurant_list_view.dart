@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'restaurant_items.dart';
 import 'restaurant_items_tile.dart';
@@ -45,8 +44,8 @@ class _RestaurantListViewState extends State<RestaurantListView> {
           item['place_name'] ?? "Unknown",
           item['category_name'] ?? "Unknown",
           item['road_address_name'] ?? "Unknown",
-          item['distance'] ?? "Unknown",
           item['phone'] ?? "Unknown",
+          item['distance'] ?? "Unknown",
         ));
       }
 
