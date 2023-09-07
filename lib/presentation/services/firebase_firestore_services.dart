@@ -2,10 +2,8 @@ import 'dart:ui';
 
 import 'package:artroad/src/model/fcalendar_items.dart';
 import 'package:artroad/presentation/calendar/mycalendar_screen/mcalendar_bottom/mcalendar_items.dart';
-import 'package:artroad/src/model/concert.dart';
 import 'package:artroad/src/model/profile_concert.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
 
 // Firestore 컬렉션 및 문서 참조
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -16,7 +14,7 @@ class FirebaseStoreService{
   //사용자 정보 가져오기
   Future<List<String>> getUserInfo(String userId) async {
      try {
-    DocumentSnapshot userDocument = await FirebaseFirestore.instance
+    DocumentSnapshot userDocument = await _firestore
         .collection('user')
         .doc(userId)
         .get();
@@ -33,6 +31,16 @@ class FirebaseStoreService{
   } catch (error) {
     print('Error fetching user data: $error');
     return ['Error', ''];
+    }
+  }
+
+  Future<bool> deleteUserInfo(String userId) async{
+     try {
+      await _firestore.collection('user').doc(userId).delete();
+      return true;
+    } catch (e) {
+      return false;
+      print('회원 삭제 실패: $e');
     }
   }
 
