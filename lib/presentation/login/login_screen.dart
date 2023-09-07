@@ -192,7 +192,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                       Row(
                                         children: [
                                           Checkbox(
-                                            activeColor: const Color(0xFF00233D),
+                                            activeColor:
+                                                const Color(0xFF00233D),
                                             value: _isCheckRemember,
                                             onChanged: (value) {
                                               bottomState(() {
@@ -202,7 +203,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                               });
                                             },
                                             materialTapTargetSize: //패딩 제거
-                                                MaterialTapTargetSize.shrinkWrap,
+                                                MaterialTapTargetSize
+                                                    .shrinkWrap,
                                           ),
                                           const FittedBox(
                                             child: AutoSizeText(
@@ -260,7 +262,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           fontSize: 16.0,
                                         );
                                         // 로그인 성공 후 페이지 이동
-                                        Navigator.of(context).push(
+                                        Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 BasepageScreen(),
@@ -292,7 +294,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     if (isSuccess) {
                                       Navigator.pop(context); // 다이얼로그 닫기
 
-                                      Navigator.of(context).push(
+                                      Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               BasepageScreen(),
