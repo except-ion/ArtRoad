@@ -23,7 +23,8 @@ class FirebaseStoreService{
       Map<String, dynamic> userData = userDocument.data() as Map<String, dynamic>;
       String userName = userData['userName'];
       String userEmail = userData['email'];
-
+      print('getUserInfo userName: $userName');
+      print('getUserInfo email: $userEmail');
       return [userName, userEmail];
     } else {
       return ['User not found', ''];

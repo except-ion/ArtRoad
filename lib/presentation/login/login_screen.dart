@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:artroad/presentation/signup/signup_screen.dart';
 import 'package:artroad/widgets/check_validate.dart';
 import 'package:artroad/widgets/custom_button_main_color.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:artroad/theme/theme_helper.dart';
 import 'dart:async';
@@ -13,6 +14,8 @@ import 'package:artroad/src/model/login_platform.dart';
 import 'package:artroad/widgets/custom_textformfield.dart';
 import 'package:artroad/presentation/login/login_forgot_password.dart';
 import 'package:artroad/presentation/services/firebase_auth_services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -50,27 +53,34 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  //Kakao login
-  // Future<bool> signInWithKakao() async {
-  //   try {
-  //     bool isInstalled = await isKakaoTalkInstalled();
+  //google login
+  Future<bool> signInWithGoogle() async {
+    try{
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
 
-  //     OAuthToken token = isInstalled
-  //         ? await UserApi.instance.loginWithKakaoTalk()
-  //         : await UserApi.instance.loginWithKakaoAccount();
-  //     print('token: $token');
-  //     // bool isSavedFirebase = await saveUserData(token.accessToken);
-  //     // if(isSavedFirebase) {
-  //     //   print('isSaveFirebase 성공');
-  //     // } else {
-  //     //   print('isSaveFirebase 실패');
-  //     // }
-  //     return true;
-  //   } catch (error) {
-  //     print('카카오톡으로 로그인 실패 $error');
-  //     return false;
-  //   }
-  // }
+      UserCredential userCredential =await FirebaseAuth.instance.signInWithCredential(credential);
+      User? user = userCredential.user;
+
+      if(user != null){
+        final userProvider = Provider.of<UserProvider>(context, listen: false);
+        userProvider.setFirebaseUserId(user.uid);
+        CollectionReference users = FirebaseFirestore.instance.collection('user');
+        await users.doc(user.uid).set({
+          'userName': user.displayName,
+          'email': user.email,
+        });
+      }
+      return true;
+    } catch(e) {
+        print('google login error: $e');
+        return false;
+    }
+  }
 
   //카카오 로그인 정보 firebase에 유저 정보 저장
   // Future<bool> saveUserData(String token) async {
@@ -276,12 +286,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                 const SizedBox(height: 25),
                                 CustomButtonMainColor(
                                   onPressed: () {
+                                    //firebase login
                                     if (_formKey.currentState!.validate()) {
                                       // validation 이 성공하면 폼 저장하기
                                       signInWithFirebase(emailField.text, pwField.text);
                                       _formKey.currentState!.save();
                                       Navigator.pop(context); // 다이얼로그 닫기
-                                      //로그인 로직 추가
 
                                       // 로그인 성공 후 페이지 이동
                                       Navigator.of(context).push(
@@ -296,20 +306,28 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 const SizedBox(height: 25),
                                 TextButton(
-                                  onPressed: () {
-
-                                    if (_formKey.currentState!.validate()) {
-                                      // validation 이 성공하면 폼 저장하기
-                                      signInWithFirebase(emailField.text, pwField.text);
-                                      _formKey.currentState!.save();
+                                  onPressed: () async {
+                                    //kakao login
+                                    bool isSuccess = await signInWithGoogle();
+                                    if(isSuccess){
                                       Navigator.pop(context); // 다이얼로그 닫기
+
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               BasepageScreen(),
                                         ),
                                       );
+                                    } else {
+                                      Fluttertoast.showToast(
+                                        msg: '구글 로그인 실패',
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        backgroundColor: Colors.grey,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0,
+                                      );
                                     }
+                                    
                                   },
                                   style: TextButton.styleFrom(
                                       textStyle: const TextStyle(
