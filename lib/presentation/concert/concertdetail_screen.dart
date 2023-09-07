@@ -130,7 +130,7 @@ class _ConcertDetailScreenState extends State<ConcertDetailScreen> {
                                               CrossAxisAlignment.center,
                                           children: [
                                             const AutoSizeText(
-                                              '상세 정보',
+                                              '상세 이미지',
                                               style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 16,
