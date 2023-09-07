@@ -152,8 +152,7 @@ class _ConcertDetailScreenState extends State<ConcertDetailScreen> {
                                                                       .styurls
                                                                   as List<
                                                                       dynamic>)
-                                                              .whereType<
-                                                                  String>() // 필요한 경우 String만 필터링
+                                                              .whereType<String>() // 필요한 경우 String만 필터링
                                                               .map((url) {
                                                             return Image
                                                                 .network(url);

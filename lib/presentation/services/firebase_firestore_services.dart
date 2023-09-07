@@ -4,6 +4,7 @@ import 'package:artroad/src/model/fcalendar_items.dart';
 import 'package:artroad/presentation/calendar/mycalendar_screen/mcalendar_bottom/mcalendar_items.dart';
 import 'package:artroad/src/model/profile_concert.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 // Firestore 컬렉션 및 문서 참조
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -245,7 +246,8 @@ Future<mCalendarItems?> getUserSelectedSchedule(
           Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
           DateTime startDateTime = (data['startDate'] as Timestamp).toDate();
           DateTime endDateTime = (data['endDate'] as Timestamp).toDate();
-          if (selectedDate.isAfter(startDateTime) && selectedDate.isBefore(endDateTime)) {
+         if ((startDateTime.isBefore(selectedDate) && endDateTime.isAfter(selectedDate)) ||
+          (isSameDay(selectedDate, startDateTime) || isSameDay(selectedDate, endDateTime))) {
             favorites.add(
               fCalendarItems(
                 data['concertID'],

@@ -28,9 +28,9 @@ class fCalendarItemsTile extends StatelessWidget {
 
         ListTile(
           title: Text(
-            '${_fCalendarItems.prfnm}'.toString().length <= 15
+            '${_fCalendarItems.prfnm}'.toString().length <= 20
                 ? '${_fCalendarItems.prfnm}'.toString()
-                : '${'${_fCalendarItems.prfnm}'.toString().substring(0, 15)}...',
+                : '${'${_fCalendarItems.prfnm}'.toString().substring(0, 20)}...',
             style: const TextStyle(
               color: Color(0xFF176FF2),
               fontSize: 16,

@@ -53,7 +53,6 @@ class _CustomConcertDetailHeaderState extends State<CustomConcertDetailHeader> {
     int day = int.parse(dateParts[2]);
 
     DateTime datetime = DateTime(year, month, day);
-    print('datetime date: $datetime');
     return datetime;
   }
 
@@ -67,13 +66,10 @@ class _CustomConcertDetailHeaderState extends State<CustomConcertDetailHeader> {
       final concertDetail = concertDetailList[0];
       DateTime startDate = stringToDatetime(concertDetail.prfpdfrom!);
       DateTime endDate = stringToDatetime(concertDetail.prfpdto!);
-      print('isLiked: $isLiked');
-      // bool likedStatus = await _firebaseStoreService.getLikedStatus(userId!, widget.concertId);
       
       setState((){
           isLiked = !isLiked;
           print('in setState: $isLiked');
-          // getInitialLikeStatus(userId!, widget.concertId);
         }
       );
       await _firebaseStoreService.updateLikeStatus(
@@ -93,17 +89,6 @@ class _CustomConcertDetailHeaderState extends State<CustomConcertDetailHeader> {
 
   @override
   Widget build(BuildContext context) {
-    // return FutureBuilder<bool>(
-    //     future: getInitialLikeStatus(userId, widget.concertId),
-    //     builder: (context, snapshot) {
-    //       if (snapshot.connectionState == ConnectionState.waiting) {
-    //         return const CircularProgressIndicator();
-    //       } else if (snapshot.hasError) {
-    //         return Text('Error: ${snapshot.error}');
-    //       } else {
-    //         //여기 뭐지
-    //         isLiked = snapshot.data ?? false;
-    //       }
           return Container(
             child: Stack(
               children: [
