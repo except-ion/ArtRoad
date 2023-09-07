@@ -46,30 +46,33 @@ class _LoginScreenState extends State<LoginScreen> {
 
   //google login
   Future<bool> signInWithGoogle() async {
-    try{
+    try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-      final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth?.accessToken,
         idToken: googleAuth?.idToken,
       );
 
-      UserCredential userCredential =await FirebaseAuth.instance.signInWithCredential(credential);
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
       User? user = userCredential.user;
 
-      if(user != null){
+      if (user != null) {
         final userProvider = Provider.of<UserProvider>(context, listen: false);
         userProvider.setFirebaseUserId(user.uid);
-        CollectionReference users = FirebaseFirestore.instance.collection('user');
+        CollectionReference users =
+            FirebaseFirestore.instance.collection('user');
         await users.doc(user.uid).set({
           'userName': user.displayName,
           'email': user.email,
         });
       }
       return true;
-    } catch(e) {
-        print('google login error: $e');
-        return false;
+    } catch (e) {
+      print('google login error: $e');
+      return false;
     }
   }
 
@@ -181,54 +184,60 @@ class _LoginScreenState extends State<LoginScreen> {
                                       .validatePassword(pwFocus, '$value'),
                                 ),
                                 const SizedBox(height: 17),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Checkbox(
-                                          activeColor: const Color(0xFF00233D),
-                                          value: _isCheckRemember,
-                                          onChanged: (value) {
-                                            bottomState(() {
-                                              setState(() {
-                                                _isCheckRemember = value!;
+                                FittedBox(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Checkbox(
+                                            activeColor: const Color(0xFF00233D),
+                                            value: _isCheckRemember,
+                                            onChanged: (value) {
+                                              bottomState(() {
+                                                setState(() {
+                                                  _isCheckRemember = value!;
+                                                });
                                               });
-                                            });
-                                          },
-                                          materialTapTargetSize: //패딩 제거
-                                              MaterialTapTargetSize.shrinkWrap,
-                                        ),
-                                        const FittedBox(
-                                          child: AutoSizeText('아이디 저장',
-                                              maxFontSize: 16),
-                                        ),
-                                      ],
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const LoginForgotPasswordScreen(),
+                                            },
+                                            materialTapTargetSize: //패딩 제거
+                                                MaterialTapTargetSize.shrinkWrap,
                                           ),
-                                        );
-                                      },
-                                      child: const FittedBox(
-                                        child: AutoSizeText(
-                                          '비밀번호를 잃어버리셨나요?',
-                                          maxFontSize: 16,
-                                          style: TextStyle(
-                                            decoration:
-                                                TextDecoration.underline,
-                                            color: Colors.blue,
+                                          const FittedBox(
+                                            child: AutoSizeText(
+                                              '아이디 저장',
+                                              maxFontSize: 16,
+                                              maxLines: 1,
+                                            ),
                                           ),
-                                        ),
+                                        ],
                                       ),
-                                    )
-                                  ],
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const LoginForgotPasswordScreen(),
+                                            ),
+                                          );
+                                        },
+                                        child: const FittedBox(
+                                          child: AutoSizeText(
+                                            '비밀번호를 잃어버리셨나요?',
+                                            maxFontSize: 16,
+                                            maxLines: 1,
+                                            style: TextStyle(
+                                              decoration:
+                                                  TextDecoration.underline,
+                                              color: Colors.blue,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                                 const SizedBox(height: 25),
                                 CustomButtonMainColor(
@@ -244,32 +253,31 @@ class _LoginScreenState extends State<LoginScreen> {
                                         Navigator.pop(context);
 
                                         Fluttertoast.showToast(
-                                                  msg: '로그인 성공',
-                                                  toastLength: Toast.LENGTH_SHORT,
-                                                  backgroundColor: Colors.grey,
-                                                  textColor: Colors.white,
-                                                  fontSize: 16.0,
-                                                  );
+                                          msg: '로그인 성공',
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          backgroundColor: Colors.grey,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0,
+                                        );
                                         // 로그인 성공 후 페이지 이동
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 BasepageScreen(),
                                           ),
-                                        );      
+                                        );
                                       } else {
                                         // 로그인 실패 처리
                                         print('failed');
                                         Fluttertoast.showToast(
-                                                  msg: '로그인 실패',
-                                                  toastLength: Toast.LENGTH_SHORT,
-                                                  backgroundColor: Colors.grey,
-                                                  textColor: Colors.white,
-                                                  fontSize: 16.0,
-                                                  );
+                                          msg: '로그인 실패',
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          backgroundColor: Colors.grey,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0,
+                                        );
                                       }
-                                        print('faiasdfkopwekfpowled');
-                                     
+                                      print('faiasdfkopwekfpowled');
                                     }
                                   },
                                   text: '로그인',
@@ -299,7 +307,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                         fontSize: 16.0,
                                       );
                                     }
-                                    
                                   },
                                   style: TextButton.styleFrom(
                                       textStyle: const TextStyle(
