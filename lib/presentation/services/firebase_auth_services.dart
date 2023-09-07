@@ -38,6 +38,15 @@ class FirebaseAuthService {
     } catch (e) {
       return false;
       }
+  }
+
+  Future<bool> deleteAuth() async {
+    try{
+      await _auth.currentUser?.delete();
+      return true;
+    } catch (e) {
+      return false;
     }
+  }
 
 }

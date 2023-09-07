@@ -1,5 +1,6 @@
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:artroad/core/app_export.dart';
+import 'package:artroad/presentation/services/firebase_auth_services.dart';
 import 'package:artroad/presentation/services/firebase_firestore_services.dart';
 import 'package:artroad/src/provider/user_provider.dart';
 import 'package:artroad/widgets/custom_header.dart';
@@ -213,7 +214,7 @@ class _MyInfo extends State<MyInfo> {
                                       onTap: () {
                                         // 클릭 이벤트에 따른 로직 작성
                                         bottomState((){
-                                          setState(() {
+                                          setState(() async {
                                             _storedValue = _controller.text;
                                             if(condition1 == false) {
                                               Fluttertoast.showToast(
@@ -228,23 +229,25 @@ class _MyInfo extends State<MyInfo> {
                                               condition2 = true;
                                               if(condition1 && condition2) {
                                                 //--- 탈퇴 처리 구현부 ---
-                                                Fluttertoast.showToast(
+                                                bool isSuccess = await FirebaseAuthService().deleteAuth();
+                                                if(isSuccess){
+                                                  Fluttertoast.showToast(
                                                   msg: '탈퇴 되었습니다.',
                                                   toastLength: Toast.LENGTH_SHORT,
                                                   backgroundColor: Colors.grey,
                                                   textColor: Colors.white,
                                                   fontSize: 16.0,
-                                                );
+                                                  );
+                                                } else {
+                                                    Fluttertoast.showToast(
+                                                    msg: '회원 탈퇴 실패',
+                                                    toastLength: Toast.LENGTH_SHORT,
+                                                    backgroundColor: Colors.grey,
+                                                    textColor: Colors.white,
+                                                    fontSize: 16.0,
+                                                  );
+                                                }
                                               }
-                                            }
-                                            else {
-                                              Fluttertoast.showToast(
-                                                msg: '이메일이 일치하지 않습니다.',
-                                                toastLength: Toast.LENGTH_SHORT,
-                                                backgroundColor: Colors.grey,
-                                                textColor: Colors.white,
-                                                fontSize: 16.0,
-                                              );
                                             }
                                           });
                                         });
