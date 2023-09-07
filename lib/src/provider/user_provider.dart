@@ -6,7 +6,6 @@ class UserProvider extends ChangeNotifier {
   void setFirebaseUserId(String userId) {
     firebaseUserId = userId;
     notifyListeners();
-    print('firebaseUserId: $firebaseUserId');
   }
 
   String? getFirebaseUserId(){

@@ -134,7 +134,6 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                                                 textColor: Colors.white,
                                                 fontSize: 16.0,
                                               );
-                                              print('adress copy bt');
                                             },
                                             child: const Icon(
                                               Icons.copy_rounded,

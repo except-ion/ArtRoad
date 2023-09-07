@@ -56,7 +56,6 @@ class _fTableCalendarBottomState extends State<fTableCalendarBottom> {
                             top: 3,
                             child: InkWell(
                               onTap: () {
-                                print("Location button clicked");
                               },
                               child: Row(
                                 children: [
@@ -112,7 +111,6 @@ class _fTableCalendarBottomState extends State<fTableCalendarBottom> {
                           ),
                           InkWell(
                             onTap: () {
-                              print("Concert info button clicked");
                             },
                             child: const Icon(
                               Icons.keyboard_arrow_right_rounded,

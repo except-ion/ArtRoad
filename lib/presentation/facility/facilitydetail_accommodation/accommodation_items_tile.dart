@@ -75,7 +75,6 @@ class _AccommodationItemsTileState extends State<AccommodationItemsTile> {
                               textColor: Colors.white,
                               fontSize: 16.0,
                             );
-                            print('adress copy bt');
                           },
                           child: const Icon(
                             Icons.copy_rounded,
@@ -135,7 +134,6 @@ class _AccommodationItemsTileState extends State<AccommodationItemsTile> {
                           textColor: Colors.white,
                           fontSize: 16.0,
                         );
-                        print('phone number copy bt');
                       },
                       child: const Icon(
                         Icons.copy_rounded,

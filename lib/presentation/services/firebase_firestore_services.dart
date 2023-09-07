@@ -24,14 +24,11 @@ class FirebaseStoreService{
       Map<String, dynamic> userData = userDocument.data() as Map<String, dynamic>;
       String userName = userData['userName'];
       String userEmail = userData['email'];
-      print('getUserInfo userName: $userName');
-      print('getUserInfo email: $userEmail');
       return [userName, userEmail];
     } else {
       return ['User not found', ''];
     }
   } catch (error) {
-    print('Error fetching user data: $error');
     return ['Error', ''];
     }
   }
@@ -41,7 +38,6 @@ class FirebaseStoreService{
       await _firestore.collection('user').doc(userId).delete();
       return true;
     } catch (e) {
-      print('회원 삭제 실패: $e');
       return false;
     }
   }
@@ -60,7 +56,6 @@ class FirebaseStoreService{
         String scheduleId = documentReference.id;
         return scheduleId;
       } catch (e) {
-        print('일정 추가 실패: $e');
         return '';
       }
     }
@@ -98,7 +93,6 @@ class FirebaseStoreService{
       }
       return schedules;
     } catch (e) {
-      print('일정 가져오기 실패: $e');
       } 
     }
     return [];
@@ -129,7 +123,6 @@ Future<mCalendarItems?> getUserSelectedSchedule(
           );
       }
     } catch (e) {
-      print('특정 일정 가져오기 실패: $e');
       }
         return null; 
     }
@@ -138,7 +131,6 @@ Future<mCalendarItems?> getUserSelectedSchedule(
   // 일정 수정
   Future<bool> updateSchedule(String? userId, String scheduleId, String title, DateTime date, String alarm, int color, String link) async {
     try {
-      print('updateSchedule');
       await _schedulesCollection.doc(userId).collection('user_schedules').doc(scheduleId).update({
         'title': title,
         'date': Timestamp.fromDate(date),
@@ -148,7 +140,6 @@ Future<mCalendarItems?> getUserSelectedSchedule(
       });
       return true;
     } catch (e) {
-      print('일정 수정 실패: $e');
       return false;
     }
   }
@@ -159,7 +150,6 @@ Future<mCalendarItems?> getUserSelectedSchedule(
       await _schedulesCollection.doc(userId).collection('user_schedules').doc(scheduleId).delete();
       return true;
     } catch (e) {
-      print('일정 삭제 실패: $e');
       return false;
     }
   }
@@ -167,11 +157,9 @@ Future<mCalendarItems?> getUserSelectedSchedule(
   Future<void> updateLikeStatus(String userId, String concertID, String facilityID, String concertName, String facilityName, String poster, DateTime startDate, DateTime endDate, bool isLiked) async {
     //isLiked == true인 경우
     if (isLiked) {
-      print("updateLikeStatus addLikedStatus");
       // 좋아요를 누른 경우, 데이터를 추가
       await addLikedStatus(userId, concertID, facilityID, concertName, facilityName, poster, startDate, endDate);
     } else {
-      print("updateLikeStatus removeLikedStatus");
       // 좋아요를 취소한 경우, 데이터를 삭제
       await removeLikedStatus(userId, concertID);
     }
@@ -191,7 +179,6 @@ Future<mCalendarItems?> getUserSelectedSchedule(
         'timestamp': FieldValue.serverTimestamp(), // 좋아요한 시간 기록
       });
     } catch (e) {
-      print('좋아요 누른 공연 추가 실패: $e');
     }
   }
 
@@ -200,29 +187,24 @@ Future<mCalendarItems?> getUserSelectedSchedule(
     try {
       await _likedConcertsCollection.doc(userId).collection('user_liked_concerts').doc(concertID).delete();
     } catch (e) {
-      print('좋아요 누른 공연 삭제 실패: $e');
     }
   }
 
   //concertDetailScreen Header 초기 상태
   Future<bool> getLikedStatus(String userId, String concertID) async {
     try {
-      print('getLiekdStatus 실행');
         DocumentSnapshot documentSnapshot = await _likedConcertsCollection
             .doc(userId)
             .collection('user_liked_concerts')
             .doc(concertID)
             .get();
       if (documentSnapshot.exists) {
-        print('documetnsSnapshot exists');
         return false;
       } else {
-        print('documetnsSnapshot nonon exists');
 
         return true;
       }
     } catch (e) {
-      print('좋아요 누른 공연 추가 실패: $e');
       return true;
     }
   }
@@ -261,7 +243,6 @@ Future<mCalendarItems?> getUserSelectedSchedule(
         }
       return favorites;
     } catch (e) {
-      print('좋아요 누른 공연 가져오기 실패: $e');
       return [];
     }
   }
@@ -290,7 +271,6 @@ Future<mCalendarItems?> getUserSelectedSchedule(
             }
             return mypage;
           } catch (e) {
-            print('좋아요 누른 공연 가져오기 실패: $e');
             return [];
             } 
     }

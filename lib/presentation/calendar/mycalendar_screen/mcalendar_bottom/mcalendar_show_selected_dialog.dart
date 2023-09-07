@@ -7,7 +7,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../../../../core/utils/size_utils.dart';
 
 void showSelectedDialog(BuildContext context, mCalendarItems detailList, String userId) {
-  print('showSelectedDialog: $showSelectedDialog');
   final TextEditingController textEditingController = TextEditingController();
   TextEditingController titleField = TextEditingController();
   TextEditingController linkField = TextEditingController();
@@ -74,7 +73,6 @@ void showSelectedDialog(BuildContext context, mCalendarItems detailList, String 
       Color selectedColor = colors[4]; // 초기 선택 값
       int colorValue = selectedColor.value;
 
-      print(MediaQuery.of(context).viewInsets.bottom);
       return StatefulBuilder(
         builder: (BuildContext context, StateSetter bottomState) {
           mainDialogContext = context; // 메인 다이얼로그의 BuildContext 저장
@@ -445,7 +443,6 @@ void showSelectedDialog(BuildContext context, mCalendarItems detailList, String 
                                     onChanged: (String? newValue) {
                                       bottomState(() {
                                         selectedAlarm = newValue!;
-                                        print("alarm option : $aToggledList");
 
                                         // 선택된 값에 따라 aToggledList 업데이트
                                         for (int i = 0; i < alarm.length; i++) {
@@ -509,7 +506,6 @@ void showSelectedDialog(BuildContext context, mCalendarItems detailList, String 
                                         isToggledList = List.generate(isToggledList.length, (i) => i == index ? !isToggledList[i] : false);
                                         selectedColor = colors[index];
                                         colorValue = selectedColor.value;
-                                        print("color option : $selectedColor");
                                       });
                                     },
                                     child: SizedBox(

@@ -22,7 +22,6 @@ class mCalendarListView extends StatelessWidget {
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
     String? userId = userProvider.firebaseUserId;
-    print('selectedDay in list view $selectedDay');
     
     return FutureBuilder<List<mCalendarItems>>(
       future: getScheduleData(userId),

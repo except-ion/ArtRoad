@@ -13,7 +13,6 @@ class FacilityDetailRepository {
     String baseUrl = 
       "http://www.kopis.or.kr/openApi/restful/prfplc/$facilityID?service=$apiKey";
     final response = await http.get(Uri.parse(baseUrl));
-    print(response.statusCode);
 
     if (response.statusCode == 200) {
       final body = convert.utf8.decode(response.bodyBytes);
@@ -27,9 +26,7 @@ class FacilityDetailRepository {
       if (jsonFacilityDetail != null) {
         return [FacilityDetail.fromJson(jsonFacilityDetail)];
       }
-    } else{
-      print(response);
-    }
+    } 
     return null;
   }
 }

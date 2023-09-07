@@ -58,7 +58,6 @@ class _SearchScreenState extends State<SearchScreen> {
           setState(() {
             filteredFcltItems = facilities;
             _buildSearchResults();
-            print('setState filteredFcltItems: $filteredFcltItems');
           });
         }
       }

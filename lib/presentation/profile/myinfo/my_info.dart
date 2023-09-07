@@ -50,7 +50,6 @@ class _MyInfo extends State<MyInfo> {
         ),
       ),
       builder: (BuildContext context) {
-        print(MediaQuery.of(context).viewInsets.bottom);
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter bottomState) {
             return SingleChildScrollView(
@@ -218,8 +217,6 @@ class _MyInfo extends State<MyInfo> {
                                         bottomState((){
                                           setState(() async {
                                             _storedValue = _controller.text;
-                                            print('userEmail: $userEmail');
-                                            print('_storedValue: $_storedValue');
                                             if(condition1 == false) {
                                               Fluttertoast.showToast(
                                                 msg: '처리사항 안내 확인에 동의해 주세요.',
@@ -230,8 +227,6 @@ class _MyInfo extends State<MyInfo> {
                                               );
                                             }
                                             else if(_storedValue == userEmail) {
-                                              print('userEmail: $userEmail');
-                                              print('_storedValue: $_storedValue');
                                               condition2 = true;
                                               if(condition1 && condition2) {
                                                 //--- 탈퇴 처리 구현부 ---

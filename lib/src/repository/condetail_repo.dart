@@ -29,15 +29,11 @@ class ConcertDetailRepository {
         Map<String, dynamic> jsonResult = convert.jsonDecode(json);
         final jsonConcertDetail = jsonResult['dbs']['db'];
         // jsonConcertDetail.removeWhere((key, value) => value == null);
-        print('jsonConcertDetail: $jsonConcertDetail');
         if (jsonConcertDetail != null) {
           return [ConcertDetail.fromJson(jsonConcertDetail)];
-        } else{
-          print('jsonConcert is null');
-        }
+        } 
         }
       finally{
-        print('finally print');
       }
     } return null;
   }

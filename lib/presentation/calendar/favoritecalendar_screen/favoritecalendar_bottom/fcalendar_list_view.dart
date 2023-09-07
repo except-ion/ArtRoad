@@ -15,7 +15,6 @@ class fCalendarListView extends StatelessWidget {
 
   Future<List<fCalendarItems>> getUserLikedConcertsData(String? userId) async {
     final List<fCalendarItems> fcalendarList = await _firebaseStoreService.getUserLikedConcert(userId!, selectedDay);
-    print('fcalendarList: $fcalendarList');
     return fcalendarList;
   }
 

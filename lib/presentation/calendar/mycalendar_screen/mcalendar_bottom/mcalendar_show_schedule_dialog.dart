@@ -70,7 +70,6 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay, String? user
       Color selectedColor = colors[4]; // 초기 선택 값
       int colorValue = selectedColor.value;
 
-      print(MediaQuery.of(context).viewInsets.bottom);
       return StatefulBuilder(
         builder: (BuildContext context, StateSetter bottomState) {
           mainDialogContext = context; // 메인 다이얼로그의 BuildContext 저장
@@ -428,7 +427,6 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay, String? user
                                     onChanged: (String? newValue) {
                                       bottomState(() {
                                         selectedAlarm = newValue!;
-                                        print("alarm option : $aToggledList");
 
                                         // 선택된 값에 따라 aToggledList 업데이트
                                         for (int i = 0; i < alarm.length; i++) {
@@ -492,7 +490,6 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay, String? user
                                         isToggledList = List.generate(isToggledList.length, (i) => i == index ? !isToggledList[i] : false);
                                         selectedColor = colors[index];
                                         colorValue = selectedColor.value;
-                                        print("color option : $selectedColor");
                                       });
                                     },
                                     child: SizedBox(

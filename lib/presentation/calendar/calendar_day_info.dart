@@ -20,22 +20,6 @@ class _CalendarDayInfo extends State<CalendarDayInfo> {
   @override
   Widget build(BuildContext context) {
     String selectedDate = '${widget.selectedDay.year}.${widget.selectedDay.month}.${widget.selectedDay.day}';
-    print('selectedDate: $selectedDate');
-
-    // if (widget.selectedDay.month < 10 && widget.selectedDay.day > 10) {
-    //   selectedDate = '${widget.selectedDay.year}.0${widget.selectedDay.month}.${widget.selectedDay.day}';
-    // }
-    // if (widget.selectedDay.month > 10 && widget.selectedDay.day < 10) {
-    //   selectedDate = '${widget.selectedDay.year}.${widget.selectedDay.month}.0${widget.selectedDay.day}';
-    // }
-    // if (widget.selectedDay.month < 10 && widget.selectedDay.day < 10) {
-    //   selectedDate = '${widget.selectedDay.year}.0${widget.selectedDay.month}.0${widget.selectedDay.day}';
-    // }
-    // if (widget.selectedDay.month > 10 && widget.selectedDay.day > 10) {
-    //   selectedDate = '${widget.selectedDay.year}.${widget.selectedDay.month}.${widget.selectedDay.day}';
-    // }
-
-    // print(selectedDate);
 
     return Row(
       children: [

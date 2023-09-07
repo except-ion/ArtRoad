@@ -23,7 +23,7 @@ class _FavoritecalendarScreen extends State<FavoritecalendarScreen> {
           Align(
             alignment: Alignment.topLeft,
             child: Padding(
-              padding: EdgeInsets.only(top: 30, left: 30),
+              padding: const EdgeInsets.only(top: 30, left: 30),
               child: ShaderMask(
                 shaderCallback: (Rect bounds) {
                   return const LinearGradient(
@@ -52,7 +52,6 @@ class _FavoritecalendarScreen extends State<FavoritecalendarScreen> {
               // Favorite Calendar Button
               InkWell(
                 onTap: () {
-                  print("fTableCalendar");
                   setState(() {
                     isTableCalendarVisible = !isTableCalendarVisible;
                   });
@@ -75,7 +74,6 @@ class _FavoritecalendarScreen extends State<FavoritecalendarScreen> {
               // My Calendar Button
               InkWell(
                 onTap: () {
-                  print("mTableCalendar");
                   setState(() {
                     isTableCalendarVisible = !isTableCalendarVisible;
                   });

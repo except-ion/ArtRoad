@@ -68,7 +68,6 @@ class RestaurantItemsTile extends StatelessWidget {
                               textColor: Colors.white,
                               fontSize: 16.0,
                             );
-                            print('adress copy bt');
                           },
                           child: const Icon(
                             Icons.copy_rounded,
@@ -128,7 +127,6 @@ class RestaurantItemsTile extends StatelessWidget {
                           textColor: Colors.white,
                           fontSize: 16.0,
                         );
-                        print('phone number copy bt');
                       },
                       child: const Icon(
                         Icons.copy_rounded,

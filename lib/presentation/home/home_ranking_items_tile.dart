@@ -36,7 +36,6 @@ class _RankingTileState extends State<RankingTile> {
         ),
       );
     } else {
-      print('ranking is null');
     }
   }
 

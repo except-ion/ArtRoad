@@ -18,7 +18,6 @@ class ConcertProvider extends ChangeNotifier {
       } 
       return concerts;
     } catch (error) {
-      print("Error loading concert: $error");
     }
     return null;
   }

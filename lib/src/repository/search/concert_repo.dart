@@ -45,7 +45,6 @@ class ConcertRepository {
         int itemCount = items.length ;
           concerts.addAll(items.sublist(0, itemCount).map<Concert>((item) => Concert.fromJson(item)));
       } else {
-        print(response);
       }
       return concerts;
     }

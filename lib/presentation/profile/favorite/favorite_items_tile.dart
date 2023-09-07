@@ -42,8 +42,6 @@ class _FavoriteItemsTileState extends State<FavoriteItemsTile> {
 
     return InkWell(
       onTap: () {
-        print('profile id: ${widget._profileConcert.mt20id}');
-        print('profile name: ${widget._profileConcert.prfnm}');
         Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) {

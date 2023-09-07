@@ -34,7 +34,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Uri shareUrl = await WebSharerClient.instance.makeCustomUrl(templateId: templateId);
         await launchBrowserTab(shareUrl, popupOpen: true);
       } catch (error) {
-        print('카카오톡 공유 실패 $error');
       }
    }
   }
@@ -51,7 +50,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
       builder: (BuildContext context) {
-        print(MediaQuery.of(context).viewInsets.bottom);
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter bottomState) {
             return SingleChildScrollView(
@@ -273,7 +271,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 builder: (context) => const MyInfo(), // 이동할 페이지 위젯
                               ),
                             );
-                            print('profile setting bt clicked');
                           },
                           child: const Icon(
                             Icons.settings,
@@ -335,7 +332,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       builder: (context) => const FavoriteScreen(), // 이동할 페이지 위젯
                                     ),
                                   );
-                                  print('Move to 관심공연 목록');
                                 },
                                 child: const Row(
                                   children: [
@@ -364,7 +360,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               child: InkWell(
                                 onTap: () {
                                   _showShareDialog();
-                                  print('친구에게 공유하기  Dialog');
                                 },
                                 child: const Row(
                                   children: [
@@ -398,7 +393,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       builder: (context) => AnnounceListView(), // 이동할 페이지 위젯
                                     ),
                                   );
-                                  print('Move to 공지사항');
                                 },
                                 child: const Row(
                                   children: [
@@ -429,10 +423,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => InquiryListView(), // 이동할 페이지 위젯
+                                      builder: (context) => const InquiryListView(), // 이동할 페이지 위젯
                                     ),
                                   );
-                                  print('Move to 고객센터/ 자주 묻는 문의사항');
                                 },
                                 child: const Row(
                                   children: [
@@ -466,7 +459,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       builder: (context) => ArtRoadInfo(), // 이동할 페이지 위젯
                                     ),
                                   );
-                                  print('Move to About ArtRoad');
                                 },
                                 child: const Row(
                                   children: [

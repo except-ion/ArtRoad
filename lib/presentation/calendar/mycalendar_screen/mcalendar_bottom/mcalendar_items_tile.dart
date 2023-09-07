@@ -106,7 +106,6 @@ class mCalendarItemsTile extends StatelessWidget {
                     if(_mCalendarItems.schlink != null) {
                       CustomLaunchUrl('${_mCalendarItems.schlink}');
                     }
-                    print("link button clicked");
                   },
                   child: const Icon(
                     Icons.link_rounded,

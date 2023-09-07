@@ -82,7 +82,6 @@ class fCalendarItemsTile extends StatelessWidget {
                           builder: (context) => FacilityDetailScreen(facilityID),
                         ),
                       );
-                      print('Move to facility detail page');
                     },
                     child: Text(
                       '${_fCalendarItems.fcltynm}',

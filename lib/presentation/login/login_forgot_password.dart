@@ -103,9 +103,7 @@ class _LoginForgotPasswordScreenState extends State<LoginForgotPasswordScreen> {
                                   fontSize: 16.0,
                                 );
                                 Navigator.pop(context);
-                                print('메일 발신 성공');
                               } else {
-                                print('메일 발신 실패');
                               }
                             }
                           },

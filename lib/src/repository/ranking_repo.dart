@@ -27,13 +27,11 @@ class RankingRepository {
       // 필요한 데이터 찾기
       Map<String, dynamic> jsonResult = convert.json.decode(json);
       final jsonRanking = jsonResult['boxofs']['boxof'];
-      print('jsonRanking: $jsonRanking');
       if (jsonRanking != null) {
         List<dynamic> items = jsonRanking as List;
         int itemCount = items.length < 9 ? items.length : 9;
         rankings.addAll(items.sublist(0, itemCount).map<Ranking>((item) => Ranking.fromJson(item)));
       } else {
-        print(response);
       }
     }
     if (rankings.isNotEmpty) {
@@ -68,7 +66,6 @@ class RankingRepository {
         int itemCount = items.length < 10 ? items.length : 10;
         rankings.addAll(items.sublist(0, itemCount).map<Ranking>((item) => Ranking.fromJson(item)));
       } else {
-        print(response);
       }
     }
     if (rankings.isNotEmpty) {

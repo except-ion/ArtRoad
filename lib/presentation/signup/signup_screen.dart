@@ -80,7 +80,6 @@ class _SignupScreenState extends State<SignupScreen> {
 
       // 개별 동의가 모두 선택되었는지 확인
       if (allAgreementsChecked) {
-        print('모든 개별동의 체크박스가 선택됨');
         signUpWithFirebase(
             nameField.text, emailField.text, pwField.text, pwcheckField.text);
       } else {

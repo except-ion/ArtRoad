@@ -185,7 +185,6 @@ class _ConcertDetailScreenState extends State<ConcertDetailScreen> {
                                         fit: BoxFit.fill,
                                         errorBuilder:
                                             (context, error, stackTrace) {
-                                          print('error: $error');
                                           return Container(
                                             color: Colors.grey[100],
                                             width: 170,

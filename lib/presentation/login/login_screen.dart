@@ -71,7 +71,6 @@ class _LoginScreenState extends State<LoginScreen> {
       }
       return true;
     } catch (e) {
-      print('google login error: $e');
       return false;
     }
   }
@@ -266,7 +265,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                         );
                                       } else {
                                         // 로그인 실패 처리
-                                        print('failed');
                                         Fluttertoast.showToast(
                                           msg: '로그인 실패',
                                           toastLength: Toast.LENGTH_SHORT,
@@ -275,7 +273,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                           fontSize: 16.0,
                                         );
                                       }
-                                      print('faiasdfkopwekfpowled');
                                     }
                                   },
                                   text: '로그인',

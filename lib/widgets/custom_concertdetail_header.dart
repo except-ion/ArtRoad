@@ -69,7 +69,6 @@ class _CustomConcertDetailHeaderState extends State<CustomConcertDetailHeader> {
       
       setState((){
           isLiked = !isLiked;
-          print('in setState: $isLiked');
         }
       );
       await _firebaseStoreService.updateLikeStatus(
