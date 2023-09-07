@@ -6,10 +6,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../../core/utils/size_utils.dart';
 
-void showScheduleDialog(BuildContext context, DateTime selectedDay, String? userId) {
+void showSelectedDialog(BuildContext context, mCalendarItems detailList, String userId) {
+  print('showSelectedDialog: $showSelectedDialog');
   final TextEditingController textEditingController = TextEditingController();
-  final TextEditingController titleField = TextEditingController();
-  final TextEditingController linkField = TextEditingController();
+  TextEditingController titleField = TextEditingController();
+  TextEditingController linkField = TextEditingController();
   final FirebaseStoreService firebaseStoreService = FirebaseStoreService();
 
   BuildContext? mainDialogContext;
@@ -37,6 +38,9 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay, String? user
     }
   }
 
+  titleField.text = detailList.schname;
+  linkField.text = detailList.schlink ?? '';
+  
   showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
@@ -111,23 +115,24 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay, String? user
                             Expanded(
                               child: InkWell(
                                 onTap: () async {
-                                  //일정 추가하기
-                                  String? scheduleId = await firebaseStoreService.addSchedule(userId!, titleField.text, selectedDay, selectedAlarm, colorValue, linkField.text);
-                                  if(scheduleId != null){
+                                  //일정 수정하기
+                                  bool isSuccess = await firebaseStoreService.updateSchedule(userId, detailList.scheduleId, titleField.text, detailList.schdate, selectedAlarm, colorValue, linkField.text);
+                                  if(isSuccess){
                                     titleField.text = '';
                                     linkField.text = '';
                                     textEditingController.text = '';
                                     Navigator.pop(context);
                                     Fluttertoast.showToast(
-                                      msg: '일정이 추가되었습니다.',
+                                      msg: '일정이 수정 되었습니다.',
                                       toastLength: Toast.LENGTH_SHORT,
                                       backgroundColor: Colors.grey,
                                       textColor: Colors.white,
                                       fontSize: 16.0,
                                     );
+                                    
                                   } else {
                                     Fluttertoast.showToast(
-                                      msg: '일정 추가 실패',
+                                      msg: '일정 수정 실패',
                                       toastLength: Toast.LENGTH_SHORT,
                                       backgroundColor: Colors.grey,
                                       textColor: Colors.white,
@@ -154,7 +159,7 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay, String? user
                           child: Padding(
                             padding: getPadding(left: 10),
                             child: Text(
-                              '${selectedDay.month}월 ${selectedDay.day}일 (${_getDayOfWeek(selectedDay)})',
+                              '${detailList.schdate.month}월 ${detailList.schdate.day}일 (${_getDayOfWeek(detailList.schdate)})',
                               style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 15,
@@ -293,16 +298,28 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay, String? user
                                                   const SizedBox(width: 10),
 
                                                   InkWell(
-                                                      onTap: () {
-                                                        _closeAllDialogs();
-                                                        Fluttertoast.showToast(
-                                                          msg: '일정이 삭제되었습니다.',
-                                                          toastLength: Toast.LENGTH_SHORT,
-                                                          backgroundColor: Colors.grey,
-                                                          textColor: Colors.white,
-                                                          fontSize: 16.0,
-                                                        );
-                                                        // 클릭 이벤트에 따른 로직 작성
+                                                      onTap: () async {
+                                                        //일정 삭제 함수 구현하기
+                                                        bool isSuccess = await firebaseStoreService.deleteSchedule(userId, detailList.scheduleId);
+                                                        
+                                                        if(isSuccess){
+                                                          _closeAllDialogs();
+                                                          Fluttertoast.showToast(
+                                                            msg: '일정이 삭제되었습니다.',
+                                                            toastLength: Toast.LENGTH_SHORT,
+                                                            backgroundColor: Colors.grey,
+                                                            textColor: Colors.white,
+                                                            fontSize: 16.0,
+                                                          );
+                                                        } else {
+                                                          Fluttertoast.showToast(
+                                                            msg: '일정 삭제 실패',
+                                                            toastLength: Toast.LENGTH_SHORT,
+                                                            backgroundColor: Colors.grey,
+                                                            textColor: Colors.white,
+                                                            fontSize: 16.0,
+                                                          );
+                                                        }
                                                       },
                                                       child: Container(
                                                         decoration: BoxDecoration(
