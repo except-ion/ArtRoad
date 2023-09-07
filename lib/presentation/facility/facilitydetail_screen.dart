@@ -93,6 +93,7 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                                           ),
                                         ),
                                       ),
+                                      const SizedBox(height: 20),
                                       Row(
                                         children: [
                                           const Icon(
