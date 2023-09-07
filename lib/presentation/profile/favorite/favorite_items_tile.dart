@@ -1,3 +1,4 @@
+import 'package:artroad/presentation/concert/concertdetail_screen.dart';
 import 'package:artroad/src/model/profile_concert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,9 +26,32 @@ class _FavoriteItemsTileState extends State<FavoriteItemsTile> {
 
   @override
   Widget build(BuildContext context) {
+    //텍스트 길이 줄이는 함수
+    int maxLength1 = 20;
+    int maxLength2 = 30;
+
+    String prfnmText = widget._profileConcert.prfnm.toString().length <= 20
+                                 ? widget._profileConcert.prfnm.toString()
+                            : '${widget._profileConcert.prfnm.toString().substring(0, 20)}...';
+    String prfnmResult = prfnmText.isNotEmpty ? prfnmText : '제공되지 않은 정보입니다.';
+
+    String fcltynmText = widget._profileConcert.fcltynm.toString().length <= 20
+                                 ? widget._profileConcert.fcltynm.toString()
+                            : '${widget._profileConcert.fcltynm.toString().substring(0, 20)}...';
+    String fcltynmResult = fcltynmText.isNotEmpty ? fcltynmText : '제공되지 않은 정보입니다.';
+
     return InkWell(
       onTap: () {
-        print('공연 상세로 이동');
+        print('profile id: ${widget._profileConcert.mt20id}');
+        print('profile name: ${widget._profileConcert.prfnm}');
+        Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) {
+                  return ConcertDetailScreen(
+                        widget._profileConcert.mt20id.toString(), widget._profileConcert.prfnm.toString());
+                }
+              )
+        );
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -58,8 +82,9 @@ class _FavoriteItemsTileState extends State<FavoriteItemsTile> {
                   borderRadius: BorderRadius.circular(6),
                   child: _imageLoading
                       ? const CircularProgressIndicator()
+                      // ignore: unnecessary_null_comparison
                       : (widget._profileConcert.poster != null)
-                      ? Image.network('${widget._profileConcert.poster}',
+                      ? Image.network(widget._profileConcert.poster,
                       errorBuilder: (context, error, stackTrace) {
                         _updateImageLoading(false);
                         return const Text('이미지 로드 실패');
@@ -97,7 +122,7 @@ class _FavoriteItemsTileState extends State<FavoriteItemsTile> {
                         bottom: 5,
                       ),
                       child: Text(
-                        '${widget._profileConcert.prfnm}',
+                        fcltynmResult,
                         style: const TextStyle(
                           color: Colors.black,
                           fontSize: 15,
@@ -111,7 +136,7 @@ class _FavoriteItemsTileState extends State<FavoriteItemsTile> {
                         const SizedBox(width: 10),
                         const Icon(Icons.location_on_sharp),
                         Text(
-                          widget._profileConcert.fcltynm ?? '제공되지 않은 정보입니다.', // 공연의 공연장
+                          prfnmResult, // 공연의 공연장
                           style: const TextStyle(
                             color: Color(0xFF828282),
                             fontSize: 12,
@@ -130,4 +155,4 @@ class _FavoriteItemsTileState extends State<FavoriteItemsTile> {
       ),
     );
   }
-}
+} 

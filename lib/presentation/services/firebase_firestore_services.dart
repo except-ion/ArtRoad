@@ -179,7 +179,6 @@ Future<mCalendarItems?> getUserSelectedSchedule(
 
   //좋아요 누른 경우 추가
   Future<void> addLikedStatus(String userId, String concertID, String facilityID, String concertName, String facilityName, String poster, DateTime startDate, DateTime endDate) async {
-    print("addLikedStatus");
     try {
       await _likedConcertsCollection.doc(userId).collection('user_liked_concerts').doc(concertID).set({
         'concertID': concertID,
@@ -283,8 +282,8 @@ Future<mCalendarItems?> getUserSelectedSchedule(
               mypage.add(
                 ProfileConcert(
                   data['concertID'],
-                  data['facilityName'],
                   data['concertName'],
+                  data['facilityName'],
                   data['poster']
                 ),
               );

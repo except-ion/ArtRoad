@@ -74,8 +74,8 @@ class _CustomConcertDetailHeaderState extends State<CustomConcertDetailHeader> {
       );
       await _firebaseStoreService.updateLikeStatus(
             userId!,
-            concertDetail.mt10id ?? '',  
-            concertDetail.mt20id ?? '', //공연시설id
+            concertDetail.mt20id ?? '',  
+            concertDetail.mt10id ?? '', //공연시설id
             concertDetail.prfnm ?? '정보없음', //공연명
             concertDetail.fcltynm ?? '정보없음', //공영시설명
             concertDetail.poster ?? '',
