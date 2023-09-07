@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseAuthService {
@@ -12,8 +11,23 @@ class FirebaseAuthService {
       );
       return credential.user;
     } catch (e) {
-      print('Firebase 로그인 오류: $e');
-      return null;
+      if (e is FirebaseAuthException) {
+        if (e.code == 'wrong-password') {
+          print('비밀번호가 잘못되었습니다.');
+          return null;
+        } else if (e.code == 'user-not-found') {
+          // 사용자가 존재하지 않는 경우 처리
+          print('사용자가 존재하지 않습니다.');
+          return null;
+        } else {
+          print('Firebase Authentication 에러: ${e.code}');
+          return null;
+        }
+      } else {
+        print('Firebase Authentication 에러: $e');
+          return null;
+
+      }
     }
   }
 
@@ -43,9 +57,10 @@ class FirebaseAuthService {
 
   Future<bool> deleteAuth() async {
     try{
-      await _auth.currentUser?.delete();
+      await FirebaseAuth.instance.currentUser!.delete();
       return true;
     } catch (e) {
+      print('deleteAuth 실패');
       return false;
     }
   }

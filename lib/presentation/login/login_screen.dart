@@ -33,24 +33,14 @@ class _LoginScreenState extends State<LoginScreen> {
   final FirebaseAuthService _firebaseAuthService = FirebaseAuthService();
 
   //firebase login
-  void signInWithFirebase(String email, String pw) async {
+  Future<bool> signInWithFirebase(String email, String pw) async {
     final user = await _firebaseAuthService.signInWithFirebase(email, pw);
     if (user != null) {
       final userProvider = Provider.of<UserProvider>(context, listen: false);
       userProvider.setFirebaseUserId(user.uid);
-      // 로그인 성공 후 처리
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('로그인 성공')));
-
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => BasepageScreen(),
-        ),
-      );
+      return true;
     } else {
-      // 로그인 실패 처리
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('로그인 실패')));
+      return false;
     }
   }
 
@@ -83,42 +73,6 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  //카카오 로그인 정보 firebase에 유저 정보 저장
-  // Future<bool> saveUserData(String token) async {
-  //   try{
-  //     final userCredential = await _auth.signInAnonymously();
-  //     print('userCredential : $userCredential');
-
-  //     if(userCredential.user != null) {
-  //       final uid = userCredential.user?.uid;
-  //       print('uid : $uid');
-  //       await _firestore.collection('Users').doc(uid).set({
-  //         'providerId': 'kakao.com',
-  //         'userName': (await UserApi.instance.me()).kakaoAccount!.profile!.nickname,
-  //         'idToken': token
-  //       });
-  //       print('collection 저장');
-  //     }
-  //     return true;
-  //   } catch (e) {
-  //     print('saveUserData error: $e');
-  //     return false;
-  //   }
-  // }
-
-  // void signOut() async {
-  //   switch (_loginPlatform) {
-  //     case LoginPlatform.firebase:
-  //       break;
-  //     case LoginPlatform.none:
-  //       break;
-  //   }
-
-  //   setState(() {
-  //     _loginPlatform = LoginPlatform.none;
-  //   });
-  // }
-
   List<String> backgroundImageUrls = [
     'assets/images/login_background_image_1.png',
     'assets/images/login_background_image_2.png',
@@ -144,8 +98,8 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     timer = Timer.periodic(const Duration(seconds: 5), _changeBackground);
-    emailField.text = "judyzero11@gmail.com";
-    pwField.text = "Qwerqwer1!";
+    emailField.clear();
+    pwField.clear();
   }
 
   @override
@@ -276,22 +230,45 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 const SizedBox(height: 25),
                                 CustomButtonMainColor(
-                                  onPressed: () {
+                                  onPressed: () async {
                                     //firebase login
                                     if (_formKey.currentState!.validate()) {
                                       // validation 이 성공하면 폼 저장하기
-                                      signInWithFirebase(
+                                      bool isSuccess = await signInWithFirebase(
                                           emailField.text, pwField.text);
-                                      _formKey.currentState!.save();
-                                      Navigator.pop(context); // 다이얼로그 닫기
+                                      print('login isSucess: $isSuccess');
+                                      if (isSuccess) {
+                                        //firebase login 성공
+                                        _formKey.currentState!.save();
+                                        Navigator.pop(context);
 
-                                      // 로그인 성공 후 페이지 이동
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              BasepageScreen(),
-                                        ),
-                                      );
+                                        Fluttertoast.showToast(
+                                                  msg: '로그인 성공',
+                                                  toastLength: Toast.LENGTH_SHORT,
+                                                  backgroundColor: Colors.grey,
+                                                  textColor: Colors.white,
+                                                  fontSize: 16.0,
+                                                  );
+                                        // 로그인 성공 후 페이지 이동
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                BasepageScreen(),
+                                          ),
+                                        );      
+                                      } else {
+                                        // 로그인 실패 처리
+                                        print('failed');
+                                        Fluttertoast.showToast(
+                                                  msg: '로그인 실패',
+                                                  toastLength: Toast.LENGTH_SHORT,
+                                                  backgroundColor: Colors.grey,
+                                                  textColor: Colors.white,
+                                                  fontSize: 16.0,
+                                                  );
+                                      }
+                                        print('faiasdfkopwekfpowled');
+                                     
                                     }
                                   },
                                   text: '로그인',
