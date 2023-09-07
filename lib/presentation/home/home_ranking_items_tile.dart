@@ -50,7 +50,7 @@ class _RankingTileState extends State<RankingTile> {
           borderRadius: BorderRadius.circular(16),
           child: Stack(
             alignment: Alignment.center,
-            children: [
+             children: [
               Image.network(
                 'http://www.kopis.or.kr/${widget._Ranking.poster}',
                 width: 200,
@@ -59,10 +59,10 @@ class _RankingTileState extends State<RankingTile> {
                 loadingBuilder: (BuildContext context, Widget child,
                     ImageChunkEvent? loadingProgress) {
                   if (loadingProgress == null) {
-                    _updateImageLoading(false);
-                    return child; // 이미지 로딩 완료
+                    _imageLoading = false; // 이미지 로딩 완료
+                    return child;
                   } else {
-                    _updateImageLoading(true);
+                    _imageLoading = true; // 이미지 로딩 중
                     return const CircularProgressIndicator();
                   }
                 },

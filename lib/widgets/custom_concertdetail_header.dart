@@ -25,15 +25,15 @@ class CustomConcertDetailHeader extends StatefulWidget {
 class _CustomConcertDetailHeaderState extends State<CustomConcertDetailHeader> {
   final FirebaseStoreService _firebaseStoreService = FirebaseStoreService();
   late String userId;
-  late bool isLiked;
-
+  bool isLiked = true;
+  
   @override
   void initState() {
     super.initState();
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     userId = userProvider.firebaseUserId!;
     // 초기 좋아요 상태를 가져오는 메서드 호출
-    getInitialLikeStatus(userId, widget.concertId).then((liked){
+    getInitialLikeStatus(userId, widget.concertId).then((liked) {
       setState(() {
         isLiked = liked;
       });

@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import '../../../widgets/custom_header.dart';
 
 class ArtRoadInfo extends StatelessWidget {
+  const ArtRoadInfo({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
-          CustomHeader(
+          const CustomHeader(
             name: 'About ArtRoad',
           ),
           CustomImageView(
