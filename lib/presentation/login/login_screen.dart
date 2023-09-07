@@ -98,8 +98,10 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     timer = Timer.periodic(const Duration(seconds: 5), _changeBackground);
-    emailField.clear();
-    pwField.clear();
+    // emailField.clear();
+    // pwField.clear();
+    emailField.text = 'judyzero11@naver.com';
+    pwField.text = 'Qwerqwer1!';
   }
 
   @override
@@ -236,7 +238,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                       // validation 이 성공하면 폼 저장하기
                                       bool isSuccess = await signInWithFirebase(
                                           emailField.text, pwField.text);
-                                      print('login isSucess: $isSuccess');
                                       if (isSuccess) {
                                         //firebase login 성공
                                         _formKey.currentState!.save();

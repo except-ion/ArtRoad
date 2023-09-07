@@ -1,7 +1,9 @@
 import 'package:artroad/src/provider/facdetail_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:kakaomap_webview/kakaomap_webview.dart';
 import 'package:provider/provider.dart';
 import '../../widgets/custom_header.dart';
 import '../../widgets/custom_launch_url.dart';
@@ -19,6 +21,7 @@ class FacilityDetailScreen extends StatefulWidget {
 }
 
 class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
+  String kakaoMapKey = dotenv.env['KAKAO_MAP_KEY']!;
   bool isRestaurantSelected = true;
   bool isAccommodationSelected = false;
 
@@ -71,6 +74,44 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
+                                //       SizedBox(
+                                //         height: 200,
+                                //         child: ClipRRect(
+                                // borderRadius: BorderRadius.circular(16),
+                                // child: KakaoMapView(
+                                //           width: double.infinity,
+                                //           height: 200,
+                                //           kakaoMapKey: kakaoMapKey,
+                                //           // kakaoMapKey: dotenv.env['KAKAO_MAP_KEY']!,
+                                //           //lat, lng 값 facility la, lo로 변경 필요
+                                //           lat: 33.450701,
+                                //           lng: 126.570667,
+                                //           showMapTypeControl: true,
+                                //           showZoomControl: true,
+                                //           markerImageURL:
+                                //             'assets/images/img_map_marker.png',
+                                //         ),),
+                                //       ),
+                                //       const SizedBox(height: 10),
+                                      Visibility(
+                                        visible: facilityDetailList[0].la != null && facilityDetailList[0].lo != null,
+                                        child: SizedBox(
+                                          height: 200,
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(16),
+                                            child: KakaoMapView(
+                                              width: double.infinity,
+                                              height: 200,
+                                              kakaoMapKey: kakaoMapKey,
+                                              lat: double.parse(facilityDetailList[0].la  ?? '0.0'),
+                                              lng: double.parse(facilityDetailList[0].lo ?? '0.0'),
+                                              showMapTypeControl: true,
+                                              showZoomControl: true,
+                                              markerImageURL: 'assets/images/img_map_marker.png',
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                       Row(
                                         children: [
                                           const Icon(
@@ -89,7 +130,7 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                                                 )
                                               : AutoSizeText(
                                                   facilityDetailList[0]
-                                                      .fcltynm
+                                                      .adres
                                                       .toString(),
                                                   style: const TextStyle(
                                                     fontSize: 16,
