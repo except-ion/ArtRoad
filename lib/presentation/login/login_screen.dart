@@ -14,6 +14,7 @@ import 'package:artroad/src/model/login_platform.dart';
 import 'package:artroad/widgets/custom_textformfield.dart';
 import 'package:artroad/presentation/login/login_forgot_password.dart';
 import 'package:artroad/presentation/services/firebase_auth_services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -288,6 +289,60 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 const SizedBox(
                                   height: 25,
+                                ),
+                                TextButton(
+                                  onPressed: () async {
+                                    //kakao login
+                                    bool isSuccess = await signInWithGoogle();
+                                    if (isSuccess) {
+                                      Navigator.pop(context); // 다이얼로그 닫기
+
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              BasepageScreen(),
+                                        ),
+                                      );
+                                    } else {
+                                      Fluttertoast.showToast(
+                                        msg: '구글 로그인 실패',
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        backgroundColor: Colors.grey,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0,
+                                      );
+                                    }
+                                  },
+                                  style: TextButton.styleFrom(
+                                      textStyle: const TextStyle(
+                                          textBaseline:
+                                              TextBaseline.alphabetic),
+                                      backgroundColor: const Color(0xFFF4F4F4),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      minimumSize: const Size(350, 50)),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        'assets/images/icon_google.png',
+                                        width: 23,
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      const Text(
+                                        '구글 로그인',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
