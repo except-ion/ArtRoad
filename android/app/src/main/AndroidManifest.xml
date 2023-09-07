@@ -10,8 +10,8 @@
         android:value="2" />
         
     <application
-        android:label="artroad"
-        android:name="${applicationName}"
+        android:label="ArtRoad"
+        android:name="$io.flutter.app.FlutterApplication"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">
 
@@ -22,6 +22,9 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+            
+            <intent-filter>
                 <data android:scheme="kakao66389c442b9dba0350c2d6c94286380a" android:host="oauth"/>
             </intent-filter>
         </activity>
@@ -45,6 +48,8 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <intent-filter>
                 <data android:host="kakaolink"
                 android:scheme="kakao66389c442b9dba0350c2d6c94286380a" />
             </intent-filter>
