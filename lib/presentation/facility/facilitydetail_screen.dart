@@ -74,25 +74,6 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                //       SizedBox(
-                                //         height: 200,
-                                //         child: ClipRRect(
-                                // borderRadius: BorderRadius.circular(16),
-                                // child: KakaoMapView(
-                                //           width: double.infinity,
-                                //           height: 200,
-                                //           kakaoMapKey: kakaoMapKey,
-                                //           // kakaoMapKey: dotenv.env['KAKAO_MAP_KEY']!,
-                                //           //lat, lng 값 facility la, lo로 변경 필요
-                                //           lat: 33.450701,
-                                //           lng: 126.570667,
-                                //           showMapTypeControl: true,
-                                //           showZoomControl: true,
-                                //           markerImageURL:
-                                //             'assets/images/img_map_marker.png',
-                                //         ),),
-                                //       ),
-                                //       const SizedBox(height: 10),
                                       Visibility(
                                         visible: facilityDetailList[0].la != null && facilityDetailList[0].lo != null,
                                         child: SizedBox(
@@ -107,7 +88,7 @@ class _FacilityDetailScreenState extends State<FacilityDetailScreen> {
                                               lng: double.parse(facilityDetailList[0].lo ?? '0.0'),
                                               showMapTypeControl: true,
                                               showZoomControl: true,
-                                              markerImageURL: 'assets/images/img_map_marker.png',
+                                              markerImageURL: 'https://img.icons8.com/glyph-neue/64/176ffe/region-code.png',
                                             ),
                                           ),
                                         ),
