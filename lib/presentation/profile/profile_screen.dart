@@ -333,7 +333,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => FavoriteScreen(), // 이동할 페이지 위젯
+                                      builder: (context) => const FavoriteScreen(), // 이동할 페이지 위젯
                                     ),
                                   );
                                   print('Move to 관심공연 목록');
@@ -562,11 +562,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             // 에러 핸들링
           }
         }
-        return const SizedBox(
-          width: 25.0, // 원하는 너비
-          height: 25.0, // 원하는 높이
-          child: CircularProgressIndicator(),
-        );
+        return (
+            const Center(
+              child: SizedBox( width: 30, height: 30, child: CircularProgressIndicator()))
+          );
       },
     );
   }
