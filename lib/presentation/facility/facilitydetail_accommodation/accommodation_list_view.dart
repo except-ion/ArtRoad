@@ -26,7 +26,7 @@ class _AccommodationListViewState extends State<AccommodationListView> {
     String lng = widget.lo ?? '';
     String lat = widget.la ?? '';
     final String url =
-        "https://dapi.kakao.com/v2/local/search/category.json?category_group_code=AD5&x=$lng&y=$lat";
+        "https://dapi.kakao.com/v2/local/search/category.json?category_group_code=AD5&x=$lng&y=$lat&sort=distance";
 
     final response = await http.get(
       Uri.parse(url),

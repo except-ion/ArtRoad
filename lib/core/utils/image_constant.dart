@@ -33,5 +33,5 @@ class ImageConstant {
 
   static String imgInquiryEx = 'assets/images/img_inquiry_ex.jpg';
 
-  static String imgArtRoad = 'assets/images/Img_about_artroad.jpg';
+  static String imgArtRoad = 'assets/images/img_about_artroad.jpg';
 }
