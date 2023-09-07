@@ -184,62 +184,58 @@ class _LoginScreenState extends State<LoginScreen> {
                                       .validatePassword(pwFocus, '$value'),
                                 ),
                                 const SizedBox(height: 17),
-                                FittedBox(
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Checkbox(
-                                            activeColor:
-                                                const Color(0xFF00233D),
-                                            value: _isCheckRemember,
-                                            onChanged: (value) {
-                                              bottomState(() {
-                                                setState(() {
-                                                  _isCheckRemember = value!;
-                                                });
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Checkbox(
+                                          activeColor:
+                                              const Color(0xFF00233D),
+                                          value: _isCheckRemember,
+                                          onChanged: (value) {
+                                            bottomState(() {
+                                              setState(() {
+                                                _isCheckRemember = value!;
                                               });
-                                            },
-                                            materialTapTargetSize: //패딩 제거
-                                                MaterialTapTargetSize
-                                                    .shrinkWrap,
+                                            });
+                                          },
+                                          materialTapTargetSize: //패딩 제거
+                                              MaterialTapTargetSize
+                                                  .shrinkWrap,
+                                        ),
+                                        const AutoSizeText(
+                                          '아이디 저장',
+                                          maxFontSize: 16,
+                                          maxLines: 1,
+                                        ),
+                                      ],
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const LoginForgotPasswordScreen(),
                                           ),
-                                          const FittedBox(
-                                            child: AutoSizeText(
-                                              '아이디 저장',
-                                              maxFontSize: 16,
-                                              maxLines: 1,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const LoginForgotPasswordScreen(),
-                                            ),
-                                          );
-                                        },
-                                        child: const FittedBox(
-                                          child: AutoSizeText(
-                                            '비밀번호를 잃어버리셨나요?',
-                                            maxFontSize: 16,
-                                            maxLines: 1,
-                                            style: TextStyle(
-                                              decoration:
-                                                  TextDecoration.underline,
-                                              color: Colors.blue,
-                                            ),
+                                        );
+                                      },
+                                      child: const FittedBox(
+                                        child: AutoSizeText(
+                                          '비밀번호를 잃어버리셨나요?',
+                                          maxFontSize: 16,
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                            decoration:
+                                                TextDecoration.underline,
+                                            color: Colors.blue,
                                           ),
                                         ),
-                                      )
-                                    ],
-                                  ),
+                                      ),
+                                    )
+                                  ],
                                 ),
                                 const SizedBox(height: 25),
                                 CustomButtonMainColor(
