@@ -40,8 +40,8 @@ class FirebaseStoreService{
       await _firestore.collection('user').doc(userId).delete();
       return true;
     } catch (e) {
-      return false;
       print('회원 삭제 실패: $e');
+      return false;
     }
   }
 
@@ -207,14 +207,18 @@ Future<mCalendarItems?> getUserSelectedSchedule(
   //concertDetailScreen Header 초기 상태
   Future<bool> getLikedStatus(String userId, String concertID) async {
     try {
+      print('getLiekdStatus 실행');
         DocumentSnapshot documentSnapshot = await _likedConcertsCollection
             .doc(userId)
             .collection('user_liked_concerts')
             .doc(concertID)
             .get();
       if (documentSnapshot.exists) {
+        print('documetnsSnapshot exists');
         return false;
       } else {
+        print('documetnsSnapshot nonon exists');
+
         return true;
       }
     } catch (e) {

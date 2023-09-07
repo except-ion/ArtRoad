@@ -33,7 +33,11 @@ class _CustomConcertDetailHeaderState extends State<CustomConcertDetailHeader> {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     userId = userProvider.firebaseUserId!;
     // 초기 좋아요 상태를 가져오는 메서드 호출
-    getInitialLikeStatus(userId, widget.concertId);
+    getInitialLikeStatus(userId, widget.concertId).then((liked){
+      setState(() {
+        isLiked = liked;
+      });
+    });
   }
 
   // 좋아요 상태를 가져오는 비동기 메서드
@@ -63,7 +67,15 @@ class _CustomConcertDetailHeaderState extends State<CustomConcertDetailHeader> {
       final concertDetail = concertDetailList[0];
       DateTime startDate = stringToDatetime(concertDetail.prfpdfrom!);
       DateTime endDate = stringToDatetime(concertDetail.prfpdto!);
-      print('toggleLiked startDate: $startDate');
+      print('isLiked: $isLiked');
+      // bool likedStatus = await _firebaseStoreService.getLikedStatus(userId!, widget.concertId);
+      
+      setState((){
+          isLiked = !isLiked;
+          print('in setState: $isLiked');
+          // getInitialLikeStatus(userId!, widget.concertId);
+        }
+      );
       await _firebaseStoreService.updateLikeStatus(
             userId!,
             concertDetail.mt10id ?? '',  
@@ -73,43 +85,25 @@ class _CustomConcertDetailHeaderState extends State<CustomConcertDetailHeader> {
             concertDetail.poster ?? '',
             startDate,
             endDate,
-            isLiked
+            !isLiked
             );
-        setState((){
-          isLiked = !isLiked;
-      });
-      }
 
-      // // 좋아요 상태 업데이트 
-      // await _firebaseStoreService.updateLikeStatus(
-      //   userId!,
-      //   concertDetail.mt10id ?? '',
-      //   concertDetail.mt20id ?? '',
-      //   concertDetail.prfnm ?? '정보없음',
-      //   concertDetail.fcltynm ?? '정보없음',
-      //   startDate,
-      //   endDate,
-      //   !isLiked, // 현재 상태의 반대로 업데이트
-      // );
-      // setState(() {
-      //   isLiked = !isLiked;
-      //   print(isLiked);
-      //   print(getInitialLikeStatus(userId, widget.concertId));
-      // });
     }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<bool>(
-        future: getInitialLikeStatus(userId, widget.concertId),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else {
-            isLiked = snapshot.data ?? true;
-          }
+    // return FutureBuilder<bool>(
+    //     future: getInitialLikeStatus(userId, widget.concertId),
+    //     builder: (context, snapshot) {
+    //       if (snapshot.connectionState == ConnectionState.waiting) {
+    //         return const CircularProgressIndicator();
+    //       } else if (snapshot.hasError) {
+    //         return Text('Error: ${snapshot.error}');
+    //       } else {
+    //         //여기 뭐지
+    //         isLiked = snapshot.data ?? false;
+    //       }
           return Container(
             child: Stack(
               children: [
@@ -164,6 +158,6 @@ class _CustomConcertDetailHeaderState extends State<CustomConcertDetailHeader> {
               ],
             ),
           );
-        });
+        }
   }
-}
+
