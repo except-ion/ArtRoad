@@ -32,6 +32,14 @@ class _CustomConcertDetailHeaderState extends State<CustomConcertDetailHeader> {
     super.initState();
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     userId = userProvider.firebaseUserId!;
+    // 초기 좋아요 상태를 가져오는 메서드 호출
+    getInitialLikeStatus(userId, widget.concertId);
+  }
+
+  // 좋아요 상태를 가져오는 비동기 메서드
+  Future<bool> getInitialLikeStatus(String userId, String concertId) async {
+    final liked = await _firebaseStoreService.getLikedStatus(userId, concertId);
+    return liked;
   }
 
   DateTime stringToDatetime(String date) {
@@ -50,28 +58,29 @@ class _CustomConcertDetailHeaderState extends State<CustomConcertDetailHeader> {
     final concertDetailProvider =
         Provider.of<ConcertDetailProvider>(context, listen: false);
     final concertDetailList = concertDetailProvider.concertDetails;
+
     if (concertDetailList.isNotEmpty) {
       final concertDetail = concertDetailList[0];
       DateTime startDate = stringToDatetime(concertDetail.prfpdfrom!);
       DateTime endDate = stringToDatetime(concertDetail.prfpdto!);
-      print('toggleLiked startDate: $startDate');
+
+      // 좋아요 상태 업데이트
       await _firebaseStoreService.updateLikeStatus(
-          userId!,
-          concertDetail.mt10id ?? '',
-          concertDetail.mt20id ?? '', //공연시설id
-          concertDetail.prfnm ?? '정보없음', //공연명
-          concertDetail.fcltynm ?? '정보없음', //공영시설명
-          startDate,
-          endDate,
-          isLiked);
+        userId!,
+        concertDetail.mt10id ?? '',
+        concertDetail.mt20id ?? '',
+        concertDetail.prfnm ?? '정보없음',
+        concertDetail.fcltynm ?? '정보없음',
+        startDate,
+        endDate,
+        !isLiked, // 현재 상태의 반대로 업데이트
+      );
       setState(() {
         isLiked = !isLiked;
+        print(isLiked);
+        print(getInitialLikeStatus(userId, widget.concertId));
       });
     }
-  }
-
-  Future<bool> getInitialLikeStatus(String userId, String concertId) async {
-    return await _firebaseStoreService.getLikedStatus(userId, concertId);
   }
 
   @override
@@ -118,7 +127,7 @@ class _CustomConcertDetailHeaderState extends State<CustomConcertDetailHeader> {
                         Transform.scale(
                           scale: 1.5,
                           child: IconButton(
-                            icon: isLiked
+                            icon: isLiked == true
                                 ? Icon(
                                     //좋아요 클릭 전
                                     Icons.favorite_border,
