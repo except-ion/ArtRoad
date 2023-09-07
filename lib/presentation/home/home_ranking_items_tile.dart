@@ -40,50 +40,68 @@ class _RankingTileState extends State<RankingTile> {
     }
   }
 
-  @override
+   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: _onImageTap,
-        child: Container(
-          height: 270,
-          alignment: Alignment.center,
-          child: ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: _imageLoading
-                  ? const CircularProgressIndicator()
-                  : Image.network(
-                      'http://www.kopis.or.kr/${widget._Ranking.poster}',
-                      width: 200,
-                      height: 270,
-                      fit: BoxFit.fill,
-                      errorBuilder: (context, error, stackTrace) {
-                        _updateImageLoading(false);
-                        return Container(
-                          color: Colors.grey[100],
-                          height: 270,
-                          width: 200,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.no_photography_outlined,
-                                size: 38,
-                                color: Colors.grey[600],
-                              ),
-                              AutoSizeText(
-                                'No Image',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.grey[600],
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                maxLines: 1,
-                              ),
-                            ],
+      onTap: _onImageTap,
+      child: Container(
+        height: 270,
+        alignment: Alignment.center,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Image.network(
+                'http://www.kopis.or.kr/${widget._Ranking.poster}',
+                width: 200,
+                height: 270,
+                fit: BoxFit.fill,
+                loadingBuilder: (BuildContext context, Widget child,
+                    ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) {
+                    _updateImageLoading(false);
+                    return child; // 이미지 로딩 완료
+                  } else {
+                    _updateImageLoading(true);
+                    return const CircularProgressIndicator();
+                  }
+                },
+                errorBuilder:
+                    (context, error, stackTrace) {
+                  _updateImageLoading(false);
+                  return Container(
+                    color: Colors.grey[100],
+                    height: 270,
+                    width: 200,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.no_photography_outlined,
+                          size: 38,
+                          color: Colors.grey[600],
+                        ),
+                        AutoSizeText(
+                          'No Image',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.grey[600],
+                            fontWeight: FontWeight.bold,
                           ),
-                        );
-                      },
-                    )),
-        ));
+                          maxLines: 1,
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+              if (_imageLoading)
+                const CircularProgressIndicator(),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
