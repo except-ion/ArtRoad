@@ -145,7 +145,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               InkWell(
                                 onTap: () {
                                   share();
-                                  print('Kakao Share bt clicked');
                                 },
                                 child: Row(
                                   children: [
