@@ -181,7 +181,6 @@ Future<mCalendarItems?> getUserSelectedSchedule(
     } catch (e) {
     }
   }
-
   //좋아요 누른 경우 삭제
   Future<void> removeLikedStatus(String userId, String concertID) async {
     try {

@@ -93,8 +93,8 @@ void showScheduleDialog(BuildContext context, DateTime selectedDay, String? user
                               child: InkWell(
                                 onTap: () {
                                   //창 닫기
-                                  titleField.text = '';
-                                  linkField.text = '';
+                                  // titleField.text = '';
+                                  // linkField.text = '';
                                   Navigator.pop(context);
                                 },
                                 child: const Align(
