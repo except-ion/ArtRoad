@@ -66,10 +66,10 @@ class _SignupScreenState extends State<SignupScreen> {
   void initState() {
     super.initState();
 
-    nameField.text = "yuda";
-    emailField.text = "dyj09087@gmail.com";
-    pwField.text = "r3OeR0UDal";
-    pwcheckField.text = "r3OeR0UDal";
+    // nameField.text = "yuda";
+    // emailField.text = "dyj09087@gmail.com";
+    // pwField.text = "r3OeR0UDal";
+    // pwcheckField.text = "r3OeR0UDal";
   }
 
   // 회원가입 버튼을 눌렀을 때 호출될 함수

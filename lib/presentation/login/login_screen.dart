@@ -100,10 +100,8 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     timer = Timer.periodic(const Duration(seconds: 5), _changeBackground);
-    // emailField.clear();
-    // pwField.clear();
-    emailField.text = 'judyzero11@naver.com';
-    pwField.text = 'Qwerqwer1!';
+    emailField.clear();
+    pwField.clear();
   }
 
   @override
