@@ -10,7 +10,7 @@
   https://docs.flutter.dev/get-started/install 
 4. file - settings - Languages & Frameworks - Flutter 탭으로 이동하여 flutter가 설치된 폴더를 path로 설정
 5. pabspec.yaml 파일을 열고 pub get 버튼 클릭 혹은 터미널에 flutter pub get 입력
-6. 에뮬레이터 선택 후 "Run without Debugging" 으로 실행
+6. 에뮬레이터 선택 후 실행
 
 ### ArtRoad 실행 영상
 https://youtu.be/8uXR4AWGLFQ
